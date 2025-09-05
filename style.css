@@ -34,8 +34,11 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   overflow: hidden;
+  background: radial-gradient(circle at center, #2C2F33 0%, #111 100%);
 }
+
 #bgCanvas {
   position: absolute;
   top: 0; left: 0;
@@ -43,20 +46,60 @@ header {
   height: 100%;
   z-index: 0;
 }
+
 .logo {
   position: relative;
   z-index: 1;
-  text-align: center;
+  color: white;
+  animation: fadeIn 2s ease;
 }
+
 .logo img {
   width: 250px;
   height: auto;
   animation: pulse 4s infinite;
+  filter: drop-shadow(0 0 15px #7289DA) drop-shadow(0 0 30px #5865F2);
 }
+
+.logo h1 {
+  font-size: 2.5rem;
+  margin-top: 20px;
+  text-shadow: 0 0 10px #7289DA, 0 0 20px #5865F2;
+}
+
+.logo p {
+  font-size: 1.2rem;
+  margin: 15px 0 30px;
+  color: #ddd;
+}
+
+.btn-hero {
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  background: #7289DA;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  box-shadow: 0 0 15px #5865F2;
+}
+
+.btn-hero:hover {
+  background: #5b6eae;
+  box-shadow: 0 0 20px #7289DA, 0 0 40px #5865F2;
+}
+
+/* Animations */
 @keyframes pulse {
   0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.9; }
+  50% { transform: scale(1.05); opacity: 0.95; }
   100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Sections */
