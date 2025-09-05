@@ -214,6 +214,34 @@ iframe {
   display: block;
   border-radius: 10px;
 }
+/* About Section schöner formatieren */
+#about {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px;
+  background: rgba(35, 39, 42, 0.8); /* leichtes dunkles Overlay */
+  border-radius: 15px;
+  margin: 50px auto;
+  max-width: 1000px;
+}
+
+.about-container {
+  text-align: center;
+}
+
+#about h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #7289DA;
+  text-shadow: 0 0 5px #5865F2;
+}
+
+#about p {
+  font-size: 1.1rem;
+  color: #ddd;
+  line-height: 1.8;
+}
 
 /* Footer */
 footer {
