@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NRW RP DE</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#about">Über uns</a>
+    <a href="#features">Features</a>
+    <a href="#team">Team</a>
+    <a href="#faq">FAQ</a>
+    <a href="#discord">Jetzt beitreten!</a>
+  </nav>
+
+  <!-- Hero -->
+  <header>
+    <canvas id="bgCanvas"></canvas>
+    <div class="logo">
+      <img src="bilder/logo.png" alt="Server Logo">
+    </div>
+  </header>
+
+  <!-- About -->
+  <section id="about">
+    <h2>Über unseren Server</h2>
+    <p>Unser Roleplay-Server bietet dir ein einzigartiges Erlebnis mit eigenen Regeln und einer aktiven Community. Egal ob Anfänger oder erfahrener Rollenspieler – bei uns ist jeder willkommen!</p>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <h2>Server-Features</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>🌍 Eigene RP-Welt</h3>
+        <p>Eine Umgebung mit vielen Fraktionen.</p>
+      </div>
+      <div class="feature">
+        <h3>👥 Aktive Community</h3>
+        <p>Freundliche Spieler und engagierte Moderatoren helfen dir jederzeit.</p>
+      </div>
+      <div class="feature">
+        <h3>⚔️ Events</h3>
+        <p>Regelmäßige RP-Events mit Rennen oder anderen Veranstaltungen.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section id="team">
+    <h2>Unser Team</h2>
+    <div class="team">
+      <div class="member">
+        <img src="https://via.placeholder.com/100" alt="Admin">
+        <h3>AdminName</h3>
+        <p>Serverleitung</p>
+      </div>
+      <div class="member">
+        <img src="https://via.placeholder.com/100" alt="Moderator">
+        <h3>ModName</h3>
+        <p>Moderator</p>
+      </div>
+      <div class="member">
+        <img src="https://via.placeholder.com/100" alt="Supporter">
+        <h3>SupportName</h3>
+        <p>Support</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <h2>FAQ</h2>
+    <div class="faq-item">
+      <h3>Wie trete ich dem Server bei?</h3>
+      <p>Einfach oben auf den „Jetzt beitreten“-Button klicken oder unten das Widget nutzen.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Brauche ich Vorerfahrung im RP?</h3>
+      <p>Nein! Unser Team hilft dir gerne beim Einstieg.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Gibt es feste Regeln?</h3>
+      <p>Ja, unsere Serverregeln findest du nach dem Beitritt im entsprechenden Channel.</p>
+    </div>
+  </section>
+
+  <!-- Discord -->
+  <section id="discord">
+    <h2>Unser Discord</h2>
+    <iframe src="https://discord.com/widget?id=1343137566068838480&theme=dark" allowtransparency="true"></iframe>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 NRW RP DE
+  </footer>
+
+  <!-- Partikel-Skript -->
+  <script>
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = Math.random() * 2 + 1;
+        this.dx = (Math.random() - 0.5) * 0.5;
+        this.dy = (Math.random() - 0.5) * 0.5;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        ctx.fillStyle = '#7289DA';
+        ctx.fill();
+      }
+      update() {
+        this.x += this.dx;
+        this.y += this.dy;
+        if (this.x < 0 || this.x > canvas.width) this.dx = -this.dx;
+        if (this.y < 0 || this.y > canvas.height) this.dy = -this.dy;
+        this.draw();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < 120; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => p.update());
+    }
+
+    initParticles();
+    animate();
+  </script>
+</body>
+</html>
