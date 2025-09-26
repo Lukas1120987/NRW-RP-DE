@@ -1,253 +1,295 @@
-/* Global */
+/* ================================
+   🌐 Global Settings
+=================================== */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+:root {
+  --primary: #5865F2;
+  --primary-dark: #4752C4;
+  --background: #0f111a;
+  --sidebar-bg: #151823;
+  --text: #f0f0f0;
+  --text-light: #cccccc;
+  --accent: #7289da;
+  --danger: #e74c3c;
+  --success: #27ae60;
+  --shadow: rgba(0,0,0,0.4);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-body {
+
+html, body {
   font-family: 'Roboto', sans-serif;
-  background: #2C2F33;
-  color: white;
-  line-height: 1.6;
+  background: var(--background);
+  color: var(--text);
+  height: 100%;
   overflow-x: hidden;
 }
 
-/* Navigation */
-nav {
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: 0.3s;
+}
+a:hover {
+  color: var(--accent);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* ================================
+   📁 Layout: App Container
+=================================== */
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background: var(--sidebar-bg);
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   position: fixed;
   top: 0;
+  bottom: 0;
   left: 0;
-  right: 0;
-  background: #23272A;
-  display: flex;
-  justify-content: center;
-  padding: 15px;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
   z-index: 1000;
 }
-nav a {
-  margin: 0 15px;
-  color: white;
-  text-decoration: none;
-  font-weight: 700;
-  transition: 0.3s;
-}
-nav a:hover { color: #7289DA; }
 
-/* Hero mit Glow, Text und Button */
-header {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  overflow: hidden;
-  background: radial-gradient(circle at center, #2C2F33 0%, #111 100%);
-}
-
-#bgCanvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-
-.logo {
-  position: relative;
-  z-index: 1;
-  color: white;
-  animation: fadeIn 2s ease;
-}
-
-.logo img {
-  width: 250px;
-  height: auto;
-  animation: pulse 4s infinite;
-  filter: drop-shadow(0 0 15px #7289DA) drop-shadow(0 0 30px #5865F2);
-}
-
-.logo h1 {
-  font-size: 2.5rem;
-  margin-top: 20px;
-  text-shadow: 0 0 10px #7289DA, 0 0 20px #5865F2;
-}
-
-.logo p {
-  font-size: 1.2rem;
-  margin: 15px 0 30px;
-  color: #ddd;
-}
-
-.btn-hero {
-  padding: 15px 40px;
-  font-size: 1.2rem;
-  background: #7289DA;
-  border-radius: 8px;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
-  box-shadow: 0 0 15px #5865F2;
-}
-
-.btn-hero:hover {
-  background: #5b6eae;
-  box-shadow: 0 0 20px #7289DA, 0 0 40px #5865F2;
-}
-
-/* Animations */
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.95; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Sections */
-section {
-  padding: 80px 20px;
-  max-width: 1200px;
-  margin: auto;
-}
-section h2 {
-  font-size: 2rem;
-  margin-bottom: 40px;
-  text-align: center;
-}
-
-/* Features */
-.features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-.feature {
-  background: #23272A;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 300px;
-  flex: 1;
-  transition: 0.3s;
-}
-.feature:hover { transform: scale(1.05); }
-
-/* Team */
-.team {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-.member {
-  background: #23272A;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 250px;
-  text-align: center;
-}
-.member img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-bottom: 15px;
-}
-
-/* FAQ */
-.faq-item {
-  background: #23272A;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-}
-
-/* Invite Banner */
-#invite-banner {
-  background: linear-gradient(135deg, #5865F2, #7289DA);
-  padding: 80px 20px;
-  text-align: center;
-  color: white;
-  border-radius: 15px;
-  margin: 50px auto;
-  max-width: 1000px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-}
-
-#invite-banner h2 {
-  font-size: 2rem;
-  margin-bottom: 15px;
-}
-
-#invite-banner p {
-  font-size: 1.1rem;
-  margin-bottom: 25px;
-}
-
-.invite-btn {
-  padding: 15px 40px;
-  font-size: 1.2rem;
-  background: #23272A;
-  border-radius: 8px;
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
-  display: inline-block;
-}
-
-.invite-btn:hover {
-  background: #111;
-}
-
-/* Discord Widget */
-iframe {
-  border: none;
-  width: 350px;
-  height: 500px;
-  margin: 20px auto;
+.sidebar-logo {
+  width: 90px;
+  margin: 0 auto 1rem;
   display: block;
-  border-radius: 10px;
 }
-/* About Section schöner formatieren */
-#about {
+
+.sidebar-top {
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 80px 20px;
-  background: rgba(35, 39, 42, 0.8); /* leichtes dunkles Overlay */
-  border-radius: 15px;
-  margin: 50px auto;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-icon:hover {
+  color: var(--accent);
+}
+
+.sidebar-nav a {
+  display: block;
+  padding: 0.8rem 1rem;
+  color: var(--text-light);
+  font-weight: 500;
+  border-radius: 6px;
+  transition: 0.3s;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-nav a:hover {
+  background: var(--primary-dark);
+  color: #fff;
+}
+
+.sidebar-nav a.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.discord-cta {
+  background: var(--accent);
+  color: #fff;
+  font-weight: bold;
+}
+
+.sidebar-footer {
+  text-align: center;
+  color: #777;
+  font-size: 0.85rem;
+  margin-top: auto;
+}
+
+/* ================================
+   📄 Main Area
+=================================== */
+.main {
+  margin-left: 260px;
+  width: calc(100% - 260px);
+  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s ease;
+}
+
+.topbar {
+  background: #1c1f2b;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.topbar-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  padding: 0.6rem 1.3rem;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn-secondary {
+  background: #2e3245;
+  color: #fff;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 500;
+  display: inline-block;
+  margin-top: 0.5rem;
+  transition: 0.3s;
+}
+.btn-secondary:hover {
+  background: #3a3f57;
+}
+
+.btn-discord {
+  background: var(--accent);
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 0.5rem;
+  transition: 0.3s;
+}
+.btn-discord:hover {
+  background: #5c6bc0;
+}
+
+.section {
+  padding: 3rem 2rem;
   max-width: 1000px;
+  margin: 0 auto;
 }
 
-.about-container {
+/* ================================
+   🪜 Schritt-für-Schritt Boxen
+=================================== */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.step {
+  background: #1a1d2b;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px var(--shadow);
+  transition: transform 0.3s;
+}
+.step:hover {
+  transform: translateY(-3px);
+}
+.step h3 {
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+
+/* ================================
+   📢 Call-to-Action Box
+=================================== */
+.cta-box {
+  margin-top: 3rem;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  padding: 2rem;
+  border-radius: 12px;
   text-align: center;
+  color: #fff;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
 }
-
-#about h2 {
+.cta-box h2 {
+  margin-bottom: 0.5rem;
   font-size: 2rem;
-  margin-bottom: 20px;
-  color: #7289DA;
-  text-shadow: 0 0 5px #5865F2;
 }
-
-#about p {
+.cta-box p {
+  margin-bottom: 1.5rem;
   font-size: 1.1rem;
-  color: #ddd;
-  line-height: 1.8;
 }
 
-/* Footer */
-footer {
-  background: #111;
-  padding: 20px;
-  text-align: center;
-  font-size: 0.9rem;
-  margin-top: 50px;
+/* ================================
+   📱 Responsive Anpassungen
+=================================== */
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    left: -260px;
+    top: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .main {
+    margin-left: 0;
+    width: 100%;
+  }
+  .topbar {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 2rem 1rem;
+  }
+  .cta-box h2 {
+    font-size: 1.6rem;
+  }
+  .cta-box p {
+    font-size: 1rem;
+  }
 }
