@@ -19,382 +19,292 @@
       --card-bg: #1a1d2b;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: var(--background);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    a {
-      color: var(--primary);
-      text-decoration: none;
-      transition: 0.3s;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Roboto', sans-serif; background: var(--background); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+    a { color: var(--primary); text-decoration: none; transition: 0.3s; }
     a:hover { color: var(--accent); }
-
     h1, h2, h3 { font-weight: 700; margin-bottom: 0.7rem; }
     p { color: var(--text-light); line-height: 1.6; margin-bottom: 1rem; }
 
-    /* Layout */
     .app { display: flex; min-height: 100vh; }
-
-    .sidebar {
-      width: 260px;
-      background: var(--sidebar-bg);
-      padding: 1.5rem 1rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      transition: transform 0.3s ease;
-      z-index: 1000;
-    }
-
+    .sidebar { width: 260px; background: var(--sidebar-bg); padding: 1.5rem 1rem; display: flex; flex-direction: column; justify-content: space-between; position: fixed; top: 0; bottom: 0; left: 0; transition: transform 0.3s ease; z-index: 1000; }
     .sidebar-logo { width: 90px; margin: 0 auto 1rem; }
-
-    .sidebar-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 2rem;
-    }
-
-    .btn-icon {
-      background: none;
-      border: none;
-      color: var(--text);
-      font-size: 1.8rem;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+    .sidebar-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
+    .btn-icon { background: none; border: none; color: var(--text); font-size: 1.8rem; cursor: pointer; transition: 0.2s; }
     .btn-icon:hover { color: var(--accent); }
-
-    .sidebar-nav a {
-      display: block;
-      padding: 0.8rem 1rem;
-      color: var(--text-light);
-      font-weight: 500;
-      border-radius: 6px;
-      transition: 0.3s;
-      margin-bottom: 0.5rem;
-    }
-
+    .sidebar-nav a { display: block; padding: 0.8rem 1rem; color: var(--text-light); font-weight: 500; border-radius: 6px; transition: 0.3s; margin-bottom: 0.5rem; }
     .sidebar-nav a:hover { background: var(--primary-dark); color: #fff; }
     .sidebar-nav a.active { background: var(--primary); color: #fff; }
     .discord-cta { background: var(--accent); color: #fff; font-weight: bold; }
+    .sidebar-footer { text-align: center; color: #777; font-size: 0.85rem; margin-top: auto; }
 
-    .sidebar-footer {
-      text-align: center;
-      color: #777;
-      font-size: 0.85rem;
-      margin-top: auto;
-    }
-
-    /* Main */
-    .main {
-      margin-left: 260px;
-      width: calc(100% - 260px);
-      display: flex;
-      flex-direction: column;
-      transition: margin-left 0.3s ease;
-    }
-
-    .topbar {
-      background: #1c1f2b;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      box-shadow: 0 2px 8px var(--shadow);
-    }
-
+    .main { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; transition: margin-left 0.3s ease; }
+    .topbar { background: #1c1f2b; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 8px var(--shadow); }
     .topbar-title { font-size: 1.3rem; font-weight: bold; }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
-      padding: 0.6rem 1.3rem;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: 0.3s;
-    }
+    .btn-primary { background: var(--primary); color: #fff; padding: 0.6rem 1.3rem; border-radius: 8px; font-weight: bold; transition: 0.3s; }
     .btn-primary:hover { background: var(--primary-dark); }
 
-    /* Section */
-    .section {
-      padding: 4rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    .section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section h1 { font-size: 2.4rem; margin-bottom: 2rem; text-align: center; }
 
-    .section h1 {
-      font-size: 2.4rem;
-      margin-bottom: 2rem;
-      text-align: center;
-    }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .card { background: var(--card-bg); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px var(--shadow); border-left: 5px solid var(--accent); cursor: pointer; transition: 0.3s ease; }
+    .card:hover { transform: translateY(-6px); border-left-color: var(--primary); box-shadow: 0 8px 20px var(--shadow); }
+    .card h3 { font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff; }
+    .card p { color: var(--text-light); }
 
-    /* Grid */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
+    .footer { text-align: center; padding: 1.5rem; background: #151823; color: #777; font-size: 0.9rem; }
 
-    .card {
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px var(--shadow);
-      border-left: 5px solid var(--accent);
-      transition: 0.3s ease;
-    }
+    @media (max-width: 900px) { .sidebar { transform: translateX(-100%); position: fixed; left: 0; } .sidebar.open { transform: translateX(0); } .main { margin-left: 0; width: 100%; } }
+    @media (max-width: 600px) { .section { padding: 2.5rem 1rem; } .section h1 { font-size: 2rem; } .card h3 { font-size: 1.6rem; } }
 
-    .card:hover {
-      transform: translateY(-6px);
-      border-left-color: var(--primary);
-      box-shadow: 0 8px 20px var(--shadow);
-    }
-
-    .card h3 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-      color: #fff;
-    }
-
-    .card ul {
-      margin-top: 0.8rem;
-      padding-left: 1.2rem;
-      list-style: disc;
-      color: var(--text-light);
-      font-size: 0.95rem;
-    }
-
-    /* Footer */
-    .footer {
-      text-align: center;
-      padding: 1.5rem;
-      background: #151823;
-      color: #777;
-      font-size: 0.9rem;
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .sidebar {
-        transform: translateX(-100%);
-        position: fixed;
-        left: 0;
-      }
-      .sidebar.open { transform: translateX(0); }
-      .main {
-        margin-left: 0;
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .section { padding: 2.5rem 1rem; }
-      .section h1 { font-size: 2rem; }
-      .card h3 { font-size: 1.6rem; }
-    }
+    /* Modal Styling */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background: rgba(0,0,0,0.7); }
+    .modal-content { background: var(--card-bg); margin: 10% auto; padding: 2rem; border-radius: 12px; max-width: 600px; color: var(--text); box-shadow: 0 8px 20px var(--shadow); }
+    .close { float: right; font-size: 1.8rem; font-weight: bold; cursor: pointer; color: var(--accent); }
+    .close:hover { color: var(--primary); }
   </style>
 </head>
 <body>
-  <div class="app">
-    <aside id="sidebar" class="sidebar">
-      <div class="sidebar-top">
-        <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
-        <button id="closeSidebar" class="btn-icon" title="Schließen">&times;</button>
+<div class="app">
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-top">
+      <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
+      <button id="closeSidebar" class="btn-icon" title="Schließen">&times;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html">Start</a>
+      <a href="about.html">Über uns</a>
+      <a href="factions.html" class="active">Fraktionen</a>
+      <a href="rules.html">Regelwerk</a>
+      <a href="events.html">Events</a>
+      <a href="team.html">Team</a>
+      <a href="join.html" class="discord-cta">Beitreten</a>
+    </nav>
+    <div class="sidebar-footer"><small>&copy; 2025 NRW RP DE</small></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button id="toggleSidebar" class="btn-icon">&#9776;</button>
+      <div class="topbar-title">Fraktionen</div>
+      <a href="join.html" class="btn-primary">Beitreten</a>
+    </header>
+
+    <section class="section">
+      <h1>Fraktionen & Rollen</h1>
+      <div class="grid-2">
+        <div class="card" data-fraktion="polizei"><h3>🚓 Polizeipräsidium NRW</h3><p>Klicke für Details</p></div>
+        <div class="card" data-fraktion="adac"><h3>🚗 ADAC NRW</h3><p>Klicke für Details</p></div>
+        <div class="card" data-fraktion="strassen"><h3>🛣️ Straßen NRW</h3><p>Klicke für Details</p></div>
+        <div class="card" data-fraktion="bundeswehr"><h3>🎖️ Bundeswehr</h3><p>Klicke für Details</p></div>
+        <div class="card" data-fraktion="ninjago"><h3>🥷 Ninjago</h3><p>Klicke für Details</p></div>
+        <div class="card" data-fraktion="finanzamt"><h3>💰 Finanzamt NRW RP DE</h3><p>Klicke für Details</p></div>
+        <div class="card" data-fraktion="fluxbus"><h3>🚌 FluXbus</h3><p>Klicke für Details</p></div>
+        <div class="card" data-fraktion="usmarshal"><h3>👮‍🕵️ US Marshal</h3><p>Klicke für Details</p></div>
+        <div class="card" data-fraktion="bluelights"><h3>🎬 Blue Lights Films</h3><p>Klicke für Details</p></div>
+        <div class="card" data-fraktion="feuerwehr"><h3>🔥 Feuerwehr NRW</h3><p>Klicke für Details</p></div>
+        <div class="card" data-fraktion="rettungsdienst"><h3>🚑 Rettungsdienst NRW</h3><p>Klicke für Details</p></div>
+        <div class="card" data-fraktion="werkfeuerwehr"><h3>🏭 Werkfeuerwehr NRW</h3><p>Klicke für Details</p></div>
+        <div class="card" data-fraktion="tuev"><h3>✅ Deutsche Tüv NRW Rp De</h3><p>Klicke für Details</p></div>
+        <div class="card" data-fraktion="nrwlive"><h3>🇩🇪 NRW LIVE</h3><p>Klicke für Details</p></div>
       </div>
-      <nav class="sidebar-nav">
-        <a href="index.html">Start</a>
-        <a href="about.html">Über uns</a>
-        <a href="factions.html" class="active">Fraktionen</a>
-        <a href="rules.html">Regelwerk</a>
-        <a href="events.html">Events</a>
-        <a href="team.html">Team</a>
-        <a href="join.html" class="discord-cta">Beitreten</a>
-      </nav>
-      <div class="sidebar-footer"><small>&copy; 2025 NRW RP DE</small></div>
-    </aside>
 
-    <main class="main">
-      <header class="topbar">
-        <button id="toggleSidebar" class="btn-icon">&#9776;</button>
-        <div class="topbar-title">Fraktionen</div>
-        <a href="join.html" class="btn-primary">Beitreten</a>
-      </header>
+      <!-- Modal -->
+      <div id="fraktionModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2 id="modal-title">Fraktionsname</h2>
+          <p id="modal-discord"><a href="#" target="_blank">Discord-Link</a></p>
+          <ul id="modal-info"></ul>
+        </div>
+      </div>
+    </section>
 
-      <section class="section">
-  <h1>Fraktionen & Rollen</h1>
-  <div class="grid-2">
-    <div class="card">
-      <h3>🚓 Polizeipräsidium NRW</h3>
-      <p>Discord: <a href="https://discord.gg/Yzq2hPnZdP" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Stv. Eigentümer | Sensei Wu</li>
-        <li>Developer: @Stv. Eigentümer | Dev | Lloyd</li>
-      </ul>
-    </div>
+    <footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
+  </main>
+</div>
 
-    <div class="card">
-      <h3>🚗 ADAC NRW</h3>
-      <p>Discord: <a href="https://discord.gg/Ax5jTqHaCy" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Stv. Eigentümer | Sensei Wu</li>
-        <li>Developer: @Stv. Eigentümer | Dev | Lloyd</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>🛣️ Straßen NRW</h3>
-      <p>Discord: <a href="https://discord.gg/EDfDTRQkBf" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Ulley</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>🎖️ Bundeswehr</h3>
-      <p>Discord: <a href="https://discord.gg/CEq4sU6b" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Stv. Eigentümer | Pegnitz</li>
-        <li>Developer: @Stv. Eigentümer | Dev | Yannis</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>🥷 Ninjago</h3>
-      <p>Discord: <a href="https://discord.gg/k7kV9DYQ" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Stv. Eigentümer | Sensei Wu</li>
-        <li>Developer: @Stv. Eigentümer | Dev | Lloyd</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>💰 Finanzamt NRW RP DE</h3>
-      <p>Discord: <a href="https://discord.gg/5zgzcEP5" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Head Mod | Kai🔥</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>🚌 FluXbus</h3>
-      <p>Discord: <a href="https://discord.gg/qE9bMg7eEs" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Supporter | Besitzer von Fl...</li>
-        <li>Developer: @Stv. Eigentümer | Dev | Lloyd</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>👮‍🕵️ US Marshal</h3>
-      <p>Discord: <a href="https://discord.gg/JEGmgHrs" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Stv. Eigentümer | Sensei Wu</li>
-        <li>Developer: @Stv. Eigentümer | Dev | Lloyd</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>🎬 Blue Lights Films</h3>
-      <p>Discord: <a href="https://discord.gg/d28KaPmdPW" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Head Mod | Colin</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>🔥 Feuerwehr NRW</h3>
-      <p>Discord: <a href="https://discord.gg/qBcXjjFCTX" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Admin | Spongebob</li>
-        <li>Developer: @Stv. Eigentümer | Dev | Lloyd</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>🚑 Rettungsdienst NRW</h3>
-      <p>Discord: <a href="https://discord.gg/JTnjAVJsBy" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Stv. Eigentümer | Dev | Lloyd</li>
-        <li>Developer: @Stv. Eigentümer | Dev | Lloyd</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>🏭 Werkfeuerwehr NRW</h3>
-      <p>Discord: <a href="https://discord.gg/FpJw6NKWHD" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Stv. Eigentümer | Dev | Lloyd</li>
-        <li>Developer: @Stv. Eigentümer | Dev | Yannis</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>✅ Deutsche Tüv NRW Rp De</h3>
-      <p>Discord: <a href="https://discord.gg/HPujZr98" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Admin | Zain❄🧊|Angelo</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>🇩🇪 NRW LIVE</h3>
-      <p>Discord: <a href="https://discord.gg/TzhGW692" target="_blank">Beitreten</a></p>
-      <ul>
-        <li>Ansprechpartner: @Conner I OG</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-
-      <footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
-    </main>
-  </div>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const sidebar = document.getElementById("sidebar");
-    const toggleSidebar = document.getElementById("toggleSidebar");
-    const closeSidebar = document.getElementById("closeSidebar");
+const fraktionen = {
+  polizei: {
+    title: "🚓 Polizeipräsidium NRW",
+    discord: "https://discord.gg/Yzq2hPnZdP",
+    info: [
+      "Ansprechpartner: @Stv. Eigentümer | Sensei Wu",
+      "Developer: @Stv. Eigentümer | Dev | Lloyd",
+      "Regeln: RP-Grundverständnis erforderlich, keine Cheats",
+      "Aufgaben: Streifen, Einsätze, Verkehrskontrollen, SEK-Einsätze",
+      "Ausrüstung: Funk, Dienstfahrzeuge"
+    ]
+  },
+  adac: {
+    title: "🚗 ADAC NRW",
+    discord: "https://discord.gg/Ax5jTqHaCy",
+    info: [
+      "Ansprechpartner: @Stv. Eigentümer | Sensei Wu",
+      "Developer: @Stv. Eigentümer | Dev | Lloyd",
+      "Regeln: Freundliches Verhalten, Hilfe im RP",
+      "Aufgaben: Pannenhilfe, Abschleppdienst",
+      "Ausrüstung: Abschleppfahrzeuge, Werkzeuge"
+    ]
+  },
+  strassen: {
+    title: "🛣️ Straßen NRW",
+    discord: "https://discord.gg/EDfDTRQkBf",
+    info: [
+      "Ansprechpartner: @Ulley",
+      "Regeln: Verkehrssicherheits-RP beachten",
+      "Aufgaben: Straßenkontrolle, Reparaturen",
+      "Ausrüstung: Werkzeuge, Fahrzeuge"
+    ]
+  },
+  bundeswehr: {
+    title: "🎖️ Bundeswehr",
+    discord: "https://discord.gg/CEq4sU6b",
+    info: [
+      "Ansprechpartner: @Stv. Eigentümer | Pegnitz",
+      "Developer: @Stv. Eigentümer | Dev | Yannis",
+      "Regeln: Militärisches RP einhalten",
+      "Aufgaben: Übungen, Einsätze, Training",
+      "Ausrüstung: Uniformen, Fahrzeuge, Waffen"
+    ]
+  },
+  ninjago: {
+    title: "🥷 Ninjago",
+    discord: "https://discord.gg/k7kV9DYQ",
+    info: [
+      "Ansprechpartner: @Stv. Eigentümer | Sensei Wu",
+      "Developer: @Stv. Eigentümer | Dev | Lloyd",
+      "Regeln: RP einhalten, friedliche Interaktionen",
+      "Aufgaben: Geheimmissionen, Schutzaufgaben",
+      "Ausrüstung: Waffen, Fahrzeuge"
+    ]
+  },
+  finanzamt: {
+    title: "💰 Finanzamt NRW RP DE",
+    discord: "https://discord.gg/5zgzcEP5",
+    info: [
+      "Ansprechpartner: @Head Mod | Kai🔥",
+      "Regeln: RP korrekt abwickeln",
+      "Aufgaben: Steuerkontrolle, Verwaltung",
+      "Ausrüstung: Akten, Computer"
+    ]
+  },
+  fluxbus: {
+    title: "🚌 FluXbus",
+    discord: "https://discord.gg/qE9bMg7eEs",
+    info: [
+      "Ansprechpartner: @Supporter | Besitzer von Fl...",
+      "Developer: @Stv. Eigentümer | Dev | Lloyd",
+      "Regeln: Freundliches RP",
+      "Aufgaben: Transport, Fahrdienste",
+      "Ausrüstung: Busse, Ticketsystem"
+    ]
+  },
+  usmarshal: {
+    title: "👮‍🕵️ US Marshal",
+    discord: "https://discord.gg/JEGmgHrs",
+    info: [
+      "Ansprechpartner: @Stv. Eigentümer | Sensei Wu",
+      "Developer: @Stv. Eigentümer | Dev | Lloyd",
+      "Regeln: Gesetzestreues RP",
+      "Aufgaben: Überwachung, Einsätze",
+      "Ausrüstung: Fahrzeuge, Waffen"
+    ]
+  },
+  bluelights: {
+    title: "🎬 Blue Lights Films",
+    discord: "https://discord.gg/d28KaPmdPW",
+    info: [
+      "Ansprechpartner: @Head Mod | Colin",
+      "Regeln: RP beachten, respektvoll",
+      "Aufgaben: Filmdreh, Produktion",
+      "Ausrüstung: Kameras, Technik"
+    ]
+  },
+  feuerwehr: {
+    title: "🔥 Feuerwehr NRW",
+    discord: "https://discord.gg/qBcXjjFCTX",
+    info: [
+      "Ansprechpartner: @Admin | Spongebob",
+      "Developer: @Stv. Eigentümer | Dev | Lloyd",
+      "Regeln: Sicherheit RP einhalten",
+      "Aufgaben: Brandbekämpfung, technische Hilfe",
+      "Ausrüstung: Löschfahrzeuge, Atemschutz"
+    ]
+  },
+  rettungsdienst: {
+    title: "🚑 Rettungsdienst NRW",
+    discord: "https://discord.gg/JTnjAVJsBy",
+    info: [
+      "Ansprechpartner: @Stv. Eigentümer | Dev | Lloyd",
+      "Developer: @Stv. Eigentümer | Dev | Lloyd",
+      "Regeln: Erste Hilfe RP einhalten",
+      "Aufgaben: Versorgung von Verwundeten, RTW-Einsätze",
+      "Ausrüstung: Rettungswagen, Sanitäter-Koffer"
+    ]
+  },
+  werkfeuerwehr: {
+    title: "🏭 Werkfeuerwehr NRW",
+    discord: "https://discord.gg/FpJw6NKWHD",
+    info: [
+      "Ansprechpartner: @Stv. Eigentümer | Dev | Lloyd",
+      "Developer: @Stv. Eigentümer | Dev | Yannis",
+      "Regeln: Brandschutz-RP beachten",
+      "Aufgaben: Werkschutz, Brandbekämpfung",
+      "Ausrüstung: Fahrzeuge, Löschmittel"
+    ]
+  },
+  tuev: {
+    title: "✅ Deutsche Tüv NRW Rp De",
+    discord: "https://discord.gg/HPujZr98",
+    info: [
+      "Ansprechpartner: @Admin | Zain❄🧊|Angelo",
+      "Regeln: Prüfungen korrekt durchführen",
+      "Aufgaben: TÜV-Kontrollen",
+      "Ausrüstung: Prüfgeräte, Fahrzeuge"
+    ]
+  },
+  nrwlive: {
+    title: "🇩🇪 NRW LIVE",
+    discord: "https://discord.gg/TzhGW692",
+    info: [
+      "Ansprechpartner: @Conner I OG",
+      "Regeln: RP beachten",
+      "Aufgaben: Streaming, Events",
+      "Ausrüstung: Kamera, Technik"
+    ]
+  }
+};
 
-    if(toggleSidebar) {
-      toggleSidebar.addEventListener("click", () => {
-        sidebar.classList.toggle("open");
-      });
-    }
+const modal = document.getElementById("fraktionModal");
+const modalTitle = document.getElementById("modal-title");
+const modalDiscord = document.getElementById("modal-discord");
+const modalInfo = document.getElementById("modal-info");
 
-    if(closeSidebar) {
-      closeSidebar.addEventListener("click", () => {
-        sidebar.classList.remove("open");
-      });
-    }
-
-    // Optional: automatisch Sidebar schließen, wenn ein Link geklickt wird (mobil)
-    document.querySelectorAll('.sidebar-nav a').forEach(link => {
-      link.addEventListener('click', () => {
-        sidebar.classList.remove('open');
-      });
-    });
+document.querySelectorAll(".card").forEach(card => {
+  card.addEventListener("click", () => {
+    const key = card.getAttribute("data-fraktion");
+    const f = fraktionen[key];
+    modalTitle.textContent = f.title;
+    modalDiscord.innerHTML = `<a href="${f.discord}" target="_blank">Discord-Link</a>`;
+    modalInfo.innerHTML = f.info.map(i => `<li>${i}</li>`).join("");
+    modal.style.display = "block";
   });
-</script>
+});
 
+document.querySelector(".close").addEventListener("click", () => modal.style.display = "none");
+window.addEventListener("click", e => { if(e.target == modal) modal.style.display = "none"; });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.getElementById("sidebar");
+  const toggleSidebar = document.getElementById("toggleSidebar");
+  const closeSidebar = document.getElementById("closeSidebar");
+  if(toggleSidebar) toggleSidebar.addEventListener("click", () => sidebar.classList.toggle("open"));
+  if(closeSidebar) closeSidebar.addEventListener("click", () => sidebar.classList.remove("open"));
+  document.querySelectorAll('.sidebar-nav a').forEach(link => link.addEventListener('click', () => sidebar.classList.remove('open')));
+});
+</script>
 </body>
 </html>
