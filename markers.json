@@ -2,7 +2,7 @@
   {
     "name": "Polizeiwache Nord",
     "type": "polizei",
-    "coords": [300, 500],
+    "coords": [4952, 2878],
     "beschreibung": "Hauptwache für Streifendienst (Nord).",
     "bild": "bilder/polizei.png",
     "link": "https://discord.gg/Yzq2hPnZdP"
