@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Events – NRW RP DE</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-top">
+        <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
+        <button id="closeSidebar" class="btn-icon" title="Schließen">&times;</button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html">Start</a>
+        <a href="about.html">Über uns</a>
+        <a href="factions.html">Fraktionen</a>
+        <a href="rules.html">Regelwerk</a>
+        <a href="events.html" class="active">Events</a>
+        <a href="team.html">Team</a>
+        <a href="join.html" class="discord-cta">Beitreten</a>
+      </nav>
+      <div class="sidebar-footer"><small>&copy; 2025</small></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button id="toggleSidebar" class="btn-icon">&#9776;</button>
+        <div class="topbar-title">Events</div>
+        <a href="join.html" class="btn-primary">Teilnehmen</a>
+      </header>
+
+      <section class="section">
+        <h1>Kommende Events</h1>
+        <div class="event-list">
+          <article class="event">
+            <h3>Großes Silvester-Event</h3>
+            <p>Datum: 31.12.2025 — besondere Herausforderungen & Belohnungen.</p>
+            <div class="countdown" data-date="2025-12-31T18:00:00"></div>
+          </article>
+
+          <article class="event">
+            <h3>Ranger-Patrouille Special</h3>
+            <p>Datum: Wird noch angekündigt — regelmäßige Einsätze jeden Monat.</p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
