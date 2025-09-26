@@ -4,11 +4,184 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Über uns – NRW RP DE</title>
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #5865F2;
+      --primary-dark: #4752C4;
+      --background: #0f111a;
+      --sidebar-bg: #151823;
+      --text: #f0f0f0;
+      --text-light: #cccccc;
+      --accent: #7289da;
+      --shadow: rgba(0,0,0,0.4);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    a:hover { color: var(--accent); }
+
+    h1, h2, h3 { font-weight: 700; margin-bottom: 0.7rem; }
+    p { color: var(--text-light); line-height: 1.6; margin-bottom: 1.2rem; }
+    ul { margin: 1rem 0; padding-left: 1.5rem; }
+    li { margin-bottom: 0.6rem; }
+
+    /* Layout */
+    .app { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 260px;
+      background: var(--sidebar-bg);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
+      top: 0; bottom: 0; left: 0;
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar-logo { width: 90px; margin: 0 auto 1rem; }
+
+    .sidebar-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .btn-icon {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-icon:hover { color: var(--accent); }
+
+    .sidebar-nav a {
+      display: block;
+      padding: 0.8rem 1rem;
+      color: var(--text-light);
+      font-weight: 500;
+      border-radius: 6px;
+      transition: 0.3s;
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-nav a:hover { background: var(--primary-dark); color: #fff; }
+    .sidebar-nav a.active { background: var(--primary); color: #fff; }
+    .discord-cta { background: var(--accent); color: #fff; font-weight: bold; }
+
+    .sidebar-footer {
+      text-align: center;
+      color: #777;
+      font-size: 0.85rem;
+      margin-top: auto;
+    }
+
+    /* Main Content */
+    .main {
+      margin-left: 260px;
+      width: calc(100% - 260px);
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.3s ease;
+    }
+
+    .topbar {
+      background: #1c1f2b;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .topbar-title { font-size: 1.3rem; font-weight: bold; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.6rem 1.3rem;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+
+    /* Section */
+    .section {
+      padding: 4rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section h1 {
+      font-size: 2.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section h2 {
+      font-size: 1.8rem;
+      margin-top: 2.5rem;
+      margin-bottom: 0.8rem;
+      color: var(--accent);
+    }
+
+    .section strong { color: #fff; }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #151823;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        left: 0;
+      }
+      .sidebar.open { transform: translateX(0); }
+      .main {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .section { padding: 2.5rem 1rem; }
+      .section h1 { font-size: 2rem; }
+    }
+  </style>
 </head>
 <body>
   <div class="app">
-    <!-- Sidebar (gleiche Struktur wie index.html) -->
+    <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
       <div class="sidebar-top">
         <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
@@ -37,18 +210,18 @@
 
       <section class="section">
         <h1>Über NRW RP DE</h1>
-        <p>NRW RP DE ist eine Community, die sich dem <strong>Emergency Hamburg</strong> Roleplay auf Roblox widmet. Wir legen wert auf realistisches RP, klare Regeln und eine freundliche, unterstützende Community. Egal ob Anfänger oder Erfahrener — bei uns findest du Mitspieler und strukturierte Einsätze.</p>
+        <p><strong>NRW RP DE</strong> ist eine Community, die sich dem <strong>Emergency Hamburg</strong> Roleplay auf Roblox widmet. Wir legen großen Wert auf realistisches RP, klare Regeln und eine freundliche, unterstützende Community. Egal ob Anfänger oder Erfahrener – bei uns findest du Mitspieler, spannende Einsätze und ein strukturiertes Spielerlebnis.</p>
 
         <h2>Unsere Mission</h2>
-        <p>Realitätstreues, faires Rollenspiel zu fördern und eine langfristige, aktive Community aufzubauen.</p>
+        <p>Wir wollen ein authentisches, faires und unterhaltsames Roleplay-Erlebnis schaffen, bei dem Zusammenarbeit, Professionalität und Spaß im Vordergrund stehen. Unser Ziel ist es, eine langfristige, aktive Community aufzubauen, die gemeinsam wächst.</p>
 
         <h2>Was wir bieten</h2>
         <ul>
-          <li>Strukturierte Fraktionen (Polizei, Rettungsdienst, Feuerwehr, Zivil)</li>
-          <li>Events mit Belohnungen</li>
-          <li>Einsteiger-Guides für Roblox & Roleplay</li>
+          <li>✅ Strukturierte Fraktionen (Polizei, Rettungsdienst, Feuerwehr, Zivil)</li>
+          <li>🏆 Regelmäßige Events & spannende RP-Szenarien</li>
+          <li>📘 Einsteiger-Guides für Roblox & Roleplay</li>
+          <li>🤝 Aktive Unterstützung durch erfahrene Spieler und Moderatoren</li>
         </ul>
-
       </section>
 
       <footer class="footer">
@@ -57,6 +230,11 @@
     </main>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // Sidebar Script
+    const sidebar = document.getElementById('sidebar');
+    document.getElementById('toggleSidebar').addEventListener('click', () => sidebar.classList.toggle('open'));
+    document.getElementById('closeSidebar').addEventListener('click', () => sidebar.classList.remove('open'));
+  </script>
 </body>
 </html>
