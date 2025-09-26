@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Interaktive Stadtkarte – Emergency Hamburg (Demo)</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+    html,body { height:100%; margin:0; font-family: Arial, Helvetica, sans-serif; background:#0f111a; color:#eee; }
+    .wrap { display:flex; height:100vh; gap:12px; padding:12px; box-sizing:border-box; }
+    #panel {
+      width:320px;
+      min-width:220px;
+      background:#151823;
+      border-radius:10px;
+      padding:16px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.6);
+      overflow:auto;
+    }
+    #map { flex:1; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.6); }
+    h2 { margin-top:0; font-size:18px; color:#fff; }
+    label { display:flex; align-items:center; gap:8px; margin:6px 0; color:#d7d9dd; }
+    input[type="search"] { width:100%; padding:8px; border-radius:6px; border:1px solid #2a2d36; background:#0f1119; color:#fff; margin-bottom:8px; }
+    .category { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+    .legend-item { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+    .dot { width:14px; height:14px; border-radius:50%; display:inline-block; margin-right:6px; }
+    .footer { font-size:12px; color:#8c8f96; margin-top:12px; }
+    .btn { background:#5865F2; color:white; border:none; padding:8px 10px; border-radius:6px; cursor:pointer; margin-top:8px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div id="panel">
+      <h2>Stadtkarte — Emergency Hamburg</h2>
+      <input id="search" type="search" placeholder="Ort suchen (Name)..." />
+
+      <div style="margin:8px 0;">
+        <strong>Filter nach Kategorie</strong>
+        <div class="category" id="filters"></div>
+        <button id="resetBtn" class="btn">Alle anzeigen</button>
+      </div>
+
+      <div style="margin-top:12px;">
+        <strong>Legende</strong>
+        <div id="legend"></div>
+      </div>
+
+      <div class="footer">
+        Marker werden aus <code>markers.json</code> geladen. Koordinaten sind im Format [y, x] (Pixel auf dem Bild).
+        <br><br>Hinweis: Speichere die Karte als <code>bilder/hamburg_map.png</code>.
+      </div>
+    </div>
+
+    <div id="map"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+  // === Konfiguration ===
+  // Dateipfad zur Karte (ändere hier, falls anders)
+  const imageUrl = 'bilder/hamburg_map.png';
+
+  // Bildgröße (in Pixel) — passend zur hochgeladenen Karte
+  const imageWidth = 2047;   // px
+  const imageHeight = 1165;  // px
+
+  // Farben pro Kategorie (du kannst mehr Kategorien hinzufügen)
+  const categoryColors = {
+    "polizei": "#1f8ef1",
+    "feuerwehr": "#f44336",
+    "rettungsdienst": "#ff9800",
+    "krankenhaus": "#9c27b0",
+    "adac": "#ffeb3b",
+    "werkfeuerwehr": "#795548",
+    "tuev": "#4caf50",
+    "depot": "#03a9f4",
+    "spawn": "#9e9e9e",
+    "hafen": "#3f51b5",
+    "sonstiges": "#bdbdbd"
+  };
+
+  // === Leaflet Karte mit ImageOverlay (CRS.Simple) ===
+  const map = L.map('map', {
+    crs: L.CRS.Simple,
+    minZoom: -2,
+    maxZoom: 3,
+    zoomControl: true
+  });
+
+  const bounds = [[0,0], [imageHeight, imageWidth]];
+  L.imageOverlay(imageUrl, bounds).addTo(map);
+  map.fitBounds(bounds);
+
+  // Layer- und Markerverwaltung
+  const markersLayer = L.layerGroup().addTo(map);
+  let allMarkers = []; // Liste aller Marker-Objekte mit Metadaten
+  let categoriesSet = new Set();
+
+  // Hilfsfunktion: Erzeuge ein farbiges CircleMarker-Icon
+  function makeMarker(latlng, category) {
+    const color = categoryColors[category] || categoryColors["sonstiges"];
+    return L.circleMarker(latlng, {
+      radius: 8,
+      fillColor: color,
+      color: '#000000',
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.95
+    });
+  }
+
+  // Lade markers.json
+  fetch('markers.json')
+    .then(r => {
+      if(!r.ok) throw new Error('markers.json nicht gefunden (404). Stelle sicher, dass die Datei im gleichen Ordner liegt).');
+      return r.json();
+    })
+    .then(data => {
+      data.forEach(item => {
+        const latlng = [ item.coords[0], item.coords[1] ]; // [y,x]
+        const marker = makeMarker(latlng, item.type);
+        const popupHtml = `
+          <strong>${item.name}</strong><br>
+          <em>${item.type}</em><br>
+          ${item.beschreibung ? `<p style="margin:6px 0;">${item.beschreibung}</p>` : ''}
+          ${item.link ? `<a href="${item.link}" target="_blank">Discord / Link</a><br>` : ''}
+          ${item.bild ? `<img src="${item.bild}" style="width:150px;margin-top:6px;border-radius:6px;">` : ''}
+        `;
+        marker.bindPopup(popupHtml);
+        marker.item = item; // Referenz auf Metadaten
+        marker.addTo(markersLayer);
+        allMarkers.push(marker);
+        categoriesSet.add(item.type || 'sonstiges');
+      });
+
+      buildFilters(); // Checkboxen & Legende aufbauen
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Fehler beim Laden von markers.json: ' + err.message);
+    });
+
+  // === Filter UI ===
+  const filtersEl = document.getElementById('filters');
+  const legendEl = document.getElementById('legend');
+  const resetBtn = document.getElementById('resetBtn');
+
+  function buildFilters() {
+    const categories = Array.from(categoriesSet).sort();
+    filtersEl.innerHTML = '';
+    legendEl.innerHTML = '';
+    categories.forEach(cat => {
+      const id = `chk_${cat}`;
+      const wrapper = document.createElement('label');
+      wrapper.style.cursor = 'pointer';
+      wrapper.innerHTML = `<input type="checkbox" id="${id}" data-cat="${cat}" checked> <span style="text-transform:capitalize">${cat}</span>`;
+      filtersEl.appendChild(wrapper);
+
+      // Legende
+      const leg = document.createElement('div');
+      leg.className = 'legend-item';
+      const dot = document.createElement('span');
+      dot.className = 'dot';
+      dot.style.background = categoryColors[cat] || categoryColors['sonstiges'];
+      leg.appendChild(dot);
+      leg.appendChild(document.createTextNode(cat));
+      legendEl.appendChild(leg);
+
+      // Event
+      document.getElementById(id).addEventListener('change', (e) => {
+        toggleCategory(cat, e.target.checked);
+      });
+    });
+  }
+
+  function toggleCategory(cat, visible) {
+    allMarkers.forEach(m => {
+      if((m.item.type || 'sonstiges') === cat) {
+        if(visible) {
+          markersLayer.addLayer(m);
+        } else {
+          markersLayer.removeLayer(m);
+        }
+      }
+    });
+  }
+
+  resetBtn.addEventListener('click', () => {
+    document.querySelectorAll('#filters input[type=checkbox]').forEach(chk => { chk.checked = true; });
+    // alle anzeigen
+    allMarkers.forEach(m => { if(!map.hasLayer(m)) markersLayer.addLayer(m); });
+  });
+
+  // === Suche ===
+  const searchInput = document.getElementById('search');
+  searchInput.addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    if(q === '') {
+      // zeige alle (respektiere Checkboxen)
+      document.querySelectorAll('#filters input[type=checkbox]').forEach(chk => {
+        const cat = chk.dataset.cat;
+        const show = chk.checked;
+        toggleCategory(cat, show);
+      });
+      return;
+    }
+    // Suche nach name: nur diese Marker einblenden
+    allMarkers.forEach(m => {
+      const name = (m.item.name || '').toLowerCase();
+      const match = name.includes(q);
+      if(match) {
+        markersLayer.addLayer(m);
+        m.openPopup();
+        map.panTo(m.getLatLng());
+      } else {
+        markersLayer.removeLayer(m);
+      }
+    });
+  });
+
+  // Klein: Zoom zu Marker beim Klick auf Popup-Link (Popup schon macht das)
+  </script>
+</body>
+</html>
