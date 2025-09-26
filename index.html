@@ -1,174 +1,95 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NRW RP DE</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NRW RP DE – Emergency Hamburg (Start)</title>
+  <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div class="app">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-top">
+        <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
+        <button id="closeSidebar" class="btn-icon" title="Schließen">&times;</button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="active">Start</a>
+        <a href="about.html">Über uns</a>
+        <a href="factions.html">Fraktionen</a>
+        <a href="rules.html">Regelwerk</a>
+        <a href="events.html">Events</a>
+        <a href="team.html">Team</a>
+        <a href="join.html" class="discord-cta">Beitreten</a>
+      </nav>
+      <div class="sidebar-footer">
+        <small>&copy; 2025 NRW RP DE</small>
+      </div>
+    </aside>
 
-  <!-- Navigation -->
-  <nav>
-    <a href="#about">Über uns</a>
-    <a href="#features">Features</a>
-    <a href="#team">Team</a>
-    <a href="#faq">FAQ</a>
-    <a href="#discord">Jetzt beitreten!</a>
-  </nav>
+    <main class="main">
+      <header class="topbar">
+        <button id="toggleSidebar" class="btn-icon">&#9776;</button>
+        <div class="topbar-title">NRW RP DE — Emergency Hamburg</div>
+        <a href="https://discord.gg/rGXZg3XV5X" class="btn-primary">Jetzt beitreten</a>
+      </header>
 
-  <header>
-  <canvas id="bgCanvas"></canvas>
-  <div class="logo">
-    <img src="bilder/logo.png" alt="Server Logo">
-    <h1>Willkommen bei NRW RP DE</h1>
-    <p>Tritt einem der besten Emergency Hamburg Roleplay Server bei.</p>
-    <a href="https://discord.gg/rGXZg3XV5X" class="btn-hero">Jetzt beitreten</a>
+      <section class="hero">
+        <canvas id="bgCanvas"></canvas>
+        <div class="hero-inner">
+          <img src="bilder/logo.png" alt="Logo" class="hero-logo">
+          <h1>Willkommen bei NRW RP DE</h1>
+          <p>Realistisches Emergency Hamburg Roleplay auf Roblox — aktiv, freundlich & strukturiert.</p>
+          <div class="hero-actions">
+            <a href="join.html" class="btn-hero">Wie beitreten</a>
+            <a href="events.html" class="btn-ghost">Nächstes Event</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section overview">
+        <h2>Kurzüberblick</h2>
+        <div class="grid-3">
+          <div class="card">
+            <h3>🚓 Polizei</h3>
+            <p>Organisiert Einsätze, Streifen & Spezialeinheiten.</p>
+          </div>
+          <div class="card">
+            <h3>🚑 Rettungsdienst</h3>
+            <p>Fachgerechte medizinische Versorgung und Rettungsdienstarbeit.</p>
+          </div>
+          <div class="card">
+            <h3>🔥 Feuerwehr</h3>
+            <p>Brandbekämpfung, technische Hilfeleistung & coole Einsätze.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section highlight">
+        <h2>Warum zu uns?</h2>
+        <ul>
+          <li>Klare Regeln & Roleplay-Leitfaden</li>
+          <li>Einsteigerfreundliche Guides für Roblox & Server</li>
+          <li>Regelmäßige Community-Events</li>
+        </ul>
+      </section>
+
+      <section class="section small">
+        <h3>Schnelllinks</h3>
+        <div class="links-row">
+          <a href="rules.html" class="link-card">Regeln lesen</a>
+          <a href="factions.html" class="link-card">Fraktionen entdecken</a>
+          <a href="team.html" class="link-card">Team & Ansprechpartner</a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <small>NRW RP DE · Emergency Hamburg Roleplay · &copy; 2025</small>
+      </footer>
+    </main>
   </div>
-</header>
 
-
-<section id="about">
-  <div class="about-container">
-    <h2>Über unseren Server</h2>
-    <p>
-      Unser Roleplay-Server bietet dir eine detailreiche Welt mit eigenen Regeln und einer aktiven Community. 
-      Egal ob Anfänger oder erfahrener Rollenspieler – bei uns ist jeder willkommen!
-    </p>
-  </div>
-</section>
-
-
-  <!-- Features -->
-  <section id="features">
-    <h2>Server-Features</h2>
-    <div class="features">
-      <div class="feature">
-        <h3>🌍 Eigene RP-Welt</h3>
-        <p>Eine Umgebung mit vielen Fraktionen.</p>
-      </div>
-      <div class="feature">
-        <h3>👥 Aktive Community</h3>
-        <p>Freundliche Spieler und engagierte Moderatoren helfen dir jederzeit.</p>
-      </div>
-      <div class="feature">
-        <h3>⚔️ Events</h3>
-        <p>Regelmäßige RP-Events mit Rennen oder anderen Veranstaltungen.</p>
-      </div>
-    </div>
-  </section>
-  
-<!-- Invite Banner -->
-<section id="invite-banner">
-  <div class="invite-content">
-    <h2>🎉 Werde Teil unserer Roleplay-Community!</h2>
-    <p>Events und eine starke Community warten auf dich.</p>
-    <a href="https://discord.gg/rwy6FjKWSg" class="invite-btn">Jetzt beitreten</a>
-  </div>
-</section>
-
-  <!-- Team -->
-  <section id="team">
-    <h2>Unser Team</h2>
-    <div class="team">
-      <div class="member">
-        <img src="https://via.placeholder.com/100" alt="Admin">
-        <h3>AdminName</h3>
-        <p>Serverleitung</p>
-      </div>
-      <div class="member">
-        <img src="https://via.placeholder.com/100" alt="Moderator">
-        <h3>ModName</h3>
-        <p>Moderator</p>
-      </div>
-      <div class="member">
-        <img src="https://via.placeholder.com/100" alt="Supporter">
-        <h3>SupportName</h3>
-        <p>Support</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq">
-    <h2>FAQ</h2>
-    <div class="faq-item">
-      <h3>Wie trete ich dem Server bei?</h3>
-      <p>Einfach oben auf den „Jetzt beitreten“-Button klicken oder unten das Widget nutzen.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Brauche ich Vorerfahrung im RP?</h3>
-      <p>Nein! Unser Team hilft dir gerne beim Einstieg.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Gibt es feste Regeln?</h3>
-      <p>Ja, unsere Serverregeln findest du nach dem Beitritt im entsprechenden Channel.</p>
-    </div>
-  </section>
-
-  <!-- Discord -->
-  <section id="discord">
-    <h2>Unser Discord</h2>
-    <iframe src="https://discord.com/widget?id=1343137566068838480&theme=dark" allowtransparency="true"></iframe>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    &copy; 2025 NRW RP DE
-  </footer>
-
-  <!-- Partikel-Skript -->
-  <script>
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.radius = Math.random() * 2 + 1;
-        this.dx = (Math.random() - 0.5) * 0.5;
-        this.dy = (Math.random() - 0.5) * 0.5;
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        ctx.fillStyle = '#7289DA';
-        ctx.fill();
-      }
-      update() {
-        this.x += this.dx;
-        this.y += this.dy;
-        if (this.x < 0 || this.x > canvas.width) this.dx = -this.dx;
-        if (this.y < 0 || this.y > canvas.height) this.dy = -this.dy;
-        this.draw();
-      }
-    }
-
-    function initParticles() {
-      particles = [];
-      for (let i = 0; i < 120; i++) {
-        particles.push(new Particle());
-      }
-    }
-
-    function animate() {
-      requestAnimationFrame(animate);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => p.update());
-    }
-
-    initParticles();
-    animate();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
