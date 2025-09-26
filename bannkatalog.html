@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bannkatalog – NRW RP DE</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #5865F2;
+  --primary-dark: #4752C4;
+  --background: #0f111a;
+  --sidebar-bg: #151823;
+  --text: #f0f0f0;
+  --text-light: #cccccc;
+  --accent: #7289da;
+  --shadow: rgba(0,0,0,0.4);
+  --warning: #e74c3c;
+  --note: #ffb74d;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: var(--background);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+a { color: var(--primary); text-decoration:none; }
+a:hover { color: var(--accent); }
+
+h1,h2,h3 { font-weight:700; margin-bottom:0.7rem; }
+p { color: var(--text-light); line-height:1.6; margin-bottom:1rem; }
+
+.app { display:flex; min-height:100vh; }
+
+.sidebar {
+  width: 260px;
+  background: var(--sidebar-bg);
+  padding: 1.5rem 1rem;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top:0; bottom:0; left:0;
+  transition: transform 0.3s ease;
+  z-index:1000;
+}
+
+.sidebar-logo { width:90px; margin:0 auto 1rem; }
+.sidebar-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; }
+.btn-icon { background:none; border:none; color: var(--text); font-size:1.8rem; cursor:pointer; transition:0.2s; }
+.btn-icon:hover { color: var(--accent); }
+
+.sidebar-nav a { display:block; padding:0.8rem 1rem; color: var(--text-light); font-weight:500; border-radius:6px; transition:0.3s; margin-bottom:0.5rem; }
+.sidebar-nav a:hover { background: var(--primary-dark); color:#fff; }
+.sidebar-nav a.active { background: var(--primary); color:#fff; }
+.discord-cta { background: var(--accent); color:#fff; font-weight:bold; }
+
+.sidebar-footer { text-align:center; color:#777; font-size:0.85rem; margin-top:auto; }
+
+.main { margin-left:260px; width: calc(100% - 260px); display:flex; flex-direction:column; transition: margin-left 0.3s ease; }
+
+.topbar { background:#1c1f2b; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10; box-shadow:0 2px 8px var(--shadow); }
+.topbar-title { font-size:1.3rem; font-weight:bold; }
+.btn-primary { background: var(--primary); color:#fff; padding:0.6rem 1.3rem; border-radius:8px; font-weight:bold; transition:0.3s; }
+.btn-primary:hover { background: var(--primary-dark); }
+
+.section { padding:4rem 2rem; max-width:900px; margin:0 auto; }
+.section h1 { font-size:2.4rem; margin-bottom:2rem; text-align:center; }
+
+.entry { background:#101217; padding:1rem; border-left:4px solid var(--primary); margin-bottom:1rem; border-radius:6px; }
+.entry h3 { color:#fff; margin-bottom:0.5rem; }
+.entry p { margin-bottom:0.5rem; }
+.warning { background:#2a120f; padding:0.9rem 1rem; border-left:4px solid var(--warning); color:#ffdede; border-radius:6px; margin-bottom:1rem; }
+.note { background:#332211; padding:0.8rem 1rem; border-left:4px solid var(--note); color:#ffe7b3; border-radius:6px; margin-bottom:1rem; }
+
+.footer { text-align:center; padding:1.5rem; background: var(--sidebar-bg); color:#777; font-size:0.9rem; }
+
+@media(max-width:900px) {
+  .sidebar { transform:translateX(-100%); position:fixed; left:0; }
+  .sidebar.open { transform:translateX(0); }
+  .main { margin-left:0; width:100%; }
+}
+@media(max-width:600px) {
+  .section { padding:2.5rem 1rem; }
+  .section h1 { font-size:2rem; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-top">
+    <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
+    <button id="closeSidebar" class="btn-icon" title="Schließen">&times;</button>
+  </div>      
+  
+  <nav class="sidebar-nav">
+        <a href="index.html">Start</a>
+        <a href="about.html">Über uns</a>
+        <a href="factions.html">Fraktionen</a>
+        <a href="rules.html">Regelwerke</a>
+        <a href="bannkatalog.html" class="activ">Admin-Regeln</a>
+        <a href="events.html">Events</a>
+        <a href="team.html">Team</a>
+        <a href="join.html" class="discord-cta">Beitreten</a>
+  </nav>
+  
+  <div class="sidebar-footer"><small>&copy; 2025 NRW RP DE</small></div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <button id="toggleSidebar" class="btn-icon">&#9776;</button>
+  <div class="topbar-title">Bannkatalog – NRW RP DE</div>
+</header>
+
+<section class="section">
+<h1>🏛️ Bannkatalog Übersicht</h1>
+
+<div class="entry">
+  <h3>Admin-Flucht</h3>
+  <p>Das absichtliche Verlassen des Spiels oder Ignorieren eines Admin-Signals, um einer Strafe zu entgehen.</p>
+  <div class="note"><strong>Strafen:</strong> <br>
+  - Bis 10 Sekunden: Verwarnung<br>
+  - 10–30 Sekunden: 1 Tag Bann<br>
+  - Über 30 Sekunden: 2 Tage Bann + 1 Tag pro Minute</div>
+  <div class="note">Wiederholte Verstöße verlängern die Strafe. Admin-Kollege muss nach 30 Sekunden informiert werden.</div>
+</div>
+
+<div class="entry">
+  <h3>Crash RP</h3>
+  <p>Absichtliches Herbeiführen von Unfällen ohne RP-Hintergrund oder unrealistisches Verhalten nach einem Unfall.</p>
+  <div class="note"><strong>Strafen:</strong><br>
+  Leicht: Verwarnung oder Kick<br>
+  Mittel: 1–3 Tage Bann<br>
+  Schwer: 7–14 Tage Bann<br>
+  Extrem: 30 Tage Bann</div>
+</div>
+
+<div class="entry">
+  <h3>RDM (Random Deathmatch)</h3>
+  <p>Grundloses Angreifen oder Töten anderer Spieler ohne RP-Hintergrund.</p>
+  <div class="note"><strong>Strafen:</strong><br>
+  Leicht: Verwarnung oder Kick<br>
+  Mittel: 1–3 Tage Bann<br>
+  Schwer: 7–14 Tage Bann<br>
+  Extrem: 30 Tage Bann</div>
+</div>
+
+<div class="entry">
+  <h3>VDM (Vehicle Deathmatch)</h3>
+  <p>Absichtliches Überfahren oder Rammen anderer Spieler ohne RP-Hintergrund.</p>
+  <div class="note"><strong>Strafen:</strong><br>
+  Leicht: Verwarnung oder Kick<br>
+  Mittel: 1–3 Tage Bann<br>
+  Schwer: 7–14 Tage Bann<br>
+  Extrem: Permanenter Bann</div>
+</div>
+
+<div class="entry">
+  <h3>Metagaming</h3>
+  <p>Nutzen von Infos aus externen Quellen (Discord, Streams) für RP-Vorteile.</p>
+  <div class="note"><strong>Strafen:</strong><br>
+  Leicht: Verwarnung oder Kick<br>
+  Mittel: 1–3 Tage Bann<br>
+  Schwer: 7–14 Tage Bann<br>
+  Extrem: 30 Tage Bann</div>
+</div>
+
+<div class="entry">
+  <h3>Powergaming</h3>
+  <p>Erzwingen von RP-Situationen oder unrealistische Darstellung der eigenen Fähigkeiten.</p>
+  <div class="note"><strong>Strafen:</strong><br>
+  Leicht: Verwarnung oder Kick<br>
+  Mittel: 1–3 Tage Bann<br>
+  Schwer: 7–14 Tage Bann<br>
+  Extrem: 30 Tage Bann</div>
+</div>
+
+<div class="entry">
+  <h3>Admin Abuse</h3>
+  <p>Missbrauch von Admin-Rechten für persönliche Vorteile oder Manipulation von RP.</p>
+  <div class="note"><strong>Strafen:</strong><br>
+  Leicht: Verwarnung / temporäre Admin-Entziehung<br>
+  Mittel: 3–7 Tage Bann + Admin-Entziehung 2 Wochen<br>
+  Schwer: 14–30 Tage Bann + dauerhafte Admin-Entziehung<br>
+  Extrem: 30 Tage Bann oder Entfernung aus Admin-Team</div>
+</div>
+
+<div class="entry">
+  <h3>Admin-Notruf Abuse</h3>
+  <p>Missbräuchliche Nutzung von Admin-Notrufen (/report, /help).</p>
+  <div class="note"><strong>Strafen:</strong><br>
+  Leicht: Verwarnung<br>
+  Mittel: 1–3 Tage Bann<br>
+  Schwer: 7–14 Tage Bann<br>
+  Extrem: 30 Tage Bann</div>
+</div>
+
+<div class="entry">
+  <h3>Unrealistisches Ziehen von Langwaffen / Items</h3>
+  <p>Langwaffen oder Items ohne RP-Kontext ziehen.</p>
+  <div class="note"><strong>Strafen:</strong><br>
+  1. Verstoß: Verwarnung<br>
+  2. Verstoß: Kick<br>
+  3. Verstoß: 1-Tages-Bann</div>
+  <div class="note">Langwaffen nur realistisch mit /me, aus Fahrzeugen oder Taschen.</div>
+</div>
+
+<div class="entry">
+  <h3>Stop Sticks unrealistisch einsetzen</h3>
+  <p>Stop Sticks ohne RP-Kontext oder direkt aus dem Nichts platzieren.</p>
+  <div class="note"><strong>Strafen:</strong> 1 Warnung + ggf. Schadensersatz 3.000€ Ingame</div>
+</div>
+
+<div class="entry">
+  <h3>Blaulichtmissbrauch</h3>
+  <p>Blaulicht ohne RP-relevanten Grund oder zur Umgehung von Regeln.</p>
+  <div class="note"><strong>Strafen:</strong> 1. Warnung → 2. Warnung → Kick → 1-Tages-Bann</div>
+</div>
+
+<div class="entry">
+  <h3>Beleidigungen / Respektloses Verhalten</h3>
+  <p>Direkte Beleidigungen, Diskriminierung, respektloses Verhalten.</p>
+  <div class="note"><strong>Strafen:</strong> 1 Warnung → 2 Warnung → Kick → 1-Tages-Bann → bis 7-Tage oder Permaban</div>
+</div>
+
+<div class="entry">
+  <h3>Blitzer auf Kreiseln</h3>
+  <p>Blitzer auf Kreisverkehr platzieren, um unfair Spieler zu bestrafen.</p>
+  <div class="note"><strong>Strafen:</strong> 1 Warnung → 2 Warnung → Kick → 1-Tages-Bann</div>
+</div>
+
+<div class="entry">
+  <h3>Fake-Admin</h3>
+  <p>Ausgeben als Admin / Teammitglied ohne Berechtigung.</p>
+  <div class="note"><strong>Strafen:</strong> Kick → 30-Tage-Bann → Permanenter Bann</div>
+</div>
+
+</section>
+<footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
+</main>
+</div>
+
+<script>
+const sidebar=document.getElementById('sidebar');
+document.getElementById('toggleSidebar').addEventListener('click',()=>sidebar.classList.toggle('open'));
+document.getElementById('closeSidebar').addEventListener('click',()=>sidebar.classList.remove('open'));
+</script>
+</body>
+</html>
