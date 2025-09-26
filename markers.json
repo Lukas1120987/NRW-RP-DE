@@ -1,0 +1,98 @@
+[
+  {
+    "name": "Polizeiwache Nord",
+    "type": "polizei",
+    "coords": [300, 500],
+    "beschreibung": "Hauptwache für Streifendienst (Nord).",
+    "bild": "bilder/polizei.png",
+    "link": "https://discord.gg/Yzq2hPnZdP"
+  },
+  {
+    "name": "Polizeiwache Mitte",
+    "type": "polizei",
+    "coords": [550, 1000],
+    "beschreibung": "Zentrale Polizeiwache (Innenstadt).",
+    "bild": "bilder/polizei2.png",
+    "link": "https://discord.gg/Yzq2hPnZdP"
+  },
+  {
+    "name": "Feuerwehr Hauptwache",
+    "type": "feuerwehr",
+    "coords": [800, 1400],
+    "beschreibung": "Feuerwehr- & Rettungszentrum.",
+    "bild": "bilder/feuerwehr.png",
+    "link": "https://discord.gg/qBcXjjFCTX"
+  },
+  {
+    "name": "Rettungsdienst Zentrale",
+    "type": "rettungsdienst",
+    "coords": [700, 900],
+    "beschreibung": "RTW-Station & Notfallversorgung.",
+    "bild": "bilder/rettungsdienst.png",
+    "link": "https://discord.gg/JTnjAVJsBy"
+  },
+  {
+    "name": "Krankenhaus Hamburg",
+    "type": "krankenhaus",
+    "coords": [450, 1600],
+    "beschreibung": "Versorgung von Patienten, OP-Bereiche.",
+    "bild": "bilder/krankenhaus.png",
+    "link": ""
+  },
+  {
+    "name": "ADAC Garage",
+    "type": "adac",
+    "coords": [900, 300],
+    "beschreibung": "Pannenhilfe & Abschlepper.",
+    "bild": "bilder/adac.png",
+    "link": "https://discord.gg/Ax5jTqHaCy"
+  },
+  {
+    "name": "Werkfeuerwehr (Industrie)",
+    "type": "werkfeuerwehr",
+    "coords": [1000, 1800],
+    "beschreibung": "Werkfeuerwehr des Industrieareals.",
+    "bild": "bilder/werkfeuerwehr.png",
+    "link": "https://discord.gg/FpJw6NKWHD"
+  },
+  {
+    "name": "TÜV-Prüfstelle",
+    "type": "tuev",
+    "coords": [200, 1700],
+    "beschreibung": "Fahrzeugprüfungen & TÜV.",
+    "bild": "bilder/tuev.png",
+    "link": "https://discord.gg/HPujZr98"
+  },
+  {
+    "name": "FluXbus Depot",
+    "type": "depot",
+    "coords": [1100, 400],
+    "beschreibung": "Busdepot & Wartung.",
+    "bild": "bilder/fluxbus.png",
+    "link": "https://discord.gg/qE9bMg7eEs"
+  },
+  {
+    "name": "Blue Lights Films Studio",
+    "type": "sonstiges",
+    "coords": [400, 1200],
+    "beschreibung": "Filmset & Produktion.",
+    "bild": "bilder/bluelights.png",
+    "link": "https://discord.gg/d28KaPmdPW"
+  },
+  {
+    "name": "Spawn: Hauptplatz",
+    "type": "spawn",
+    "coords": [1150, 1020],
+    "beschreibung": "Haup-Spawnpunkt für neue Spieler.",
+    "bild": "",
+    "link": ""
+  },
+  {
+    "name": "Hafen (Nord)",
+    "type": "hafen",
+    "coords": [50, 1840],
+    "beschreibung": "Großer Hafenbereich mit Containerterminal.",
+    "bild": "bilder/hafen.png",
+    "link": ""
+  }
+]
