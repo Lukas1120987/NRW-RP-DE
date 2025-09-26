@@ -4,117 +4,124 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Regelwerke Übersicht – NRW RP DE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* ========== RESET & GRUNDSTIL ========== */
+    :root {
+      --primary: #5865F2;
+      --primary-dark: #4752C4;
+      --background: #0f111a;
+      --sidebar-bg: #151823;
+      --text: #f0f0f0;
+      --text-light: #cccccc;
+      --accent: #7289da;
+      --shadow: rgba(0,0,0,0.4);
+    }
+
     * { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
     body {
       font-family:'Roboto', sans-serif;
-      background:#0e0e12;
-      color:#e0e0e0;
-      display:flex;
+      background: var(--background);
+      color: var(--text);
       min-height:100vh;
+      overflow-x:hidden;
     }
-    a { color:#7289da; text-decoration:none; }
-    a:hover { text-decoration:underline; }
+    a { color: var(--primary); text-decoration:none; transition:0.3s; }
+    a:hover { color: var(--accent); }
 
-    /* ========== APP LAYOUT ========== */
-    .app { display:flex; width:100%; }
+    h1,h2,h3 { font-weight:700; margin-bottom:0.7rem; }
+    p { color: var(--text-light); line-height:1.6; margin-bottom:1.2rem; }
+
+    /* Layout */
+    .app { display:flex; min-height:100vh; }
     .sidebar {
       width:260px;
-      background:#1a1b20;
+      background: var(--sidebar-bg);
+      padding:1.5rem 1rem;
       display:flex;
       flex-direction:column;
+      justify-content:space-between;
       position:fixed;
-      top:0; left:0; bottom:0;
-      padding:1rem;
+      top:0; bottom:0; left:0;
       transition: transform 0.3s ease;
       z-index:1000;
     }
-    .sidebar.open { transform:translateX(0); }
-    .sidebar-top {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-    .sidebar-logo { width:50px; height:50px; border-radius:8px; }
-    .btn-icon { background:none; border:none; color:#aaa; font-size:2rem; cursor:pointer; }
-    .btn-icon:hover { color:#fff; }
+    .sidebar-logo { width:90px; margin:0 auto 1rem; }
+    .sidebar-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:2rem; }
+    .btn-icon { background:none; border:none; color: var(--text); font-size:1.8rem; cursor:pointer; transition:0.2s; }
+    .btn-icon:hover { color: var(--accent); }
 
-    .sidebar-nav { margin-top:2rem; display:flex; flex-direction:column; gap:0.8rem; }
     .sidebar-nav a {
+      display:block;
       padding:0.8rem 1rem;
-      border-radius:6px;
-      transition: background 0.2s;
+      color: var(--text-light);
       font-weight:500;
-      color:#cfcfcf;
+      border-radius:6px;
+      transition:0.3s;
+      margin-bottom:0.5rem;
     }
-    .sidebar-nav a:hover { background:#2a2b30; }
-    .sidebar-nav a.active { background:#7289da; color:#fff; }
-    .discord-cta { background:#5865f2; color:#fff !important; text-align:center; }
-    .discord-cta:hover { background:#4752c4; }
-    .sidebar-footer { margin-top:auto; text-align:center; font-size:0.8rem; color:#888; }
+    .sidebar-nav a:hover { background: var(--primary-dark); color:#fff; }
+    .sidebar-nav a.active { background: var(--primary); color:#fff; }
+    .discord-cta { background: var(--accent); color:#fff; font-weight:bold; text-align:center; }
+    .sidebar-footer { text-align:center; color:#777; font-size:0.85rem; margin-top:auto; }
 
-    /* ========== MAIN CONTENT ========== */
-    .main { margin-left:260px; width:100%; display:flex; flex-direction:column; min-height:100vh; }
+    /* Main */
+    .main { margin-left:260px; width:calc(100% - 260px); display:flex; flex-direction:column; transition: margin-left 0.3s ease; }
 
-    /* ========== TOPBAR ========== */
     .topbar {
-      background:#18191c;
+      background:#1c1f2b;
       padding:1rem 2rem;
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       position:sticky;
       top:0;
-      z-index:900;
-      border-bottom:1px solid #2c2d33;
+      z-index:10;
+      box-shadow:0 2px 8px var(--shadow);
     }
-    .topbar-title { font-size:1.4rem; font-weight:bold; }
+    .topbar-title { font-size:1.3rem; font-weight:bold; }
     .btn-primary {
-      background:#5865f2;
-      padding:0.7rem 1.4rem;
+      background: var(--primary);
       color:#fff;
-      border-radius:6px;
-      font-weight:bold;
-      transition:background 0.2s;
-    }
-    .btn-primary:hover { background:#4752c4; }
-
-    /* ========== SECTION ========== */
-    .section { padding:2rem 3rem; max-width:900px; margin:0 auto; }
-    .section h1 { font-size:2rem; margin-bottom:1rem; }
-    .section h2 { font-size:1.5rem; margin-top:2rem; margin-bottom:1rem; }
-    .section p { margin-bottom:1rem; line-height:1.45; }
-    .rules-overview { display:grid; gap:1rem; margin-top:1rem; }
-    .rule-card {
-      background:#101217;
-      border:1px solid #222;
-      padding:1rem 1.2rem;
+      padding:0.6rem 1.3rem;
       border-radius:8px;
-      transition: background 0.2s, transform 0.15s;
+      font-weight:bold;
+      transition:0.3s;
     }
-    .rule-card:hover { background:#1a1b20; transform:translateY(-2px); }
-    .rule-card a { font-weight:bold; color:#7289da; font-size:1.1rem; display:block; margin-bottom:0.4rem; }
+    .btn-primary:hover { background: var(--primary-dark); }
+
+    /* Section */
+    .section { padding:4rem 2rem; max-width:900px; margin:0 auto; }
+    .section h1 { font-size:2.4rem; margin-bottom:2rem; }
+    .section h2 { font-size:1.5rem; margin-top:2rem; margin-bottom:1rem; }
+    .section p { margin-bottom:1rem; line-height:1.6; }
+
+    .rules-overview {
+      display:grid;
+      gap:1.5rem;
+      margin-top:1rem;
+    }
+    .rule-card {
+      background:#1a1d2b;
+      border-left:5px solid var(--accent);
+      padding:1.5rem;
+      border-radius:12px;
+      transition:0.3s;
+    }
+    .rule-card:hover { transform:translateY(-4px); border-left-color: var(--primary); }
+    .rule-card a { font-weight:bold; color:#fff; font-size:1.1rem; display:block; margin-bottom:0.5rem; }
     .rule-card p { font-size:0.95rem; color:#ccc; margin:0; }
 
-    /* ========== FOOTER ========== */
-    .footer {
-      text-align:center;
-      padding:1rem;
-      font-size:0.9rem;
-      color:#888;
-      border-top:1px solid #2c2d33;
-      margin-top:auto;
-    }
+    /* Footer */
+    .footer { text-align:center; padding:1.5rem; background: var(--sidebar-bg); color:#777; font-size:0.9rem; }
 
-    /* ========== RESPONSIVE ========== */
-    @media (max-width:900px) {
+    /* Responsive */
+    @media(max-width:900px){
       .sidebar { transform:translateX(-100%); position:fixed; }
       .sidebar.open { transform:translateX(0); }
-      .main { margin-left:0; }
-      .topbar { padding:1rem; }
-      .section { padding:1.5rem; }
+      .main { margin-left:0; width:100%; }
+      .section { padding:2.5rem 1rem; }
+      .section h1 { font-size:2rem; }
       .rules-overview { display:block; }
     }
   </style>
@@ -175,29 +182,18 @@
   </div>
 
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const sidebar = document.getElementById("sidebar");
-    const toggleSidebar = document.getElementById("toggleSidebar");
-    const closeSidebar = document.getElementById("closeSidebar");
+    document.addEventListener("DOMContentLoaded", () => {
+      const sidebar = document.getElementById("sidebar");
+      const toggleSidebar = document.getElementById("toggleSidebar");
+      const closeSidebar = document.getElementById("closeSidebar");
 
-    if(toggleSidebar) {
-      toggleSidebar.addEventListener("click", () => {
-        sidebar.classList.toggle("open");
-      });
-    }
+      if(toggleSidebar){ toggleSidebar.addEventListener("click", ()=>{ sidebar.classList.toggle("open"); }); }
+      if(closeSidebar){ closeSidebar.addEventListener("click", ()=>{ sidebar.classList.remove("open"); }); }
 
-    if(closeSidebar) {
-      closeSidebar.addEventListener("click", () => {
-        sidebar.classList.remove("open");
-      });
-    }
-
-    document.querySelectorAll('.sidebar-nav a').forEach(link => {
-      link.addEventListener('click', () => {
-        sidebar.classList.remove('open');
+      document.querySelectorAll('.sidebar-nav a').forEach(link=>{
+        link.addEventListener('click', ()=>{ sidebar.classList.remove('open'); });
       });
     });
-  });
   </script>
 </body>
 </html>
