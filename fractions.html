@@ -4,7 +4,214 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Fraktionen – NRW RP DE</title>
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #5865F2;
+      --primary-dark: #4752C4;
+      --background: #0f111a;
+      --sidebar-bg: #151823;
+      --text: #f0f0f0;
+      --text-light: #b9bbbe;
+      --accent: #7289da;
+      --shadow: rgba(0, 0, 0, 0.4);
+      --card-bg: #1a1d2b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    a:hover { color: var(--accent); }
+
+    h1, h2, h3 { font-weight: 700; margin-bottom: 0.7rem; }
+    p { color: var(--text-light); line-height: 1.6; margin-bottom: 1rem; }
+
+    /* Layout */
+    .app { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 260px;
+      background: var(--sidebar-bg);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar-logo { width: 90px; margin: 0 auto 1rem; }
+
+    .sidebar-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .btn-icon {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-icon:hover { color: var(--accent); }
+
+    .sidebar-nav a {
+      display: block;
+      padding: 0.8rem 1rem;
+      color: var(--text-light);
+      font-weight: 500;
+      border-radius: 6px;
+      transition: 0.3s;
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-nav a:hover { background: var(--primary-dark); color: #fff; }
+    .sidebar-nav a.active { background: var(--primary); color: #fff; }
+    .discord-cta { background: var(--accent); color: #fff; font-weight: bold; }
+
+    .sidebar-footer {
+      text-align: center;
+      color: #777;
+      font-size: 0.85rem;
+      margin-top: auto;
+    }
+
+    /* Main */
+    .main {
+      margin-left: 260px;
+      width: calc(100% - 260px);
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.3s ease;
+    }
+
+    .topbar {
+      background: #1c1f2b;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .topbar-title { font-size: 1.3rem; font-weight: bold; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.6rem 1.3rem;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+
+    /* Section */
+    .section {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section h1 {
+      font-size: 2.4rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    /* Grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px var(--shadow);
+      border-left: 5px solid var(--accent);
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-left-color: var(--primary);
+      box-shadow: 0 8px 20px var(--shadow);
+    }
+
+    .card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .card ul {
+      margin-top: 0.8rem;
+      padding-left: 1.2rem;
+      list-style: disc;
+      color: var(--text-light);
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #151823;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        left: 0;
+      }
+      .sidebar.open { transform: translateX(0); }
+      .main {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .section { padding: 2.5rem 1rem; }
+      .section h1 { font-size: 2rem; }
+      .card h3 { font-size: 1.6rem; }
+    }
+  </style>
 </head>
 <body>
   <div class="app">
@@ -22,7 +229,7 @@
         <a href="team.html">Team</a>
         <a href="join.html" class="discord-cta">Beitreten</a>
       </nav>
-      <div class="sidebar-footer"><small>&copy; 2025</small></div>
+      <div class="sidebar-footer"><small>&copy; 2025 NRW RP DE</small></div>
     </aside>
 
     <main class="main">
@@ -36,7 +243,7 @@
         <h1>Fraktionen & Rollen</h1>
         <div class="grid-2">
           <div class="card">
-            <h3>Polizei</h3>
+            <h3>🚓 Polizei</h3>
             <p>Aufgaben: Streifen, Einsätze, Verkehrskontrollen, SEK-Einsätze.</p>
             <ul>
               <li>Voraussetzungen: RP-Grundverständnis</li>
@@ -45,18 +252,30 @@
           </div>
 
           <div class="card">
-            <h3>Rettungsdienst</h3>
+            <h3>🚑 Rettungsdienst</h3>
             <p>Aufgaben: Versorgung von Verwundeten, Rettungswagen-Einsätze, Sanitäter-Ausbildung.</p>
+            <ul>
+              <li>Voraussetzungen: RP-Grundlagen</li>
+              <li>Ausrüstung: Rettungskoffer, RTW</li>
+            </ul>
           </div>
 
           <div class="card">
-            <h3>Feuerwehr</h3>
+            <h3>🔥 Feuerwehr</h3>
             <p>Aufgaben: Brandbekämpfung, technische Hilfe, Unfalldienste.</p>
+            <ul>
+              <li>Voraussetzungen: Schulung im Umgang mit Geräten</li>
+              <li>Ausrüstung: Löschfahrzeuge, Atemschutz</li>
+            </ul>
           </div>
 
           <div class="card">
-            <h3>Zivilisten</h3>
-            <p>Aufgaben: freie Rollen, Geschäftsaufbau, ziviles Leben.</p>
+            <h3>🏙️ Zivilisten</h3>
+            <p>Aufgaben: Freie Rollen, Geschäftsaufbau, ziviles Leben.</p>
+            <ul>
+              <li>Voraussetzungen: Keine</li>
+              <li>Möglichkeiten: Shops, Immobilien, Events</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -65,6 +284,11 @@
     </main>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // Sidebar öffnen/schließen
+    const sidebar = document.getElementById('sidebar');
+    document.getElementById('toggleSidebar').addEventListener('click', () => sidebar.classList.toggle('open'));
+    document.getElementById('closeSidebar').addEventListener('click', () => sidebar.classList.remove('open'));
+  </script>
 </body>
 </html>
