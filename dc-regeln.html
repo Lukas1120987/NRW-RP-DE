@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Discord-Regeln – NRW RP DE</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #5865F2;
+  --primary-dark: #4752C4;
+  --background: #0f111a;
+  --sidebar-bg: #151823;
+  --text: #f0f0f0;
+  --text-light: #cccccc;
+  --accent: #7289da;
+  --shadow: rgba(0,0,0,0.4);
+  --warning: #e74c3c;
+  --note: #ffb74d;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: var(--background);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a { color: var(--primary); text-decoration:none; }
+a:hover { color: var(--accent); }
+
+h1,h2,h3 { font-weight:700; margin-bottom:0.7rem; }
+p { color: var(--text-light); line-height:1.6; margin-bottom:1rem; }
+
+.app { display:flex; min-height:100vh; }
+
+.sidebar {
+  width: 260px;
+  background: var(--sidebar-bg);
+  padding: 1.5rem 1rem;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top:0; bottom:0; left:0;
+  transition: transform 0.3s ease;
+  z-index:1000;
+}
+
+.sidebar-logo { width:90px; margin:0 auto 1rem; }
+
+.sidebar-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; }
+
+.btn-icon {
+  background:none;
+  border:none;
+  color: var(--text);
+  font-size:1.8rem;
+  cursor:pointer;
+  transition:0.2s;
+}
+.btn-icon:hover { color: var(--accent); }
+
+.sidebar-nav a {
+  display:block;
+  padding:0.8rem 1rem;
+  color: var(--text-light);
+  font-weight:500;
+  border-radius:6px;
+  transition:0.3s;
+  margin-bottom:0.5rem;
+}
+.sidebar-nav a:hover { background: var(--primary-dark); color:#fff; }
+.sidebar-nav a.active { background: var(--primary); color:#fff; }
+.discord-cta { background: var(--accent); color:#fff; font-weight:bold; }
+
+.sidebar-footer { text-align:center; color:#777; font-size:0.85rem; margin-top:auto; }
+
+.main {
+  margin-left:260px;
+  width: calc(100% - 260px);
+  display:flex;
+  flex-direction:column;
+  transition: margin-left 0.3s ease;
+}
+
+.topbar {
+  background:#1c1f2b;
+  padding:1rem 2rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 2px 8px var(--shadow);
+}
+.topbar-title { font-size:1.3rem; font-weight:bold; }
+
+.btn-primary {
+  background: var(--primary);
+  color:#fff;
+  padding:0.6rem 1.3rem;
+  border-radius:8px;
+  font-weight:bold;
+  transition:0.3s;
+}
+.btn-primary:hover { background: var(--primary-dark); }
+
+.section { padding:4rem 2rem; max-width:900px; margin:0 auto; }
+
+.section h1 { font-size:2.4rem; margin-bottom:2rem; text-align:center; }
+
+.rules-list { margin-top:1rem; margin-bottom:2rem; padding-left:1.2rem; }
+.rules-list li { margin-bottom:1rem; }
+
+.definition {
+  background:#101217;
+  padding:1rem;
+  border-left:4px solid var(--primary);
+  margin-bottom:1rem;
+  border-radius:6px;
+}
+.warning {
+  background:#2a120f;
+  padding:0.9rem 1rem;
+  border-left:4px solid var(--warning);
+  color:#ffdede;
+  border-radius:6px;
+  margin-bottom:1rem;
+}
+.note {
+  background:#332211;
+  padding:0.8rem 1rem;
+  border-left:4px solid var(--note);
+  color:#ffe7b3;
+  border-radius:6px;
+  margin-bottom:1rem;
+}
+
+.footer { text-align:center; padding:1.5rem; background: var(--sidebar-bg); color:#777; font-size:0.9rem; }
+
+@media(max-width:900px) {
+  .sidebar { transform:translateX(-100%); position:fixed; left:0; }
+  .sidebar.open { transform:translateX(0); }
+  .main { margin-left:0; width:100%; }
+}
+@media(max-width:600px) {
+  .section { padding:2.5rem 1rem; }
+  .section h1 { font-size:2rem; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-top">
+    <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
+    <button id="closeSidebar" class="btn-icon" title="Schließen">&times;</button>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="index.html">Start</a>
+    <a href="about.html">Über uns</a>
+    <a href="factions.html">Fraktionen</a>
+    <a href="rules-overview.html">Regelwerke</a>
+    <a href="rules-dc.html" class="active">Discord-Regeln</a>
+    <a href="events.html">Events</a>
+    <a href="team.html">Team</a>
+    <a href="join.html" class="discord-cta">Beitreten</a>
+  </nav>
+  <div class="sidebar-footer"><small>&copy; 2025 NRW RP DE</small></div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <button id="toggleSidebar" class="btn-icon">&#9776;</button>
+  <div class="topbar-title">Discord-Regeln</div>
+</header>
+
+<section class="section">
+<h1>📜 Discord-Regeln – NRW RP DE</h1>
+
+<h2>1. Allgemeines Verhalten</h2>
+<ol class="rules-list">
+  <li><strong>1.1 Respektvoller Umgang:</strong> Alle Mitglieder sind mit Respekt zu behandeln. Freundlicher, hilfsbereiter Umgang ist Pflicht.</li>
+  <li class="warning"><strong>1.2 Diskriminierung & Hassrede:</strong> Jegliche Diskriminierung ist strengstens verboten. Hassrede, NS-Anspielungen → sofortige Sanktionen.</li>
+  <li><strong>1.3 Streitigkeiten:</strong> Private Konflikte nicht öffentlich ausfechten; Moderation hinzuziehen.</li>
+</ol>
+
+<h2>2. Chats & Sprache</h2>
+<ol class="rules-list">
+  <li class="warning"><strong>2.1 Spamverbot:</strong> Wiederholte Nachrichten, Emojis, unnötige Textblöcke oder Emojiketten sind verboten.</li>
+  <li><strong>2.2 Großschreibung:</strong> Vermeide durchgehendes Capslock → wirkt wie Schreien.</li>
+  <li class="warning"><strong>2.3 Unangemessene Inhalte:</strong> Sexuelle, gewalttätige, rassistische oder NSFW-Inhalte → verboten.</li>
+  <li><strong>2.4 Werbung & Links:</strong> Nur mit expliziter Erlaubnis erlaubt <code>&lt;@1269641012737867881&gt;</code>.</li>
+  <li><strong>2.5 Off-Topic:</strong> Nachrichten nur in passenden Kanälen posten.</li>
+</ol>
+
+<h2>3. Voice-Chats</h2>
+<ol class="rules-list">
+  <li><strong>3.1 Verhaltensregeln:</strong> Respektvoll bleiben, keine Beleidigungen, Trolling oder Stören anderer Gespräche.</li>
+  <li><strong>3.2 Hintergrundgeräusche:</strong> Push-to-Talk oder ruhige Umgebung nutzen.</li>
+  <li><strong>3.3 Musik/Störlaute:</strong> Nur in dafür vorgesehenen Kanälen. Stören → Ausschluss.</li>
+  <li><strong>3.4 Aufzeichnungen:</strong> Mitschneiden ohne Zustimmung verboten.</li>
+</ol>
+
+<h2>4. Rollen & Befehle</h2>
+<ol class="rules-list">
+  <li><strong>4.1 Rollenvergabe:</strong> Rollen vom Serverteam. Forderungen verboten.</li>
+  <li><strong>4.2 Botnutzung:</strong> Nur in vorgesehenen Kanälen und Rahmen, kein Spam.</li>
+  <li><strong>4.3 Rechte durch Rollen:</strong> Verantwortung bewusst wahrnehmen (Mod-/Supportrollen).</li>
+</ol>
+
+<h2>5. Moderation & Sanktionen</h2>
+<ol class="rules-list">
+  <li><strong>5.1 Anweisungen des Teams:</strong> Anweisungen jederzeit folgen; Diskussionen privat.</li>
+  <li><strong>5.2 Sanktionen:</strong> Verwarnungen, Timeouts, Kicks oder permanenter Bann.</li>
+  <li><strong>5.3 Wiederholte Verstöße:</strong> Dauerhafte Sperre möglich ohne Vorwarnung.</li>
+  <li><strong>5.4 Meldungen:</strong> Regelverstöße melden; Screenshots helfen.</li>
+  <li><strong>5.5 Keine Selbstjustiz:</strong> Moderation kontaktieren.</li>
+</ol>
+
+<h2>6. Sonstiges</h2>
+<ol class="rules-list">
+  <li><strong>6.1 Regeländerungen:</strong> Serverteam kann jederzeit Regeln ändern.</li>
+  <li><strong>6.2 Unwissenheit schützt nicht:</strong> Pflicht zur Kenntnisnahme der Regeln.</li>
+  <li><strong>6.3 Externe Inhalte:</strong> Nur vertrauenswürdige Links teilen.</li>
+  <li><strong>6.4 Technische Probleme:</strong> Moderation informieren, nicht ausnutzen.</li>
+  <li><strong>6.5 Direkte Gefahr:</strong> Gefährliche Nutzer → Bann.</li>
+</ol>
+
+<h2>7. Schlusswort</h2>
+<ol class="rules-list">
+  <li><strong>7.1 Miteinander:</strong> Community lebt von Respekt.</li>
+  <li><strong>7.2 Hilfe & Support:</strong> Fragen an Team, respektvoll & vertraulich.</li>
+  <li><strong>7.3 Viel Spaß:</strong> Aktiv, freundlich, positiv gestalten.</li>
+  <li><strong>7.4 Schutz des Namens:</strong> NRW RP DE geschützt; NRW darf nicht am Servernamen stehen.</li>
+  <li><strong>7.5 Serverbestehen:</strong> Server existiert seit 01.01.2024.</li>
+</ol>
+
+</section>
+<footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
+</main>
+</div>
+
+<script>
+const sidebar=document.getElementById('sidebar');
+document.getElementById('toggleSidebar').addEventListener('click',()=>sidebar.classList.toggle('open'));
+document.getElementById('closeSidebar').addEventListener('click',()=>sidebar.classList.remove('open'));
+</script>
+</body>
+</html>
