@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Beitreten – NRW RP DE</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-top">
+        <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
+        <button id="closeSidebar" class="btn-icon" title="Schließen">&times;</button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html">🏠 Start</a>
+        <a href="about.html">ℹ️ Über uns</a>
+        <a href="factions.html">🚓 Fraktionen</a>
+        <a href="rules.html">📜 Regelwerk</a>
+        <a href="events.html">📅 Events</a>
+        <a href="team.html">👤 Team</a>
+        <a href="join.html" class="active discord-cta">🎮 Beitreten</a>
+      </nav>
+      <div class="sidebar-footer"><small>&copy; 2025 NRW RP DE</small></div>
+    </aside>
+
+    <!-- Hauptinhalt -->
+    <main class="main">
+      <!-- Topbar -->
+      <header class="topbar">
+        <button id="toggleSidebar" class="btn-icon">&#9776;</button>
+        <div class="topbar-title">Beitreten</div>
+        <a href="https://discord.gg/rGXZg3XV5X" class="btn-primary">💬 Discord</a>
+      </header>
+
+      <!-- Inhalt -->
+      <section class="section">
+        <h1>🚀 So trittst du unserem Server bei</h1>
+        <p>Folge einfach diesen Schritten, um Teil unserer Community im Roblox-Roleplay „Emergency Hamburg“ zu werden.</p>
+
+        <div class="steps">
+          <div class="step">
+            <h3>✅ Schritt 1 – Roblox-Account erstellen</h3>
+            <p>Falls du noch keinen Roblox-Account hast, erstelle dir kostenlos einen unter: 
+              <a href="https://www.roblox.com/" target="_blank">www.roblox.com</a>
+            </p>
+          </div>
+
+          <div class="step">
+            <h3>🚔 Schritt 2 – „Emergency Hamburg“ starten</h3>
+            <p>Gehe auf die Spielseite und starte das Spiel:</p>
+            <a href="https://www.roblox.com/games/00000000/Emergency-Hamburg" target="_blank" class="btn-secondary">🎮 Zum Spiel</a>
+          </div>
+
+          <div class="step">
+            <h3>📜 Schritt 3 – Regeln lesen</h3>
+            <p>Bevor du mitspielst, lies dir bitte unser Regelwerk sorgfältig durch, damit du weißt, wie unser RP funktioniert:</p>
+            <a href="rules.html" class="btn-secondary">📘 Regelwerk ansehen</a>
+          </div>
+
+          <div class="step">
+            <h3>💬 Schritt 4 – Discord beitreten</h3>
+            <p>Unser Discord ist der zentrale Ort für Bewerbungen, Support, RP-Ankündigungen und mehr. Tritt hier bei:</p>
+            <a href="https://discord.gg/rGXZg3XV5X" target="_blank" class="btn-discord">🚀 Jetzt Discord beitreten</a>
+          </div>
+
+          <div class="step">
+            <h3>👤 Schritt 5 – Bewerbung abschicken</h3>
+            <p>Auf dem Discord findest du im Channel <strong>#bewerbung</strong> alle Informationen, wie du dich für eine Fraktion bewerben kannst. 
+              Danach kannst du direkt im RP loslegen!</p>
+          </div>
+        </div>
+
+        <div class="cta-box">
+          <h2>🎉 Bereit für dein RP-Abenteuer?</h2>
+          <p>Klicke unten, um unserem Discord-Server beizutreten und Teil der NRW RP DE Community zu werden.</p>
+          <a href="https://discord.gg/rGXZg3XV5X" target="_blank" class="btn-primary">🚀 Jetzt beitreten</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Sidebar ein- und ausklappen
+    const sidebar = document.getElementById("sidebar");
+    const toggleSidebar = document.getElementById("toggleSidebar");
+    const closeSidebar = document.getElementById("closeSidebar");
+
+    toggleSidebar.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+    });
+    closeSidebar.addEventListener("click", () => {
+      sidebar.classList.remove("open");
+    });
+  </script>
+</body>
+</html>
