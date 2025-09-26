@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Regelwerk – NRW RP DE</title>
+  <title>Regelwerke Übersicht – NRW RP DE</title>
   <style>
     /* ========== RESET & GRUNDSTIL ========== */
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -85,19 +85,18 @@
     .section { padding:2rem 3rem; max-width:900px; margin:0 auto; }
     .section h1 { font-size:2rem; margin-bottom:1rem; }
     .section h2 { font-size:1.5rem; margin-top:2rem; margin-bottom:1rem; }
-    .section h3 { font-size:1.1rem; margin-top:1rem; margin-bottom:0.6rem; color:#cfcfcf; }
     .section p { margin-bottom:1rem; line-height:1.45; }
-    .rules-list { list-style:decimal inside; margin-top:1rem; margin-bottom:2rem; }
-    .rules-list li { margin-bottom:0.7rem; padding-left:0.3rem; }
-
-    /* ========== TOC & BOXES ========== */
-    .toc { background:#0f1114; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #222; }
-    .toc ul { list-style:none; display:grid; gap:0.4rem; }
-    .toc a { color:#cfcfcf; }
-    .definition { background:#101217; padding:1rem; border-left:4px solid #7289da; margin-bottom:1rem; border-radius:6px; }
-    .example { background:#0f1418; padding:0.8rem; border-left:4px solid #2ecc71; margin-bottom:1rem; border-radius:6px; }
-    .warning { background:#2a120f; padding:0.8rem; border-left:4px solid #e74c3c; color:#ffdede; border-radius:6px; margin-bottom:1rem; }
-    .small { font-size:0.9rem; color:#bdbdbd; }
+    .rules-overview { display:grid; gap:1rem; margin-top:1rem; }
+    .rule-card {
+      background:#101217;
+      border:1px solid #222;
+      padding:1rem 1.2rem;
+      border-radius:8px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .rule-card:hover { background:#1a1b20; transform:translateY(-2px); }
+    .rule-card a { font-weight:bold; color:#7289da; font-size:1.1rem; display:block; margin-bottom:0.4rem; }
+    .rule-card p { font-size:0.95rem; color:#ccc; margin:0; }
 
     /* ========== FOOTER ========== */
     .footer {
@@ -116,6 +115,7 @@
       .main { margin-left:0; }
       .topbar { padding:1rem; }
       .section { padding:1.5rem; }
+      .rules-overview { display:block; }
     }
   </style>
 </head>
@@ -130,7 +130,7 @@
         <a href="index.html">Start</a>
         <a href="about.html">Über uns</a>
         <a href="factions.html">Fraktionen</a>
-        <a href="rules.html" class="active">Regelwerk</a>
+        <a href="rules.html" class="active">Regelwerke</a>
         <a href="events.html">Events</a>
         <a href="team.html">Team</a>
         <a href="join.html" class="discord-cta">Beitreten</a>
@@ -141,181 +141,32 @@
     <main class="main" id="top">
       <header class="topbar">
         <button id="toggleSidebar" class="btn-icon">&#9776;</button>
-        <div class="topbar-title">Regelwerk</div>
-        <a href="rules.pdf" class="btn-primary">PDF herunterladen</a>
+        <div class="topbar-title">Übersicht Regelwerke</div>
       </header>
 
       <section class="section">
-        <h1>📜 Ausführliches Regelwerk — NRW RP DE</h1>
-        <p class="small">Diese Seite enthält die vollständigen Serverregeln, ergänzt um Begriffsdefinitionen, Beispiele, und ein klares Sanktionenschema. Änderungen werden im Discord bekannt gegeben. Mit dem Betreten des Servers akzeptierst du diese Regeln.</p>
+        <h1>📚 Übersicht aller Regelwerke</h1>
+        <p class="small">Hier findest du alle wichtigen Regelwerke des Servers. Klicke auf einen Eintrag, um direkt zum ausführlichen Regelwerk zu gelangen.</p>
 
-        <div class="toc" aria-label="Inhaltsverzeichnis">
-          <strong>Inhaltsverzeichnis</strong>
-          <ul>
-            <li><a href="#definitions">1. Begriffsdefinitionen</a></li>
-            <li><a href="#general">2. Allgemeines</a></li>
-            <li><a href="#ooc">3. OOC & Kommunikation</a></li>
-            <li><a href="#rp-behavior">4. RP-Verhalten (FailRP / Powergaming / Meta)</a></li>
-            <li><a href="#weapons">5. Schusswaffen & Eskalationsregeln</a></li>
-            <li><a href="#vehicles">6. Fahrzeuge & VDM</a></li>
-            <li><a href="#fractions">7. Fraktionen & Dienstregeln</a></li>
-            <li><a href="#admins">8. Admins & Moderation</a></li>
-            <li><a href="#skins">9. Skins, Mods & technische Regeln</a></li>
-            <li><a href="#sanctions">10. Sanktionen & Meldungen</a></li>
-            <li><a href="#appeals">11. Berufungen & Beweise</a></li>
-            <li><a href="#changes">12. Änderungen / Inkrafttreten</a></li>
-          </ul>
+        <div class="rules-overview">
+          <div class="rule-card">
+            <a href="rules-alt.html">RP-Regeln</a>
+            <p>Alle allgemeinen Server-Regeln, Rollenspiel-Verhalten, FailRP, Powergaming und Eskalationsregeln.</p>
+          </div>
+          <div class="rule-card">
+            <a href="dc-regeln.html">Discord-Regeln</a>
+            <p>Verhalten auf dem Discord-Server, OOC-Kommunikation, Beleidigungen, Meldungen und Sanktionen.</p>
+          </div>
+          <div class="rule-card">
+            <a href="fraktionen.html">Fraktions-Regeln</a>
+            <p>Regeln der Fraktionen (Externe Server).</p>
+          </div>
+          <div class="rule-card">
+            <a href="bannkatalog.html">Admin-Regeln</a>
+            <p>Bankatalog für Admins (Bestrafungen für Vergehen)</p>
+          </div>
         </div>
 
-        <!-- 1 -->
-        <h2 id="definitions">1. Begriffsdefinitionen</h2>
-        <div class="definition">
-          <p><strong>RP (Roleplay)</strong>: Das Ausspielen einer Figur mit nachvollziehbaren Handlungen und Konsequenzen.</p>
-          <p><strong>IC (In Character):</strong> Alles, was die Figur/Spielwelt betrifft.</p>
-          <p><strong>OOC (Out of Character):</strong> Alles außerhalb der Spielfigur (z. B. Meta-Informationen, Discord-Chat).</p>
-          <p><strong>FailRP (FRP):</strong> Unrealistisches / unlogisches Verhalten im RP (z. B. bei zwei platten Reifen weiterfahren ohne Folgen).</p>
-          <p><strong>Powergaming (PG):</strong> Erzwingen von Handlungen oder Ergebnissen ohne anderen Spielern Reaktionsmöglichkeiten zu geben.</p>
-          <p><strong>Meta-gaming (MG):</strong> Nutzung von Informationen, die die Figur nicht kennen kann.</p>
-          <p><strong>RDM / VDM:</strong> Random Deathmatch (töten ohne RP-Grund) / Vehicle Deathmatch (Töten mit Fahrzeug).</p>
-        </div>
-
-        <!-- 2 -->
-        <h2 id="general">2. Allgemeines</h2>
-        <ol class="rules-list">
-          <li>Alle Spieler verhalten sich <strong>realitätsnah</strong> und vermeiden offenkundig unrealistische Handlungen.</li>
-          <li>Respekt und höflicher Umgang sind Pflicht. Beleidigungen, Diskriminierung oder Belästigung werden streng geahndet.</li>
-          <li>Jeder ist verantwortlich, sich regelmäßig über Regeländerungen zu informieren (Ankündigungen im Discord gelten als verbindlich).</li>
-          <li>Störungen, Exploits oder Serverfehler sind dem Team unverzüglich zu melden.</li>
-        </ol>
-
-        <!-- 3 -->
-        <h2 id="ooc">3. OOC & Kommunikation</h2>
-        <ol class="rules-list">
-          <li>OOC-Kommentare gehören nicht in IC-Chats. OOC-Themen dürfen nur in den dafür vorgesehenen Kanälen behandelt werden.</li>
-          <li>Ausnahme: <code>!Admin</code> für dringende Notfälle ist im RP-Chat erlaubt.</li>
-          <li>Voice-Chat, Streams oder Aufnahmen: Mitschnitte dürfen nicht ohne Zustimmung beteiligter Spieler veröffentlicht werden. Doxing ist verboten.</li>
-          <li>OOC-Beleidigungen, Belästigung oder gezieltes Trolling werden wie IC-Verstöße behandelt und sanktioniert.</li>
-        </ol>
-
-        <div class="example">
-          <strong>Beispiel (erlaubt):</strong> "Ich habe ein OOC-Problem mit Verbindung — !Admin" — kurz, sachlich und nur zur Problemlösung.  
-          <strong>Beispiel (verboten):</strong> OOC-Informationen im RP nutzen ("Ich habe im Stream gesehen, dass...").
-        </div>
-
-        <!-- 4 -->
-        <h2 id="rp-behavior">4. RP-Verhalten (FailRP / Powergaming / Meta)</h2>
-        <ol class="rules-list">
-          <li><strong>FailRP</strong>: Verhalten, das die Immersion zerstört (z. B. unsinnige Bewegungen, physikalisch unmögliche Aktionen).</li>
-          <li><strong>Powergaming</strong>: Du darfst anderen Spielern keine Aktionen aufzwingen (z. B. "Du bist sofort handlungsunfähig" ohne Reaktion). Beispiel verboten: Einen Spieler ohne Reaktion fesseln und ihm sofort HP abziehen.</li>
-          <li><strong>Meta-gaming</strong>: Informationen aus Discord/Streams/anderen Sessions dürfen IC nicht benutzt werden.</li>
-          <li><strong>FearRP & Value of Life:</strong> Spieler müssen realistisch auf Bedrohungen reagieren. Die Entscheidung "mein Charakter stirbt sofort" oder "ich ignoriere Bedrohung" ist nicht zulässig.</li>
-          <li>Nutze Emotes (/me, /do) korrekt — sie dürfen keine Spielmechanik ersetzen oder Informationen erfinden.</li>
-        </ol>
-
-        <div class="warning">
-          <strong>Wichtig:</strong> Wenn du dir unsicher bist, ob etwas erlaubt ist — spiele es <em>realistisch</em> und gewähre anderen Spielern Reaktionszeit. Bei Streit: Ticket eröffnen.
-        </div>
-
-        <!-- 5 -->
-        <h2 id="weapons">5. Schusswaffen & Eskalationsregeln</h2>
-        <p>Schusswaffen dürfen nicht leichtfertig eingesetzt werden. Folgende Eskalationsstufen sind als Orientierung zu verstehen und müssen IC nachvollziehbar sein:</p>
-        <ol class="rules-list">
-          <li><strong>1 — Deeskalation verbal</strong>: Aufforderung, Abstand, klare Ansage.</li>
-          <li><strong>2 — Androhung</strong>: "Ich nehme dich in Schussrichtung, bewegst du dich nicht ...".</li>
-          <li><strong>3 — Warnschuss / Nicht-tödlicher Einsatz</strong>: Wenn eindeutig sicher und angekündigt.</li>
-          <li><strong>4 — Tödlicher Schuss</strong>: Nur wenn keine andere Option bleibt und sachlich begründet ist.</li>
-          <li>Gezielte Schüsse müssen, sofern kontrolliert, angekündigt werden (z. B. "Ich schieße, wenn du dich nicht ablegst").</li>
-        </ol>
-
-        <div class="example">
-          <strong>Erlaubt:</strong> Eine Kontrolle mit verbaler Ansage und klarer Eskalationskette.  
-          <strong>Verboten:</strong> Plötzliches Beschießen ohne Warnung oder ersichtliche Eskalation.
-        </div>
-
-        <!-- 6 -->
-        <h2 id="vehicles">6. Fahrzeuge & VDM</h2>
-        <ol class="rules-list">
-          <li><strong>VDM</strong> (Mit Fahrzeug töten): verboten, außer klaren RP-Gründen und wenn die Situation vorher nachvollziehbar war.</li>
-          <li>Fahren mit zwei oder mehr platten Reifen ist <strong>FailRP</strong>. Ausnahme: während einer aktiven Verfolgung; das Fahrzeug muss danach repariert werden.</li>
-          <li>Gefährliches/absichtliches Rammen ohne RP-Begründung ist VDM.</li>
-          <li>Fahrzeugflucht: Spieler dürfen nicht instant getötet werden; realistische Flucht-/Verfolgungsmechanik anwenden.</li>
-        </ol>
-
-        <!-- 7 -->
-        <h2 id="fractions">7. Fraktionen & Dienstregeln</h2>
-        <ol class="rules-list">
-          <li>Als <strong>wehrlose Fraktion</strong> gelten u. a.: Feuerwehr, Rettungsdienst/Notarzt, ADAC, LKW-Fahrer, Busfahrer. Diese dürfen nicht angegriffen oder als Geiseln genommen werden.</li>
-          <li>Staatliche/fraktionsgebundene Fahrzeuge dürfen nicht privat gebraucht werden. Uniformen sind während des Dienstes korrekt zu tragen.</li>
-          <li>Corruption-Play (z. B. Bestechung) erfordert Genehmigung der Fraktionsleitung oder muss klar als RP-Plot angemeldet werden.</li>
-        </ol>
-
-        <!-- 8 -->
-        <h2 id="admins">8. Admins & Moderation</h2>
-        <ol class="rules-list">
-          <li>Admins dürfen eine laufende Szene unterbrechen (<strong>RP-Stop</strong>), wenn es zur Moderation oder Spieler-/Server-Sicherheit notwendig ist.</li>
-          <li>Admin-Entscheidungen sind IC bindend. Streitfälle werden im Discord-Support geklärt.</li>
-          <li>Alle Moderationsmaßnahmen werden dokumentiert (Kanal: Moderation / Log) — Transparenz ist Pflicht.</li>
-          <li>Während des Dienstes müssen Admins sichtbar im Admin-Modus sein (Nametag / Adminfunk).</li>
-          <li>Missbrauch von Adminrechten (z. B. Zurücksetzen des Servercodes, Änderung von Rechten) zieht harte Strafen nach sich (siehe Sanktionen).</li>
-        </ol>
-
-        <div class="example">
-          <strong>Beispielverstoß Admin:</strong> Ein Admin nutzt Adminbefehle, um einen eigenen Freund vom Server zu schicken → Dokumentation + Team-Kick + Bewerbungssperre möglich.
-        </div>
-
-        <!-- 9 -->
-        <h2 id="skins">9. Skins, Mods & technische Regeln</h2>
-        <ol class="rules-list">
-          <li>Skins dürfen das RP nicht stören. Skins, die bewusst die Hitbox verkleinern oder Vorteile verschaffen, sind verboten.</li>
-          <li>Skins, die anderen Jobs eindeutig zugeordnet sind (z. B. bestimmte Behördenuniformen), dürfen nicht ohne Erlaubnis getragen werden.</li>
-          <li>Mods oder Client-Tools, die Gameplay-Vorteile bringen (Aimbot, Wallhack, Hitbox-Änderungen, No-Clip), sind strengstens verboten und führen zum Permaban.</li>
-          <li>Visuelle HUD-Mods, die keine Vorteile bieten, sind nur mit Team-Zustimmung erlaubt.</li>
-        </ol>
-
-        <div class="warning">
-          <strong>Hinweis:</strong> Technische Manipulationen werden technisch geprüft. Bei begründetem Verdacht behalten wir uns Sofortmaßnahmen vor.
-        </div>
-
-        <!-- 10 -->
-        <h2 id="sanctions">10. Sanktionen & Meldungen</h2>
-        <p>Zur Einheitlichkeit gibt es folgende Standard-Eskalation (Abweichungen möglich, je nach Schwere):</p>
-        <ol class="rules-list">
-          <li><strong>1. schriftliche Verwarnung</strong> (Hinweis + Regelreferenz).</li>
-          <li><strong>2. temporärer Kick / kurzzeitiger Bann</strong> (24–72 Stunden).</li>
-          <li><strong>3. längerer temporärer Bann</strong> (7–30 Tage).</li>
-          <li><strong>4. permanenter Bann</strong> (bei besonders schweren oder wiederholten Verstößen).</li>
-          <li><strong>Team-Kick & Bewerbungssperre:</strong> Bei Missbrauch von Teamrechten (z. B. Servercode zurücksetzen) folgt Team-Kick + Bewerbungs-Sperre (Laufzeit variiert).</li>
-        </ol>
-
-        <h3>Melden & Vorlage</h3>
-        <p>Meldungen erfolgen über das Ticketsystem im Discord. Bitte folgende Informationen angeben:</p>
-        <ul class="small">
-          <li>Datum & Uhrzeit (Serverzeit)</li>
-          <li>Ort (Ingame-Bereich)</li>
-          <li>Beteiligte Spieler (Namen)</li>
-          <li>Kurze Beschreibung des Vorfalls</li>
-          <li>Anhang: Video-Clip / Screenshot / Log (zeitgestempelt)</li>
-        </ul>
-
-        <!-- 11 -->
-        <h2 id="appeals">11. Berufungen & Beweise</h2>
-        <ol class="rules-list">
-          <li>Erwiderungen/Appeals können im Discord-Support eingereicht werden — innerhalb von <strong>14 Tagen</strong> nach Sanktion.</li>
-          <li>Die Teamentscheidung wird nach Prüfung der Beweislage (Clips, Logs) getroffen. Ergebnis wird dokumentiert.</li>
-          <li>Erlaubte Beweismittel: Zeitgestempelte Video-Clips, Screenshots, Serverlogs. Rohdaten sind auf Anfrage vorzulegen.</li>
-        </ol>
-
-        <div class="example">
-          <strong>Muster-Report:</strong> "2025-09-26 21:12 Serverzeit — Ort: Innenstadt / Bahnhof — Spieler A / Spieler B — VDM durch Fahrzeug, Clip angehängt (mp4, 00:01:23)". 
-        </div>
-
-        <!-- 12 -->
-        <h2 id="changes">12. Änderungen / Inkrafttreten</h2>
-        <p>Das Regelwerk kann vom Serverteam angepasst werden. Änderungen treten nach Ankündigung im Discord in Kraft. Spieler sind verpflichtet, sich über Aktualisierungen zu informieren.</p>
-
-        <hr style="border:1px solid #222; margin:1.5rem 0;">
-
-        <p class="small">Hast du Anmerkungen oder Vorschläge zur Verbesserung dieses Regelwerks? Öffne ein Ticket im <a href="https://discord.gg/" target="_blank" rel="noopener">Discord</a> (Channel: <code>#regeln-feedback</code>).</p>
         <p style="margin-top:1rem;"><a href="#top">Zurück nach oben ↑</a></p>
       </section>
 
@@ -347,7 +198,6 @@
       });
     });
   });
-</script>
-
+  </script>
 </body>
 </html>
