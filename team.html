@@ -182,14 +182,33 @@
       <footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
     </main>
   </div>
-
-  <script>
-    // Sidebar ein-/ausklappen
+  
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
     const sidebar = document.getElementById("sidebar");
     const toggleSidebar = document.getElementById("toggleSidebar");
     const closeSidebar = document.getElementById("closeSidebar");
-    toggleSidebar.addEventListener("click",()=>sidebar.classList.toggle("open"));
-    closeSidebar.addEventListener("click",()=>sidebar.classList.remove("open"));
-  </script>
+
+    if(toggleSidebar) {
+      toggleSidebar.addEventListener("click", () => {
+        sidebar.classList.toggle("open");
+      });
+    }
+
+    if(closeSidebar) {
+      closeSidebar.addEventListener("click", () => {
+        sidebar.classList.remove("open");
+      });
+    }
+
+    // Optional: automatisch Sidebar schließen, wenn ein Link geklickt wird (mobil)
+    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+      });
+    });
+  });
+</script>
+
 </body>
 </html>
