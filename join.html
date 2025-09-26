@@ -4,7 +4,214 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Beitreten – NRW RP DE</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ========== RESET & GRUNDSTIL ========== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #0e0e12;
+      color: #e0e0e0;
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+    a { color: #7289da; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ========== APP LAYOUT ========== */
+    .app { display: flex; width: 100%; }
+    .sidebar {
+      width: 260px;
+      background: #1a1b20;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      padding: 1rem;
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sidebar-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+    }
+    .btn-icon {
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+    .btn-icon:hover { color: #fff; }
+
+    /* Navigation */
+    .sidebar-nav {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .sidebar-nav a {
+      padding: 0.8rem 1rem;
+      border-radius: 6px;
+      transition: background 0.2s;
+      font-weight: 500;
+      color: #cfcfcf;
+    }
+    .sidebar-nav a:hover { background: #2a2b30; }
+    .sidebar-nav a.active {
+      background: #7289da;
+      color: #fff;
+    }
+    .discord-cta {
+      background: #5865f2;
+      color: #fff !important;
+      text-align: center;
+    }
+    .discord-cta:hover { background: #4752c4; }
+    .sidebar-footer {
+      margin-top: auto;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    /* ========== MAIN CONTENT ========== */
+    .main {
+      margin-left: 260px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ========== TOPBAR ========== */
+    .topbar {
+      background: #18191c;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      border-bottom: 1px solid #2c2d33;
+    }
+    .topbar-title {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+    .btn-primary {
+      background: #5865f2;
+      padding: 0.7rem 1.4rem;
+      color: #fff;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: #4752c4; }
+
+    /* ========== SECTION ========== */
+    .section {
+      padding: 2rem 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .section h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .section p { margin-bottom: 1.5rem; }
+
+    /* ========== STEPS ========== */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .step {
+      background: #1c1d22;
+      padding: 1.5rem;
+      border-radius: 10px;
+      border: 1px solid #2a2b31;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+    .step:hover { transform: translateY(-3px); }
+    .step h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+    .step p { color: #ccc; }
+
+    /* ========== BUTTONS ========== */
+    .btn-secondary {
+      display: inline-block;
+      background: #2b2d31;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: #3c3f45; }
+    .btn-discord {
+      display: inline-block;
+      background: #5865f2;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+      font-weight: bold;
+      text-align: center;
+    }
+    .btn-discord:hover { background: #4752c4; }
+
+    /* ========== CTA BOX ========== */
+    .cta-box {
+      background: linear-gradient(135deg, #1e1f26, #24252e);
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 3rem;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    }
+    .cta-box h2 { font-size: 1.8rem; margin-bottom: 1rem; }
+    .cta-box p { margin-bottom: 1.5rem; color: #bbb; }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #888;
+      border-top: 1px solid #2c2d33;
+      margin-top: auto;
+    }
+
+    /* ========== RESPONSIVE DESIGN ========== */
+    @media (max-width: 900px) {
+      .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+      }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .topbar { padding: 1rem; }
+      .section { padding: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
   <div class="app">
@@ -56,20 +263,19 @@
 
           <div class="step">
             <h3>📜 Schritt 3 – Regeln lesen</h3>
-            <p>Bevor du mitspielst, lies dir bitte unser Regelwerk sorgfältig durch, damit du weißt, wie unser RP funktioniert:</p>
+            <p>Bevor du mitspielst, lies dir bitte unser Regelwerk sorgfältig durch:</p>
             <a href="rules.html" class="btn-secondary">📘 Regelwerk ansehen</a>
           </div>
 
           <div class="step">
             <h3>💬 Schritt 4 – Discord beitreten</h3>
-            <p>Unser Discord ist der zentrale Ort für Bewerbungen, Support, RP-Ankündigungen und mehr. Tritt hier bei:</p>
+            <p>Unser Discord ist der zentrale Ort für Bewerbungen, Support und RP-Ankündigungen:</p>
             <a href="https://discord.gg/rGXZg3XV5X" target="_blank" class="btn-discord">🚀 Jetzt Discord beitreten</a>
           </div>
 
           <div class="step">
             <h3>👤 Schritt 5 – Bewerbung abschicken</h3>
-            <p>Auf dem Discord findest du im Channel <strong>#bewerbung</strong> alle Informationen, wie du dich für eine Fraktion bewerben kannst. 
-              Danach kannst du direkt im RP loslegen!</p>
+            <p>Im Channel <strong>#bewerbung</strong> findest du alle Infos für deine Bewerbung und kannst danach direkt im RP starten!</p>
           </div>
         </div>
 
@@ -79,6 +285,10 @@
           <a href="https://discord.gg/rGXZg3XV5X" target="_blank" class="btn-primary">🚀 Jetzt beitreten</a>
         </div>
       </section>
+
+      <footer class="footer">
+        <small>&copy; 2025 NRW RP DE</small>
+      </footer>
     </main>
   </div>
 
@@ -87,13 +297,8 @@
     const sidebar = document.getElementById("sidebar");
     const toggleSidebar = document.getElementById("toggleSidebar");
     const closeSidebar = document.getElementById("closeSidebar");
-
-    toggleSidebar.addEventListener("click", () => {
-      sidebar.classList.toggle("open");
-    });
-    closeSidebar.addEventListener("click", () => {
-      sidebar.classList.remove("open");
-    });
+    toggleSidebar.addEventListener("click", () => sidebar.classList.toggle("open"));
+    closeSidebar.addEventListener("click", () => sidebar.classList.remove("open"));
   </script>
 </body>
 </html>
