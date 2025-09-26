@@ -135,17 +135,66 @@
       </header>
 
       <section class="section">
-        <h1>Server-Regeln (Kurzfassung)</h1>
+        <h1>Roleplay-Regelwerk</h1>
+        <p>Mit dem Betreten unseres Servers akzeptierst du automatisch alle folgenden Regeln. Lies sie bitte sorgfältig durch – Unwissenheit schützt nicht vor Konsequenzen.</p>
+
+        <h2>1. Allgemeines</h2>
         <ol class="rules-list">
-          <li>Behandle andere mit Respekt.</li>
-          <li>Kein Meta-Gaming oder Power-Gaming.</li>
-          <li>Rollenspiel vor Rollenspielbruch (kein OOC Verhalten im RP).</li>
-          <li>Kein Cheating, Exploits oder unerlaubte Drittprogramme.</li>
-          <li>Folge den Anweisungen der Leitung / Moderation.</li>
+          <li>Jeder Spieler muss sich realitätsnah verhalten.</li>
+          <li>Behandle andere so, wie du auch behandelt werden willst – Respekt ist Grundvoraussetzung.</li>
         </ol>
 
-        <h2>Weitere Details</h2>
-        <p>Die vollständigen Regeln findest du nach dem Beitritt im Channel <code>#regeln</code> oder als PDF (Button oben).</p>
+        <h2>2. OOC</h2>
+        <ol class="rules-list">
+          <li>Keine OOC-Kommentare im Chat.</li>
+          <li>Admin-Notrufe mit <code>!Admin</code> sind erlaubt.</li>
+          <li>OOC-Themen dürfen nur in den dafür vorgesehenen Chats besprochen werden.</li>
+        </ol>
+
+        <h2>3. FailRP & Powergaming</h2>
+        <ol class="rules-list">
+          <li>Unrealistisches Verhalten ist grundsätzlich <strong>FailRP</strong>.</li>
+          <li>Der Einsatz übermäßiger oder unrealistischer Kräfte gilt als <strong>Powergaming</strong> (z. B. sich vor ein Auto stellen).</li>
+          <li>Mit zwei oder mehr platten Reifen zu fahren ist <strong>FailRP</strong>.</li>
+          <li>Ausnahme: In einer Verfolgung ist das Fahren erlaubt, muss aber danach repariert werden.</li>
+        </ol>
+
+        <h2>4. Weitere RP-Regeln</h2>
+        <ol class="rules-list">
+          <li><strong>RDM:</strong> Jemanden ohne Grund zu töten ist verboten.</li>
+          <li><strong>VDM:</strong> Jemanden absichtlich mit einem Fahrzeug zu töten ist verboten.</li>
+          <li>Schusswaffen dürfen nur mit triftigem Grund eingesetzt werden.</li>
+          <li>Kontrollierte Schüsse müssen vorher angekündigt werden.</li>
+          <li>Blitzen darf nur an einsehbaren Stellen erfolgen.</li>
+          <li>Blitzen im Kreisverkehr, direkt hinter Verkehrsschildern oder von Dächern ist verboten.</li>
+        </ol>
+
+        <h2>5. Fraktionen</h2>
+        <ol class="rules-list">
+          <li>Feuerwehr, Rettungsdienst, Notarzt, ADAC, LKW- und Busfahrer sind <strong>wehrlose Fraktionen</strong>.</li>
+          <li>Wehrlose Fraktionen dürfen nicht angegriffen oder als Geisel genommen werden.</li>
+        </ol>
+
+        <h2>6. Admins & Rechte</h2>
+        <ol class="rules-list">
+          <li>Admins dürfen RP-Situationen unterbrechen (<strong>RP-Stop</strong>), wenn dies für Moderationsmaßnahmen erforderlich ist.</li>
+          <li>Admin-Entscheidungen sind bindend und können nur im Discord-Support angefochten werden.</li>
+          <li>Alle Moderationsmaßnahmen müssen im vorgesehenen Kanal dokumentiert werden.</li>
+          <li>Während des Dienstes muss ein Admin einen Nametag tragen und im Adminfunk sein.</li>
+          <li>Das Zurücksetzen des Servercodes oder Ändern der Beitrittsrechte führt zu <strong>Team-Kick und Bewerbungssperre</strong>.</li>
+        </ol>
+
+        <h2>7. Verstöße im Admin-Dienst</h2>
+        <p>Missbraucht ein Admin seine Rechte oder nutzt sie nicht für Admintätigkeiten, wird er gemäß Regel 6 Absatz 5 bestraft.</p>
+
+        <h2>8. Skins</h2>
+        <ol class="rules-list">
+          <li>Skins dürfen das RP nicht stören.</li>
+          <li>Skins, die die Hitbox absichtlich verkleinern, sind verboten.</li>
+          <li>Skins, die anderen Jobs zugeordnet sind, dürfen nicht verwendet werden.</li>
+        </ol>
+
+        <p><strong>Hinweis:</strong> Verstöße gegen diese Regeln können zu Verwarnungen, Kicks oder permanentem Bann führen. Die Serverleitung behält sich das Recht vor, das Regelwerk jederzeit anzupassen.</p>
       </section>
 
       <footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
@@ -170,7 +219,6 @@
       });
     }
 
-    // Optional: automatisch Sidebar schließen, wenn ein Link geklickt wird (mobil)
     document.querySelectorAll('.sidebar-nav a').forEach(link => {
       link.addEventListener('click', () => {
         sidebar.classList.remove('open');
