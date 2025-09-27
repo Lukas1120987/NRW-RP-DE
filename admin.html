@@ -223,13 +223,26 @@
       location.reload();
     }
 
-    // Automatisch eingeloggt bleiben
-    window.addEventListener("DOMContentLoaded", () => {
-      if(localStorage.getItem("adminLoggedIn") === "true"){
-        document.getElementById("login").style.display = "none";
-        document.getElementById("app").style.display = "flex";
-      }
-    });
+   // Automatisch eingeloggt bleiben oder via Hash
+window.addEventListener("DOMContentLoaded", () => {
+  const hash = window.location.hash;
+
+  // Wenn LocalStorage Login aktiv
+  if (localStorage.getItem("adminLoggedIn") === "true") {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("app").style.display = "flex";
+  }
+  // Wenn Discord-Login über #login-success oder Token
+  else if (hash.includes("login-success") || hash.includes("access_token")) {
+    localStorage.setItem("adminLoggedIn", "true");
+    document.getElementById("login").style.display = "none";
+    document.getElementById("app").style.display = "flex";
+
+    // Optional: Hash entfernen, damit die URL sauber bleibt
+    history.replaceState(null, null, 'admin.html');
+  }
+});
+
 
     // Sidebar Steuerung
     const sidebar = document.getElementById('sidebar');
