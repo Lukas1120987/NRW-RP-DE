@@ -42,7 +42,7 @@
   {
     "name": "ADAC Garage",
     "type": "adac",
-    "coords": [900, 300],
+    "coords": [700, 900],
     "beschreibung": "Pannenhilfe & Abschlepper.",
     "bild": "bilder/adac.png",
     "link": "https://discord.gg/Ax5jTqHaCy"
