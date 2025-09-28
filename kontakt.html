@@ -130,7 +130,7 @@ function checkLoginRequired(){
     document.getElementById("loginNotice").style.display = "block";
     if(!discordUser) {
       // Automatisch zum Discord-Login weiterleiten (Simuliert)
-      setTimeout(()=>window.location.href="https://discord.com/oauth2/authorize?client_id=DEINE_ID&redirect_uri="+encodeURIComponent(window.location.href)+"&response_type=token&scope=identify", 1500);
+      setTimeout(()=>window.location.href="https://discord.com/oauth2/authorize?client_id=1391061610445017178&response_type=code&redirect_uri=https%3A%2F%2Flukas1120987.github.io%2FNRW-RP-DE%2Fkontakt.html&scope=identify", 1500);
     }
   } else {
     document.getElementById("loginNotice").style.display = "none";
