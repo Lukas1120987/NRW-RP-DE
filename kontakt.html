@@ -76,24 +76,11 @@
     font-size: 13px;
     color: #8b949e;
   }
-  #discordLogin {
-    margin-top: 10px;
-    padding: 12px;
-    background: #5865F2;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    width: 100%;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  #userInfo {
-    margin-top: 10px;
-    padding: 10px;
-    background: #21262d;
-    border-radius: 8px;
+  #loginStatus {
+    margin-top: 15px;
     text-align: center;
-    display: none;
+    font-size: 14px;
+    font-weight: bold;
   }
 </style>
 </head>
@@ -101,21 +88,21 @@
 <div class="container">
   <h1>Teamkontakt & Tickets</h1>
 
+  <div id="loginStatus">🔐 Nicht eingeloggt</div>
+  <button id="loginBtn" onclick="loginWithDiscord()">🔑 Mit Discord anmelden</button>
+
   <label for="category">Kategorie</label>
   <select id="category" onchange="checkLoginRequired()">
     <option value="" disabled selected>Bitte auswählen</option>
     <option value="feedback">💡 Feedback</option>
     <option value="support">🛠️ Support</option>
     <option value="bug">🐛 Bugreport</option>
-    <option value="bewerbung">📨 Sonstiges</option>
+    <option value="bewerbung">📨 Bewerbung / Kontakt</option>
   </select>
 
   <div id="loginNotice" style="display:none; margin-top:10px; color:#da3633; font-weight:bold;">
     ⚠️ Diese Kategorie erfordert einen Discord-Login.
   </div>
-
-  <button id="discordLogin" style="display:none;" onclick="redirectToDiscord()">🔐 Mit Discord anmelden</button>
-  <div id="userInfo"></div>
 
   <label for="title">Titel</label>
   <input type="text" id="title" placeholder="Kurzer Titel für dein Anliegen">
@@ -132,6 +119,10 @@
 </div>
 
 <script>
+// 🔧 Einstellungen
+const CLIENT_ID = "1391061610445017178"; // deine Client ID
+const REDIRECT_URI = "https://lukas1120987.github.io/NRW-RP-DE/teamkontakt.html"; // exakt so wie bei Discord eingetragen!
+
 const WEBHOOKS = {
   feedback: "https://discord.com/api/webhooks/1421935742539534376/xI5-rZtA2uLb0ylZqbQzvlRcg-kwhp3LqRq3hmuv0dCq9Js3Pn7_pcVy9yrse7NxR-hN",
   support: "https://discord.com/api/webhooks/1421935803893813268/pJwD0Uy2BwyuDTrMG-DPCABY6iyoZpqeMVkdwJuESOQQP9BPxTuER-_fBSIaLgRw3KtO",
@@ -139,69 +130,75 @@ const WEBHOOKS = {
   bewerbung: "https://discord.com/api/webhooks/1421935708192510073/XM46_ZJhWs9Qjgy2ZW_8SYWqFzRgtOZe_pb0NfT9KKLMDhV57719aD_uh3sprXr9ZPgf"
 };
 
-// Kategorien mit Loginpflicht
 const loginRequiredCategories = ["support", "bug", "bewerbung"];
 
+let accessToken = null;
 let discordUser = null;
 
-// --- OAuth-Check (Implicit Grant Flow) ---
-window.addEventListener("DOMContentLoaded", async () => {
-  const hash = window.location.hash;
-  if (hash.includes("access_token")) {
-    const params = new URLSearchParams(hash.replace("#", ""));
-    const token = params.get("access_token");
-    if (token) {
-      try {
-        const res = await fetch("https://discord.com/api/users/@me", {
-          headers: { Authorization: "Bearer " + token }
-        });
-        const user = await res.json();
-        discordUser = user;
-        document.getElementById("userInfo").style.display = "block";
-        document.getElementById("userInfo").innerText = `👤 Eingeloggt als ${user.username}#${user.discriminator}`;
-        document.getElementById("discordLogin").style.display = "none";
-        history.replaceState(null, "", window.location.pathname); // Hash entfernen
-      } catch (e) {
-        console.error("Discord Login fehlgeschlagen");
-      }
+// 🧠 Discord-Login-Button
+function loginWithDiscord() {
+  window.location.href = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identify`;
+}
+
+// 🔐 Token aus URL holen und #login-success setzen
+window.addEventListener("load", async () => {
+  if (window.location.hash.includes("access_token")) {
+    accessToken = window.location.hash.match(/access_token=([^&]+)/)?.[1];
+    localStorage.setItem("discord_logged_in", "true");
+    localStorage.setItem("discord_token", accessToken);
+    window.location.hash = "login-success";
+  } else if (window.location.hash === "#login-success" || localStorage.getItem("discord_logged_in") === "true") {
+    accessToken = localStorage.getItem("discord_token");
+  }
+
+  // Falls eingeloggt: Userdaten holen
+  if (accessToken) {
+    try {
+      const res = await fetch("https://discord.com/api/users/@me", {
+        headers: { "Authorization": "Bearer " + accessToken }
+      });
+      discordUser = await res.json();
+      document.getElementById("loginStatus").innerText = `✅ Eingeloggt als ${discordUser.username}#${discordUser.discriminator}`;
+      document.getElementById("loginBtn").style.display = "none";
+    } catch (e) {
+      console.error("Fehler beim Abrufen der Discord-Daten");
     }
   }
 });
 
-// Loginpflicht prüfen
-function checkLoginRequired() {
+// 💡 Kategorie-Loginprüfung
+function checkLoginRequired(){
   const category = document.getElementById("category").value;
-  if (loginRequiredCategories.includes(category)) {
+  if(loginRequiredCategories.includes(category)){
     document.getElementById("loginNotice").style.display = "block";
-    if (!discordUser) document.getElementById("discordLogin").style.display = "block";
   } else {
     document.getElementById("loginNotice").style.display = "none";
-    document.getElementById("discordLogin").style.display = "none";
   }
 }
 
-// Weiterleitung zu Discord
-function redirectToDiscord() {
-  const clientId = "1391061610445017178";
-  const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
-  const scope = "identify";
-  window.location.href = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scope}`;
-}
-
-// Ticket senden
-async function sendTicket() {
+// 📩 Ticket senden
+async function sendTicket(){
   const category = document.getElementById("category").value;
   const title = document.getElementById("title").value;
   const message = document.getElementById("message").value;
 
-  if (!category || !title || !message) return showError("Bitte fülle alle Felder aus.");
-  if (loginRequiredCategories.includes(category) && !discordUser) return showError("Bitte melde dich zuerst über Discord an.");
+  if(!category || !title || !message){
+    showError("Bitte fülle alle Felder aus.");
+    return;
+  }
+  if(loginRequiredCategories.includes(category) && !discordUser){
+    showError("Bitte melde dich zuerst über Discord an.");
+    return;
+  }
 
   const webhookURL = WEBHOOKS[category];
-  if (!webhookURL) return showError("Webhook für diese Kategorie ist nicht definiert.");
+  if(!webhookURL){
+    showError("Webhook für diese Kategorie ist nicht definiert.");
+    return;
+  }
 
   const embed = {
-    username: "Kontaktformular",
+    username: "Teamkontakt",
     avatar_url: "https://cdn-icons-png.flaticon.com/512/5968/5968756.png",
     embeds: [{
       title: `📩 Neues ${capitalize(category)}-Ticket`,
@@ -221,19 +218,20 @@ async function sendTicket() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(embed)
     });
-    if (res.ok) {
+    if(res.ok){
       showSuccess();
       document.getElementById("title").value = "";
       document.getElementById("message").value = "";
       document.getElementById("category").value = "";
     } else throw new Error();
-  } catch (err) {
+  } catch (err){
     showError("Fehler beim Senden an Discord.");
   }
 }
 
-function categoryColor(cat) {
-  switch (cat) {
+// 🎨 Hilfsfunktionen
+function categoryColor(cat){
+  switch(cat){
     case "feedback": return 0x58a6ff;
     case "support": return 0x2ea043;
     case "bug": return 0xda3633;
@@ -241,12 +239,12 @@ function categoryColor(cat) {
     default: return 0x5865F2;
   }
 }
-function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-function showSuccess() {
+function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+function showSuccess(){
   document.getElementById("success").style.display = "block";
   document.getElementById("error").style.display = "none";
 }
-function showError(msg) {
+function showError(msg){
   const err = document.getElementById("error");
   err.innerText = "❌ " + msg;
   err.style.display = "block";
