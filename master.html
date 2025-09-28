@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discord Webhook Sender</title>
+  <style>
+    /* Dein neues CSS */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url(https://cdn.discordapp.com/attachments/1420047444435271750/1420072003032846386/rest-in-death-xcvxcvxcvxcvd.jpg?ex=68d4109d&is=68d2bf1d&hm=1b3cfa53a3251d7ebe9f8c940a4ec057e6d6b7910416d6e2a9f9aa69f5c4bcc5&) no-repeat center/cover;
+      animation: gradientBG 15s ease infinite;
+      overflow: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .glass-container {
+      position: relative;
+      width: 380px;
+      padding: 40px;
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4);
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .glass-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      transform: skewX(-15deg);
+      transition: 0.5s;
+      pointer-events: none;
+    }
+
+    .glass-container:hover::before {
+      left: 120%;
+    }
+
+    .glass-container h1 {
+      color: #fff;
+      font-size: 28px;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 1px;
+      margin-bottom: 40px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-group input,
+    .input-group textarea {
+      width: 100%;
+      padding: 15px 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      outline: none;
+      border-radius: 35px;
+      font-size: 16px;
+      color: #fff;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      resize: vertical;
+    }
+
+    .input-group input::placeholder,
+    .input-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .input-group input:focus,
+    .input-group textarea:focus {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      outline: none;
+      border-radius: 35px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .login-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .status {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glass-container">
+    <h1>Discord Webhook Sender</h1>
+    <form id="webhookForm">
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Bot-Name (optional)" />
+      </div>
+      <div class="input-group">
+        <textarea id="message" placeholder="Deine Nachricht..." required></textarea>
+      </div>
+      <button type="submit" class="login-btn">Senden</button>
+      <div class="status" id="status"></div>
+    </form>
+  </div>
+
+  <script>
+    const webhookUrl = "https://discord.com/api/webhooks/1421921483852087438/tJjQbd6xceZhs4e9tDUlPberhh0cq6esE5qvGFAENgdrFtg6M3Z0Car4pn1bLdPJUsSM";
+
+    document.getElementById("webhookForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const message = document.getElementById("message").value.trim();
+      const username = document.getElementById("username").value.trim();
+      const statusDiv = document.getElementById("status");
+
+      if (!message) {
+        statusDiv.textContent = "Bitte eine Nachricht eingeben!";
+        statusDiv.style.color = "orange";
+        return;
+      }
+
+      const payload = {
+        content: message,
+        username: username || "WebhookBot"
+      };
+
+      try {
+        const response = await fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          statusDiv.textContent = "Nachricht erfolgreich gesendet!";
+          statusDiv.style.color = "lightgreen";
+          document.getElementById("message").value = "";
+        } else {
+          statusDiv.textContent = "Fehler beim Senden!";
+          statusDiv.style.color = "red";
+        }
+      } catch (err) {
+        statusDiv.textContent = "Netzwerkfehler oder falsche URL!";
+        statusDiv.style.color = "red";
+      }
+    });
+  </script>
+
+</body>
+</html>
