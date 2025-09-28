@@ -76,6 +76,25 @@
     font-size: 13px;
     color: #8b949e;
   }
+  #discordLogin {
+    margin-top: 10px;
+    padding: 12px;
+    background: #5865F2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  #userInfo {
+    margin-top: 10px;
+    padding: 10px;
+    background: #21262d;
+    border-radius: 8px;
+    text-align: center;
+    display: none;
+  }
 </style>
 </head>
 <body>
@@ -94,6 +113,9 @@
   <div id="loginNotice" style="display:none; margin-top:10px; color:#da3633; font-weight:bold;">
     ⚠️ Diese Kategorie erfordert einen Discord-Login.
   </div>
+
+  <button id="discordLogin" style="display:none;" onclick="redirectToDiscord()">🔐 Mit Discord anmelden</button>
+  <div id="userInfo"></div>
 
   <label for="title">Titel</label>
   <input type="text" id="title" placeholder="Kurzer Titel für dein Anliegen">
@@ -117,45 +139,66 @@ const WEBHOOKS = {
   bewerbung: "https://discord.com/api/webhooks/1421935708192510073/XM46_ZJhWs9Qjgy2ZW_8SYWqFzRgtOZe_pb0NfT9KKLMDhV57719aD_uh3sprXr9ZPgf"
 };
 
-// Welche Kategorien brauchen Discord-Login?
-const loginRequiredCategories = ["support", "bewerbung", "bug"];
+// Kategorien mit Loginpflicht
+const loginRequiredCategories = ["support", "bug", "bewerbung"];
 
-// Simulierter Login (→ hier würdest du Discord OAuth integrieren)
 let discordUser = null;
 
-// Check ob Login nötig ist
-function checkLoginRequired(){
-  const category = document.getElementById("category").value;
-  if(loginRequiredCategories.includes(category)){
-    document.getElementById("loginNotice").style.display = "block";
-    if(!discordUser) {
-      // Automatisch zum Discord-Login weiterleiten (Simuliert)
-      setTimeout(()=>window.location.href="https://discord.com/oauth2/authorize?client_id=1391061610445017178&response_type=code&redirect_uri=https%3A%2F%2Flukas1120987.github.io%2FNRW-RP-DE%2Fkontakt.html&scope=identify", 1500);
+// --- OAuth-Check (Implicit Grant Flow) ---
+window.addEventListener("DOMContentLoaded", async () => {
+  const hash = window.location.hash;
+  if (hash.includes("access_token")) {
+    const params = new URLSearchParams(hash.replace("#", ""));
+    const token = params.get("access_token");
+    if (token) {
+      try {
+        const res = await fetch("https://discord.com/api/users/@me", {
+          headers: { Authorization: "Bearer " + token }
+        });
+        const user = await res.json();
+        discordUser = user;
+        document.getElementById("userInfo").style.display = "block";
+        document.getElementById("userInfo").innerText = `👤 Eingeloggt als ${user.username}#${user.discriminator}`;
+        document.getElementById("discordLogin").style.display = "none";
+        history.replaceState(null, "", window.location.pathname); // Hash entfernen
+      } catch (e) {
+        console.error("Discord Login fehlgeschlagen");
+      }
     }
+  }
+});
+
+// Loginpflicht prüfen
+function checkLoginRequired() {
+  const category = document.getElementById("category").value;
+  if (loginRequiredCategories.includes(category)) {
+    document.getElementById("loginNotice").style.display = "block";
+    if (!discordUser) document.getElementById("discordLogin").style.display = "block";
   } else {
     document.getElementById("loginNotice").style.display = "none";
+    document.getElementById("discordLogin").style.display = "none";
   }
 }
 
-async function sendTicket(){
+// Weiterleitung zu Discord
+function redirectToDiscord() {
+  const clientId = "1391061610445017178";
+  const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
+  const scope = "identify";
+  window.location.href = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scope}`;
+}
+
+// Ticket senden
+async function sendTicket() {
   const category = document.getElementById("category").value;
   const title = document.getElementById("title").value;
   const message = document.getElementById("message").value;
 
-  if(!category || !title || !message){
-    showError("Bitte fülle alle Felder aus.");
-    return;
-  }
-  if(loginRequiredCategories.includes(category) && !discordUser){
-    showError("Bitte melde dich zuerst über Discord an.");
-    return;
-  }
+  if (!category || !title || !message) return showError("Bitte fülle alle Felder aus.");
+  if (loginRequiredCategories.includes(category) && !discordUser) return showError("Bitte melde dich zuerst über Discord an.");
 
   const webhookURL = WEBHOOKS[category];
-  if(!webhookURL){
-    showError("Webhook für diese Kategorie ist nicht definiert.");
-    return;
-  }
+  if (!webhookURL) return showError("Webhook für diese Kategorie ist nicht definiert.");
 
   const embed = {
     username: "Kontaktformular",
@@ -178,19 +221,19 @@ async function sendTicket(){
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(embed)
     });
-    if(res.ok){
+    if (res.ok) {
       showSuccess();
       document.getElementById("title").value = "";
       document.getElementById("message").value = "";
       document.getElementById("category").value = "";
     } else throw new Error();
-  } catch (err){
+  } catch (err) {
     showError("Fehler beim Senden an Discord.");
   }
 }
 
-function categoryColor(cat){
-  switch(cat){
+function categoryColor(cat) {
+  switch (cat) {
     case "feedback": return 0x58a6ff;
     case "support": return 0x2ea043;
     case "bug": return 0xda3633;
@@ -198,12 +241,12 @@ function categoryColor(cat){
     default: return 0x5865F2;
   }
 }
-function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
-function showSuccess(){
+function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function showSuccess() {
   document.getElementById("success").style.display = "block";
   document.getElementById("error").style.display = "none";
 }
-function showError(msg){
+function showError(msg) {
   const err = document.getElementById("error");
   err.innerText = "❌ " + msg;
   err.style.display = "block";
