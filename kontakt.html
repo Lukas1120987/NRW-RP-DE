@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teamkontakt & Tickets</title>
+<title>Teamkontakt & Live-Support</title>
 <style>
   body {
     font-family: 'Segoe UI', sans-serif;
@@ -12,13 +12,13 @@
     margin: 0;
     padding: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
     min-height: 100vh;
+    padding-top: 50px;
   }
   .container {
     width: 90%;
-    max-width: 600px;
+    max-width: 650px;
     background: #161b22;
     padding: 30px;
     border-radius: 12px;
@@ -50,7 +50,7 @@
   }
   button {
     width: 100%;
-    margin-top: 25px;
+    margin-top: 20px;
     padding: 15px;
     border: none;
     border-radius: 8px;
@@ -70,17 +70,48 @@
   }
   .success { background: #238636; }
   .error { background: #da3633; }
-  footer {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 13px;
-    color: #8b949e;
-  }
   #loginStatus {
     margin-top: 15px;
     text-align: center;
     font-size: 14px;
     font-weight: bold;
+  }
+  #liveSupport {
+    margin-top: 25px;
+    padding: 20px;
+    background: #1a1d2b;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+  }
+  #liveSupport a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 12px 20px;
+    background: #5865F2;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.2s;
+  }
+  #liveSupport a:hover { background: #4752C4; }
+  #ticketID {
+    font-weight: bold;
+    margin-top: 10px;
+    color: #58a6ff;
+  }
+  #ticketStatus {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #f0ad4e;
+  }
+  footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 13px;
+    color: #8b949e;
   }
 </style>
 </head>
@@ -115,13 +146,20 @@
   <div id="success" class="success">✅ Ticket erfolgreich gesendet!</div>
   <div id="error" class="error">❌ Fehler beim Senden. Bitte versuche es erneut.</div>
 
+  <div id="liveSupport">
+    <h2>💬 Live-Support</h2>
+    <p>Dein Ticket wurde erstellt! Du kannst direkt im Discord-Channel weiter chatten:</p>
+    <div id="ticketID"></div>
+    <div id="ticketStatus">Erstellt</div>
+    <a href="https://discord.com/channels/ServerID/ChannelID" target="_blank">Zum Live-Support</a>
+  </div>
+
   <footer>Powered by Discord Webhooks 🚀</footer>
 </div>
 
 <script>
-// 🔧 Einstellungen
-const CLIENT_ID = "1391061610445017178"; // deine Client ID
-const REDIRECT_URI = "https://lukas1120987.github.io/NRW-RP-DE/teamkontakt.html"; // exakt so wie bei Discord eingetragen!
+const CLIENT_ID = "1391061610445017178";
+const REDIRECT_URI = "https://lukas1120987.github.io/NRW-RP-DE/teamkontakt.html";
 
 const WEBHOOKS = {
   feedback: "https://discord.com/api/webhooks/1421935742539534376/xI5-rZtA2uLb0ylZqbQzvlRcg-kwhp3LqRq3hmuv0dCq9Js3Pn7_pcVy9yrse7NxR-hN",
@@ -130,106 +168,97 @@ const WEBHOOKS = {
   bewerbung: "https://discord.com/api/webhooks/1421935708192510073/XM46_ZJhWs9Qjgy2ZW_8SYWqFzRgtOZe_pb0NfT9KKLMDhV57719aD_uh3sprXr9ZPgf"
 };
 
-const loginRequiredCategories = ["support", "bug", "bewerbung"];
-
+const loginRequiredCategories = ["support","bug","bewerbung"];
 let accessToken = null;
 let discordUser = null;
 
-// 🧠 Discord-Login-Button
+// Discord-Login
 function loginWithDiscord() {
   window.location.href = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identify`;
 }
 
-// 🔐 Token aus URL holen und #login-success setzen
+// Token aus URL extrahieren
 window.addEventListener("load", async () => {
-  if (window.location.hash.includes("access_token")) {
+  if(window.location.hash.includes("access_token")){
     accessToken = window.location.hash.match(/access_token=([^&]+)/)?.[1];
-    localStorage.setItem("discord_logged_in", "true");
-    localStorage.setItem("discord_token", accessToken);
-    window.location.hash = "login-success";
-  } else if (window.location.hash === "#login-success" || localStorage.getItem("discord_logged_in") === "true") {
+    localStorage.setItem("discord_logged_in","true");
+    localStorage.setItem("discord_token",accessToken);
+    window.location.hash = "#login-success";
+  } else if(window.location.hash === "#login-success" || localStorage.getItem("discord_logged_in")==="true"){
     accessToken = localStorage.getItem("discord_token");
   }
 
-  // Falls eingeloggt: Userdaten holen
-  if (accessToken) {
+  if(accessToken){
     try {
-      const res = await fetch("https://discord.com/api/users/@me", {
-        headers: { "Authorization": "Bearer " + accessToken }
-      });
+      const res = await fetch("https://discord.com/api/users/@me", {headers: {"Authorization": "Bearer "+accessToken}});
       discordUser = await res.json();
       document.getElementById("loginStatus").innerText = `✅ Eingeloggt als ${discordUser.username}#${discordUser.discriminator}`;
       document.getElementById("loginBtn").style.display = "none";
-    } catch (e) {
+    } catch(e){
       console.error("Fehler beim Abrufen der Discord-Daten");
     }
   }
 });
 
-// 💡 Kategorie-Loginprüfung
 function checkLoginRequired(){
   const category = document.getElementById("category").value;
-  if(loginRequiredCategories.includes(category)){
-    document.getElementById("loginNotice").style.display = "block";
-  } else {
-    document.getElementById("loginNotice").style.display = "none";
-  }
+  document.getElementById("loginNotice").style.display = loginRequiredCategories.includes(category) ? "block" : "none";
 }
 
-// 📩 Ticket senden
+// Ticketnummer generieren
+function generateTicketID(){
+  const now = new Date();
+  return `#${now.getFullYear()}-${Math.floor(Math.random()*9000+1000)}`;
+}
+
+// Ticket senden
 async function sendTicket(){
   const category = document.getElementById("category").value;
   const title = document.getElementById("title").value;
   const message = document.getElementById("message").value;
 
-  if(!category || !title || !message){
-    showError("Bitte fülle alle Felder aus.");
-    return;
-  }
-  if(loginRequiredCategories.includes(category) && !discordUser){
-    showError("Bitte melde dich zuerst über Discord an.");
-    return;
-  }
+  if(!category || !title || !message){ showError("Bitte fülle alle Felder aus."); return; }
+  if(loginRequiredCategories.includes(category) && !discordUser){ showError("Bitte melde dich zuerst über Discord an."); return; }
 
   const webhookURL = WEBHOOKS[category];
-  if(!webhookURL){
-    showError("Webhook für diese Kategorie ist nicht definiert.");
-    return;
-  }
+  if(!webhookURL){ showError("Webhook für diese Kategorie ist nicht definiert."); return; }
+
+  const ticketID = generateTicketID();
 
   const embed = {
     username: "Teamkontakt",
     avatar_url: "https://cdn-icons-png.flaticon.com/512/5968/5968756.png",
-    embeds: [{
-      title: `📩 Neues ${capitalize(category)}-Ticket`,
+    embeds:[{
+      title:`📩 Neues ${capitalize(category)}-Ticket ${ticketID}`,
       color: categoryColor(category),
-      fields: [
-        { name: "📌 Titel", value: title },
-        { name: "✉️ Nachricht", value: message },
-        { name: "👤 Absender", value: discordUser ? `${discordUser.username}#${discordUser.discriminator}` : "Anonym" },
-        { name: "📅 Eingegangen", value: new Date().toLocaleString("de-DE") }
+      fields:[
+        {name:"📌 Titel", value:title},
+        {name:"✉️ Nachricht", value:message},
+        {name:"👤 Absender", value: discordUser ? `${discordUser.username}#${discordUser.discriminator}` : "Anonym"},
+        {name:"📅 Eingegangen", value: new Date().toLocaleString("de-DE")}
       ]
     }]
   };
 
-  try {
+  try{
     const res = await fetch(webhookURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
       body: JSON.stringify(embed)
     });
     if(res.ok){
       showSuccess();
-      document.getElementById("title").value = "";
-      document.getElementById("message").value = "";
-      document.getElementById("category").value = "";
+      document.getElementById("title").value="";
+      document.getElementById("message").value="";
+      document.getElementById("category").value="";
+      document.getElementById("liveSupport").style.display="block";
+      document.getElementById("ticketID").innerText = ticketID;
+      document.getElementById("ticketStatus").innerText = "Erstellt";
+      document.getElementById("liveSupport").scrollIntoView({behavior:"smooth"});
     } else throw new Error();
-  } catch (err){
-    showError("Fehler beim Senden an Discord.");
-  }
+  } catch(e){ showError("Fehler beim Senden an Discord."); }
 }
 
-// 🎨 Hilfsfunktionen
 function categoryColor(cat){
   switch(cat){
     case "feedback": return 0x58a6ff;
@@ -240,16 +269,8 @@ function categoryColor(cat){
   }
 }
 function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
-function showSuccess(){
-  document.getElementById("success").style.display = "block";
-  document.getElementById("error").style.display = "none";
-}
-function showError(msg){
-  const err = document.getElementById("error");
-  err.innerText = "❌ " + msg;
-  err.style.display = "block";
-  document.getElementById("success").style.display = "none";
-}
+function showSuccess(){ document.getElementById("success").style.display="block"; document.getElementById("error").style.display="none"; }
+function showError(msg){ const err = document.getElementById("error"); err.innerText="❌ "+msg; err.style.display="block"; document.getElementById("success").style.display="none"; }
 </script>
 </body>
 </html>
