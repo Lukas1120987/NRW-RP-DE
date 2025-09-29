@@ -76,6 +76,17 @@
     font-size: 14px;
     font-weight: bold;
   }
+  #userInfo {
+    text-align: center;
+    margin-top: 15px;
+    display: none;
+  }
+  #userInfo img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin-bottom: 8px;
+  }
   #liveSupport {
     margin-top: 25px;
     padding: 20px;
@@ -120,6 +131,10 @@
   <h1>Teamkontakt & Tickets</h1>
 
   <div id="loginStatus">🔐 Nicht eingeloggt</div>
+  <div id="userInfo">
+    <img id="userAvatar" src="" alt="Avatar">
+    <div id="userName"></div>
+  </div>
   <button id="loginBtn" onclick="loginWithDiscord()">🔑 Mit Discord anmelden</button>
 
   <label for="category">Kategorie</label>
@@ -159,7 +174,7 @@
 
 <script>
 const CLIENT_ID = "1391061610445017178";
-const REDIRECT_URI = "https://lukas1120987.github.io/NRW-RP-DE/teamkontakt.html";
+const REDIRECT_URI = "https://lukas1120987.github.io/NRW-RP-DE/kontakt.html";
 
 const WEBHOOKS = {
   feedback: "https://discord.com/api/webhooks/1421935742539534376/xI5-rZtA2uLb0ylZqbQzvlRcg-kwhp3LqRq3hmuv0dCq9Js3Pn7_pcVy9yrse7NxR-hN",
@@ -172,46 +187,54 @@ const loginRequiredCategories = ["support","bug","bewerbung"];
 let accessToken = null;
 let discordUser = null;
 
-// Discord-Login
+// Discord-Login starten
 function loginWithDiscord() {
-  window.location.href = "https://discord.com/oauth2/authorize?client_id=1391061610445017178&response_type=code&redirect_uri=https%3A%2F%2Flukas1120987.github.io%2FNRW-RP-DE%2Fkontakt.html&scope=identify";
+  window.location.href = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identify`;
 }
 
-// Token aus URL extrahieren
+// Token aus Hash extrahieren oder aus localStorage laden
 window.addEventListener("load", async () => {
-  if(window.location.hash.includes("access_token")){
+  if (window.location.hash.includes("access_token")) {
     accessToken = window.location.hash.match(/access_token=([^&]+)/)?.[1];
-    localStorage.setItem("discord_logged_in","true");
-    localStorage.setItem("discord_token",accessToken);
-    window.location.hash = "#login-success";
-  } else if(window.location.hash === "#login-success" || localStorage.getItem("discord_logged_in")==="true"){
+    localStorage.setItem("discord_logged_in", "true");
+    localStorage.setItem("discord_token", accessToken);
+    window.location.hash = "";
+  } else if (localStorage.getItem("discord_logged_in") === "true") {
     accessToken = localStorage.getItem("discord_token");
   }
 
-  if(accessToken){
+  if (accessToken) {
     try {
-      const res = await fetch("https://discord.com/api/users/@me", {headers: {"Authorization": "Bearer "+accessToken}});
+      const res = await fetch("https://discord.com/api/users/@me", {
+        headers: { "Authorization": "Bearer " + accessToken }
+      });
       discordUser = await res.json();
-      document.getElementById("loginStatus").innerText = `✅ Eingeloggt als ${discordUser.username}#${discordUser.discriminator}`;
-      document.getElementById("loginBtn").style.display = "none";
-    } catch(e){
-      console.error("Fehler beim Abrufen der Discord-Daten");
+      showUserInfo(discordUser);
+    } catch (e) {
+      console.error("Fehler beim Abrufen der Discord-Daten", e);
+      localStorage.clear();
     }
   }
 });
+
+function showUserInfo(user) {
+  document.getElementById("loginStatus").innerText = `✅ Eingeloggt als ${user.username}#${user.discriminator}`;
+  document.getElementById("loginBtn").style.display = "none";
+  document.getElementById("userInfo").style.display = "block";
+  document.getElementById("userName").innerText = `${user.username}#${user.discriminator}`;
+  document.getElementById("userAvatar").src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+}
 
 function checkLoginRequired(){
   const category = document.getElementById("category").value;
   document.getElementById("loginNotice").style.display = loginRequiredCategories.includes(category) ? "block" : "none";
 }
 
-// Ticketnummer generieren
 function generateTicketID(){
   const now = new Date();
   return `#${now.getFullYear()}-${Math.floor(Math.random()*9000+1000)}`;
 }
 
-// Ticket senden
 async function sendTicket(){
   const category = document.getElementById("category").value;
   const title = document.getElementById("title").value;
