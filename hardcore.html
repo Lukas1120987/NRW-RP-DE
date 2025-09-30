@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="NRW RP DE – Hardcore Roleplay: Realismus, Konsequenz und maximale Immersion auf höchstem Niveau." />
+  <title>Hardcore Roleplay – NRW RP DE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #5865F2;
+      --primary-dark: #4752C4;
+      --background: #0f111a;
+      --sidebar-bg: #151823;
+      --text: #f0f0f0;
+      --text-light: #d0d0d0;
+      --accent: #7289da;
+      --shadow: rgba(0,0,0,0.4);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a { color: var(--primary); text-decoration: none; transition: 0.3s; }
+    a:hover { color: var(--accent); }
+    h1, h2, h3 { font-weight: 700; margin-bottom: 0.5rem; }
+    p { color: var(--text-light); line-height: 1.7; margin-bottom: 1rem; }
+
+    .app { display: flex; min-height: 100vh; }
+
+    /* ===================== Sidebar ===================== */
+    .sidebar {
+      width: 260px;
+      background: var(--sidebar-bg);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
+      top: 0; bottom: 0; left: 0;
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+    .sidebar-logo { width: 90px; margin: 0 auto 1.5rem; display: block; }
+    .sidebar-nav a {
+      display: block;
+      padding: 0.8rem 1rem;
+      color: var(--text-light);
+      border-radius: 6px;
+      transition: 0.3s;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      position: relative;
+    }
+    .sidebar-nav a:hover {
+      background: rgba(88, 101, 242, 0.1);
+      color: #fff;
+      transform: translateX(4px);
+    }
+    .sidebar-nav a.active {
+      color: #fff;
+      font-weight: bold;
+      border-left: 4px solid var(--primary);
+      background: rgba(88,101,242,0.15);
+      padding-left: calc(1rem - 4px);
+    }
+
+    /* Sidebar toggle */
+    .sidebar.closed { transform: translateX(-100%); }
+    #toggleSidebar {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.8rem;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* ===================== Main ===================== */
+    .main {
+      margin-left: 260px;
+      width: calc(100% - 260px);
+      display: flex;
+      flex-direction: column;
+      transition: margin-left 0.3s ease;
+    }
+    .main.fullwidth { margin-left: 0; width: 100%; }
+
+    .topbar {
+      background: #1c1f2b;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+    .topbar-title { font-size: 1.3rem; font-weight: bold; }
+
+    .section {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* ===================== Hero ===================== */
+    .hero {
+      background: linear-gradient(180deg, #151823, #0f111a);
+      padding: 6rem 2rem;
+      text-align: center;
+      animation: fadeIn 1s ease-out forwards;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+    }
+
+    /* ===================== Info Cards ===================== */
+    .info-card {
+      background: #1a1d2b;
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+      border: 2px solid transparent;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .info-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.8s ease-out;
+    }
+    .info-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      border: 2px solid var(--primary);
+    }
+
+    .highlight-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 1.5rem;
+    }
+    .highlight-list li {
+      background: #222436;
+      padding: 0.9rem 1.2rem;
+      margin-bottom: 0.8rem;
+      border-radius: 8px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+      display: inline-block;
+      margin-top: 2rem;
+      transition: 0.3s;
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(88,101,242,0.4);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #151823;
+      color: #777;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+
+    /* Overlay (mobil) */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      z-index: 500;
+      transition: opacity 0.3s;
+    }
+    .overlay.active { display: block; }
+
+    /* ===================== Responsive ===================== */
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      #toggleSidebar { display: block; }
+      .main { margin-left: 0; width: 100%; }
+    }
+
+    /* ===================== Animations ===================== */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <header>
+        <img src="bilder/logo.png" class="sidebar-logo" alt="NRW RP Logo">
+      </header>
+      <nav class="sidebar-nav">
+        <a href="index.html">Start</a>
+        <a href="about.html">Über uns</a>
+        <a href="factions.html">Fraktionen</a>
+        <a href="rules.html">Regelwerk</a>
+        <a href="events.html">Events</a>
+        <a href="hardcore.html" class="active">Hardcore RP</a>
+      </nav>
+    </aside>
+
+    <div class="overlay" id="overlay"></div>
+
+    <main class="main" id="main">
+      <header class="topbar">
+        <button id="toggleSidebar">&#9776;</button>
+        <div class="topbar-title">NRW RP DE — Hardcore RP</div>
+        <a href="join.html" class="btn-primary">Jetzt beitreten</a>
+      </header>
+
+      <section class="hero" id="hero">
+        <h1>Hardcore Roleplay</h1>
+        <p>Realismus, Konsequenz und maximale Immersion – Hardcore RP ist die intensivste Form des Roleplays bei NRW RP DE.</p>
+      </section>
+
+      <section class="section">
+        <div class="info-card">
+          <h2>Was ist Hardcore RP?</h2>
+          <p>
+            Hardcore RP bedeutet: Du spielst nicht einfach nur einen Charakter – du <strong>lebst</strong> ihn. Entscheidungen haben Konsequenzen, jede Handlung zählt und jede Begegnung kann die Story verändern.
+          </p>
+          <ul class="highlight-list">
+            <li>Konsequentes Handeln mit echten Folgen</li>
+            <li>Authentische Szenarien & realistische Abläufe</li>
+            <li>Keine Ausreden – FailRP, MG & PG sind tabu</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h2>Für wen ist Hardcore RP geeignet?</h2>
+          <p>
+            Für erfahrene Spieler:innen, die echtes Storytelling und glaubwürdige Charakterentwicklung schätzen. Hier zählt Tiefe statt Schnelligkeit.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h2>📋 Voraussetzungen</h2>
+          <p>Um teilzunehmen, solltest du:</p>
+          <ul class="highlight-list">
+            <li>Unser Regelwerk genau kennen</li>
+            <li>Eine Bewerbung für den Server ausfüllen</li>
+          </ul>
+          <a href="join.html" class="btn-primary">Jetzt bewerben</a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <small>NRW RP DE · Hardcore Roleplay · Realismus auf höchstem Niveau</small>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sidebar = document.getElementById('sidebar');
+      const toggleBtn = document.getElementById('toggleSidebar');
+      const main = document.getElementById('main');
+      const overlay = document.getElementById('overlay');
+      const cards = document.querySelectorAll('.info-card');
+
+      // Sidebar öffnen/schließen
+      toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+        main.classList.toggle('fullwidth');
+        overlay.classList.toggle('active');
+      });
+
+      overlay.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        main.classList.remove('fullwidth');
+        overlay.classList.remove('active');
+      });
+
+      document.querySelectorAll('.sidebar-nav a').forEach(link => {
+        link.addEventListener('click', () => {
+          sidebar.classList.remove('open');
+          main.classList.remove('fullwidth');
+          overlay.classList.remove('active');
+        });
+      });
+
+      // Animation der Info-Cards bei Scroll
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      cards.forEach(card => observer.observe(card));
+    });
+  </script>
+</body>
+</html>
