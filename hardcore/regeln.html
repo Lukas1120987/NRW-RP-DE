@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="NRW RP DE – Hardcore Roleplay: Vollständiges, professionelles Regelwerk (Stand: 30.09.2025)." />
+  <title>Hardcore RP Regelwerk — NRW RP DE</title>
+
+  <!-- Inlined CSS -->
+  <style>
+    :root{
+      --bg:#0f111a;
+      --sidebar:#151823;
+      --card:#12131a;
+      --muted:#bfc6db;
+      --text:#eef2ff;
+      --accent:#5865F2;
+      --accent-2:#7289da;
+      --danger:#e1645a;
+      --success:#5dd39a;
+      --glass: rgba(255,255,255,0.03);
+      --shadow: 0 8px 24px rgba(0,0,0,0.6);
+      --radius:12px;
+      font-sans: Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    /* Reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(180deg,var(--bg) 0%, #0b0c10 100%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.6;
+      padding-bottom:4rem;
+    }
+
+    a{color:var(--accent);text-decoration:none}
+    a:hover{color:var(--accent-2);text-decoration:underline}
+
+    .container{
+      max-width:1200px;
+      margin:2.25rem auto;
+      display:grid;
+      grid-template-columns: 280px 1fr;
+      gap:2rem;
+      padding:1rem;
+    }
+
+    /* Sidebar / TOC */
+    .toc{
+      background:linear-gradient(180deg,var(--sidebar), rgba(21,24,35,0.9));
+      border-radius:var(--radius);
+      padding:1.25rem;
+      box-shadow:var(--shadow);
+      position:sticky;
+      top:2rem;
+      height:calc(100vh - 4rem);
+      overflow:auto;
+    }
+    .site-logo{
+      display:block;
+      width:140px;
+      margin:0 auto 1rem;
+      opacity:.95;
+    }
+    .toc h3{font-size:0.95rem;margin-bottom:.75rem;color:var(--muted)}
+    .toc nav a{
+      display:block;
+      padding:.55rem .6rem;
+      border-radius:8px;
+      color:var(--muted);
+      margin-bottom:.35rem;
+      font-size:.95rem;
+    }
+    .toc nav a:hover{background:rgba(88,101,242,0.06);color:var(--text)}
+    .toc .version{font-size:.82rem;color:#9aa3c8;margin-top:1rem;text-align:center}
+
+    /* Main content */
+    main.article{
+      background:linear-gradient(180deg,var(--card), rgba(18,19,26,0.88));
+      border-radius:var(--radius);
+      padding:1.5rem 2rem;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    header.hero{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      margin-bottom:1rem;
+      border-bottom:1px solid rgba(255,255,255,0.03);
+      padding-bottom:1rem;
+    }
+    .hero .title{font-size:1.6rem;font-weight:700}
+    .hero .subtitle{color:var(--muted);font-size:.95rem}
+    .badge{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:.45rem .7rem;border-radius:999px;color:white;font-weight:700;font-size:.85rem;box-shadow:0 6px 18px rgba(88,101,242,0.15)}
+
+    /* Rule sections */
+    section.rule{
+      margin-top:1.25rem;
+      padding:1rem;
+      border-radius:10px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .rule h2{font-size:1.12rem;margin-bottom:.5rem}
+    .rule p{color:var(--muted);margin-bottom:.75rem}
+    ul.rules{list-style:decimal; margin-left:1.2rem; color:var(--muted)}
+    ul.rules li{margin:0.5rem 0;padding-left:.4rem}
+    .subpoint{margin-left:1rem;list-style:lower-alpha}
+    .example{background:rgba(255,255,255,0.02);padding:.6rem;border-radius:8px;color:var(--muted);font-size:.95rem;margin-top:.5rem;border-left:4px solid rgba(88,101,242,0.18)}
+
+    .note{
+      background:linear-gradient(90deg, rgba(88,101,242,0.06), rgba(114,137,218,0.03));
+      border-radius:10px;padding:.7rem;margin-top:.8rem;color:var(--muted);
+      font-size:.95rem;border:1px solid rgba(88,101,242,0.06)
+    }
+
+    .enforcement{
+      display:grid;
+      grid-template-columns:1fr 220px;
+      gap:1rem;
+      margin-top:.9rem;
+    }
+    .sanctions{background:rgba(255,255,255,0.02);padding:1rem;border-radius:10px}
+    .quick{background:rgba(255,255,255,0.02);padding:1rem;border-radius:10px}
+
+    footer.sitefoot{
+      margin-top:1.25rem;
+      padding-top:1rem;
+      border-top:1px solid rgba(255,255,255,0.03);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width:980px){
+      .container{grid-template-columns: 1fr; padding:1rem}
+      .toc{position:static;height:auto;order:2;margin-top:1rem}
+      main.article{order:1}
+      .enforcement{grid-template-columns:1fr}
+    }
+  </style>
+
+  <!-- Optional Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar / Table of Contents -->
+    <aside class="toc" aria-label="Inhaltsverzeichnis">
+      <img src="bilder/logo.png" alt="NRW RP Logo" class="site-logo" onerror="this.style.display='none'">
+      <h3>Inhalt</h3>
+      <nav>
+        <a href="#intro">Einleitung & Zweck</a>
+        <a href="#giltfuer">Gilt für</a>
+        <a href="#allgemein">Allgemeine Regeln</a>
+        <a href="#charakter">Charakter & IC-Verhalten</a>
+        <a href="#ooc">OOC-Verhalten & Kommunikation</a>
+        <a href="#mg-pg-failrp">MG / PG / FailRP</a>
+        <a href="#kriminalitaet">Kriminalität, Gewalt & Waffen</a>
+        <a href="#polizei-fraktionen">Polizei, Fraktionen & Dienst-RP</a>
+        <a href="#tode-respawn">Death, Wounds & Respawn</a>
+        <a href="#technik">Technik, Bugs & Exploits</a>
+        <a href="#beispiele">Beispiele (Do & Don't)</a>
+        <a href="#durchsetzung">Durchsetzung & Sanktionen</a>
+        <a href="#kontakt">Kontakt, Einspruch & Appeal</a>
+      </nav>
+      <div class="version">Stand: 30.09.2025 · Hardcore RP — NRW RP DE</div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="article" role="main">
+      <header class="hero" role="banner">
+        <div>
+          <div class="title">Hardcore Roleplay — Vollständiges Regelwerk</div>
+          <div class="subtitle">Strikt, verbindlich und gestaltet für maximale Immersion und faire Durchsetzung.</div>
+        </div>
+        <div class="badge">Hardcore RP · Verbindlich</div>
+      </header>
+
+      <!-- Introduction -->
+      <section id="intro" class="rule" aria-labelledby="intro-title">
+        <h2 id="intro-title">Einleitung & Zweck</h2>
+        <p>
+          Dieses Dokument definiert die verbindlichen Regeln für das Hardcore Roleplay auf <strong>NRW RP DE</strong>.
+          Ziel ist ein realistisches, konsequentes Spiel mit klaren Grenzen — zum Schutz von Immersion, Spielspaß und Sicherheit.
+        </p>
+        <p class="note"><strong>Wichtig:</strong> Regeln sind verbindlich für alle Spieler:innen. Unwissenheit schützt nicht vor Sanktionen.</p>
+      </section>
+
+      <!-- Applies to -->
+      <section id="giltfuer" class="rule">
+        <h2>Gilt für</h2>
+        <ul class="rules">
+          <li>Alle aktiven Accounts auf dem Server, inklusive alternativer Accounts (alts).</li>
+          <li>Community-Events, Foren- und Diskussionsräume, in denen Server-IP oder Serverregeln genannt werden.</li>
+          <li>Verstöße werden auch geahndet, wenn sie außerhalb des Servers nachweisbar stattfinden und den Serverbetrieb beeinträchtigen.</li>
+        </ul>
+      </section>
+
+      <!-- General -->
+      <section id="allgemein" class="rule">
+        <h2>Allgemeine Regeln</h2>
+        <ul class="rules">
+          <li><strong>Respekt & Umgang</strong> — OOC-Respekt ist Pflicht. Beleidigungen, rassistische, sexistische oder anderweitig diskriminierende Äußerungen führen zu sofortigen Maßnahmen.</li>
+          <li><strong>Realismus</strong> — Handlungen sollen in einem nachvollziehbaren, realistischen Rahmen bleiben. Übertrieben unrealistische Aktionen sind untersagt.</li>
+          <li><strong>No-Meta / No-Stream</strong> — Informationen aus OOC, Streams, Discord oder anderen Kanälen dürfen nicht IC verwendet werden.</li>
+          <li><strong>Account-Sharing</strong> — Teilen von Accounts ist untersagt; jeder Account ist bindend und individuell sanktionierbar.</li>
+          <li><strong>Alters- & Rechtskonforme Inhalte</strong> — Inhalte, die gegen Gesetze verstoßen oder strafbare Anleitungen enthalten, sind verboten.</li>
+        </ul>
+      </section>
+
+      <!-- Character -->
+      <section id="charakter" class="rule">
+        <h2>Charakter & IC-Verhalten</h2>
+        <p>Der Fokus liegt auf glaubhafter Charakterentwicklung und konsistentem In-Character-Verhalten.</p>
+        <ul class="rules">
+          <li><strong>Backstory & Motivation</strong> — Charaktere müssen motiviert und plausibel sein. Extrem unrealistische Backstories (z. B. "unbesiegbar") werden abgelehnt.</li>
+          <li><strong>IC-Entscheidungen</strong> — Spieler handeln als ihr Charakter. Entscheidungen müssen IC begründet werden.</li>
+          <li><strong>Charakterwechsel</strong> — Permanenter Wechsel zu einem komplett neuen Charakter ohne vorherige Abmeldung (metagaming) darf nicht zur Umgehung von Konsequenzen genutzt werden.</li>
+          <li><strong>Immersion</strong> — Anmeldung, Roleplay-Formalia und relevante IC-Aktionen sind ernst zu nehmen (z. B. bei Bewerbung, Gangs, Jobs).</li>
+        </ul>
+      </section>
+
+      <!-- OOC -->
+      <section id="ooc" class="rule">
+        <h2>OOC-Verhalten & Kommunikation</h2>
+        <ul class="rules">
+          <li><strong>OOC vs IC</strong> — OOC-Infos dürfen IC nicht genutzt werden. Nutze OOC-Kanal für Meta-Themen, nicht für IC-Steuerung.</li>
+          <li><strong>Beschwerden</strong> — Beschwerden werden OOC an die Moderation geschickt; nicht im RP eskalieren.</li>
+          <li><strong>Admins & Moderatoren</strong> — Adminentscheidungen sind zu respektieren. Diskussionen über Entscheidungen sind OOC zu führen (Appeal-Prozess siehe Kontakt).</li>
+        </ul>
+      </section>
+
+      <!-- MG PG FailRP -->
+      <section id="mg-pg-failrp" class="rule">
+        <h2>MG / PG / FailRP</h2>
+        <p>Diese Kernbegriffe sind streng geregelt — Verstöße führen häufig zu harten Sanktionen.</p>
+        <ul class="rules">
+          <li><strong>Metagaming (MG)</strong> — Verwendung von OOC-Informationen IC. Strikt verboten.</li>
+          <li><strong>Powergaming (PG)</strong> — Erzwingen von Handlungen, Skills oder Outcomes ohne RP-Basis (z. B. jemanden sofort töten ohne Gegenwehr). Verboten.</li>
+          <li><strong>FailRP</strong> — Offensichtliches, unrealistisches oder nicht-logisches RP (z. B. unverhältnismäßige Reaktionen, ignorieren bekannter Gefahren). Nicht erlaubt.</li>
+          <li class="example">Beispiel: Wenn ein Spieler IC keine Sicht auf eine Waffe hat, darf er nicht plötzlich OOC wissen oder reagieren, weil der Stream/Discord es verriet (MG).</li>
+        </ul>
+      </section>
+
+      <!-- Crime -->
+      <section id="kriminalitaet" class="rule">
+        <h2>Kriminalität, Gewalt & Waffen</h2>
+        <p>Kriminalität ist möglich — jedoch innerhalb klarer, realitätsnaher Regeln.</p>
+        <ul class="rules">
+          <li><strong>Konsequenzen</strong> — Straftaten müssen im RP behandelt werden: Ermittlungen, Verhöre, Gerichtsprozesse, Strafen. Einfaches "get away" ohne Folgen ist nicht erlaubt.</li>
+          <li><strong>Waffen-Einsatz</strong> — Waffen dürfen nur in angemessenem RP-Kontext und mit realistischer Begründung eingesetzt werden.</li>
+          <li><strong>Schusskontakt</strong> — Schüsse ziehen sofortere Konsequenzen nach sich (Zeugen, Polizei, medizinische Versorgung). Unverhältnismäßiges Schießen ist nicht erlaubt.</li>
+          <li><strong>Keine Anleitung</strong> — Explizite Anleitungen zur Begehung realer Straftaten sind verboten.</li>
+        </ul>
+        <div class="note">
+          Verletzungen, medizinische Regeln und Nachwirkungen sind RP-Pflicht. Beispiel: Blutungen, Bewusstlosigkeit oder dauerhafte Schäden müssen realistisch dargestellt werden.
+        </div>
+      </section>
+
+      <!-- Police -->
+      <section id="polizei-fraktionen" class="rule">
+        <h2>Polizei, Fraktionen & Dienst-RP</h2>
+        <ul class="rules">
+          <li><strong>Dienstliche Integrität</strong> — Spieler in offiziellen Rollen (Polizei, Rettung, Feuerwehr) handeln dienstlich und verantwortungsvoll. Missbrauch dieser Rollen wird streng geahndet.</li>
+          <li><strong>Durchsuchungen & Festnahmen</strong> — Realistische Prozeduren sind zu befolgen; willkürliche, ungerechtfertigte Festnahmen (Power-Abuse) sind verboten.</li>
+          <li><strong>Fraktionen</strong> — Fraktionen müssen RP-konform agieren. Interne Absprachen dürfen nicht zur systematischen Vorteilsnahme gegen andere genutzt werden.</li>
+        </ul>
+        <div class="example">
+          Beispiel: Ein Polizist darf nicht ohne vernünftigen Verdacht jemanden grundlos Taser einsetzen — das muss IC begründet und dokumentiert werden.
+        </div>
+      </section>
+
+      <!-- Death -->
+      <section id="tode-respawn" class="rule">
+        <h2>Death, Wounds & Respawn</h2>
+        <p>Regeln zu Tod und Wiedereinstieg sind entscheidend für Hardcore RP.</p>
+        <ul class="rules">
+          <li><strong>IC-Tod</strong> — Ein IC-Tod hat dauerhafte Konsequenzen. Respawn ist möglich, aber mit IC-Beschränkungen (z. B. Verlust von Inventar, Status, Ruf).</li>
+          <li><strong>Arzt & Behandlung</strong> — Medizinisches RP ist verpflichtend: Stabilisierung, Transport, Diagnosen und Nachsorge haben Nachwirkungen.</li>
+          <li><strong>Suizid-Handling</strong> — Sensibler Bereich: Explizite oder verherrlichende Darstellungen sind untersagt; Supporthinweis wird eingefügt und Moderation informiert.</li>
+        </ul>
+      </section>
+
+      <!-- Tech -->
+      <section id="technik" class="rule">
+        <h2>Technik, Bugs & Exploits</h2>
+        <ul class="rules">
+          <li><strong>Exploits melden</strong> — Fund von Bugs/Exploits ist sofort OOC an Admins zu melden. Nutzung ist strikt verboten.</li>
+          <li><strong>Streamsniping</strong> — OOC-Informationen aus Streams/Discord zur Vorteilnahme sind verboten (siehe No-Stream).</li>
+          <li><strong>Geister-/Ghosting-Regel</strong> — Wiederholte, absichtliche Ignoranz gegenüber RP-Folgen (z. B. nach Toden weiter im selben Szenario "ghosten") ist untersagt.</li>
+        </ul>
+      </section>
+
+      <!-- Examples -->
+      <section id="beispiele" class="rule">
+        <h2>Beispiele — Do & Don't</h2>
+        <div class="rule" style="margin-bottom:.6rem">
+          <h3 style="font-size:1rem">Do</h3>
+          <ul class="rules">
+            <li>Plane IC-Aktionen und handle mit Rücksicht auf Konsequenzen.</li>
+            <li>Nutze jede Gelegenheit für glaubhafte Dialoge und Konsequenzen.</li>
+            <li>Wenn du unsicher bist: frage OOC bei der Moderation nach (ohne IC-Infos zu spoilen).</li>
+          </ul>
+        </div>
+
+        <div class="rule">
+          <h3 style="font-size:1rem">Don't</h3>
+          <ul class="rules">
+            <li>MG, PG oder FailRP betreiben.</li>
+            <li>Wiederholt Regeln ignorieren, um persönliche Vorteile zu erlangen.</li>
+            <li>Admins absichtlich testen oder provozieren (z. B. "rule evasion").</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Enforcement -->
+      <section id="durchsetzung" class="rule">
+        <h2>Durchsetzung & Sanktionen</h2>
+        <p>Regelverstöße werden durch Moderation und Admins bewertet. Ziel: Fairness, Transparenz und Prävention.</p>
+
+        <div class="enforcement">
+          <div class="sanctions">
+            <h3 style="margin-bottom:.45rem">Mögliche Sanktionen</h3>
+            <ul class="rules">
+              <li><strong>Ermahnung / Verwarnung (OOC)</strong> — Bei kleineren Verstößen oder Erstvergehen.</li>
+              <li><strong>Temporärer Bann / Suspension</strong> — Bei wiederholten oder schweren Verstößen.</li>
+              <li><strong>Permaban</strong> — Bei schwerwiegenden, wiederholten Verstößen (z. B. systematisches Exploiting, dauerhafte Toxizität).</li>
+              <li><strong>In-Game Sanktionen</strong> — Verlust von Charakterstatus, Reputation, Besitztümern oder Fraktionsrechten.</li>
+            </ul>
+            <div class="note">Moderatoren dokumentieren jeden Fall; Spieler erhalten in der Regel eine Begründung und können Appeal einlegen.</div>
+          </div>
+
+          <aside class="quick">
+            <h3 style="margin-bottom:.4rem">Schnellcheck: Eskalationsstufen</h3>
+            <ol style="color:var(--muted);margin-left:1rem">
+              <li>Verwarnung →</li>
+              <li>Temporäre Sperre →</li>
+              <li>Langzeit-Sperre →</li>
+              <li>Permanent (bei Wiederholung oder Extremfällen)</li>
+            </ol>
+          </aside>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="kontakt" class="rule">
+        <h2>Kontakt, Einspruch & Appeal</h2>
+        <p>Bei Moderatorentscheidungen kannst du OOC eine Beschwerde oder einen Appeal einreichen.</p>
+        <ul class="rules">
+          <li>Form des Appeals: sachliche, vollständige Darstellung, Belege (Screenshots/Logs) und deine Forderung.</li>
+          <li>Fristen: Appeals sollten zeitnah (innerhalb von 14 Tagen nach Sanktion) eingereicht werden.</li>
+          <li>Weitere Schritte: Appeals werden geprüft; ggf. wird ein Review-Panel eingesetzt.</li>
+        </ul>
+      </section>
+
+      <!-- Footer -->
+      <footer class="sitefoot">
+        <div>NRW RP DE · Hardcore RP — Verbindliches Regelwerk</div>
+        <div style="text-align:right;color:var(--muted)">Stand: 30.09.2025 · <a href="join.html">Jetzt beitreten</a></div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Small script: smooth scroll and highlight -->
+  <script>
+    (function(){
+      // Smooth scroll for TOC links
+      document.querySelectorAll('.toc nav a').forEach(a=>{
+        a.addEventListener('click', function(e){
+          e.preventDefault();
+          const t = document.querySelector(this.getAttribute('href'));
+          if(!t) return;
+          t.scrollIntoView({behavior:'smooth', block:'start'});
+          history.replaceState(null,'',this.getAttribute('href'));
+        });
+      });
+
+      // Simple active-state for TOC during scroll
+      const sections = Array.from(document.querySelectorAll('main.article section[id]'));
+      function onScroll(){
+        const fromTop = window.scrollY + 80;
+        let current = sections.find(s => s.offsetTop <= fromTop && (s.offsetTop + s.offsetHeight) > fromTop);
+        document.querySelectorAll('.toc nav a').forEach(link=>link.style.fontWeight='400');
+        if(current){
+          const active = document.querySelector('.toc nav a[href="#'+current.id+'"]');
+          if(active) active.style.fontWeight='700';
+        }
+      }
+      window.addEventListener('scroll', onScroll);
+      document.addEventListener('DOMContentLoaded', onScroll);
+    })();
+  </script>
+</body>
+</html>
