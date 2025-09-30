@@ -308,6 +308,84 @@
   </style>
 </head>
 <body>
+    
+    <!-- Banner direkt unter <body> oder <main> einfügen -->
+<div id="infoBanner" class="info-banner" style="display:none;">
+  <span id="infoText"></span>
+  <button id="infoButton" class="btn-primary"></button>
+  <button id="infoClose" class="btn-icon">&times;</button>
+</div>
+
+<style>
+  /* Info Banner */
+  .info-banner {
+    position: fixed;
+    top: 0; left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    background: #5865f2;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 0 0 12px 12px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 2000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+  }
+  .info-banner.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  .info-banner button.btn-primary {
+    background: #fff;
+    color: #5865f2;
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+  }
+  .info-banner button.btn-icon {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const banner = document.getElementById("infoBanner");
+  const textEl = document.getElementById("infoText");
+  const btnEl = document.getElementById("infoButton");
+  const closeBtn = document.getElementById("infoClose");
+
+  // === Konfiguration ===
+  const bannerText = "Hardcore RP ist wieder da! Wir suchen dich!";
+  const bannerButtonText = "Mehr erfahren";
+  const bannerButtonLink = "https://lukas1120987.github.io/NRW-RP-DE/hardcore"; // Link zum Button
+
+  if(bannerText !== "" && bannerButtonText !== "") {
+    textEl.textContent = bannerText;
+    btnEl.textContent = bannerButtonText;
+    btnEl.onclick = () => window.open(bannerButtonLink, "_blank");
+
+    // Banner anzeigen
+    banner.style.display = "flex";
+    setTimeout(() => banner.classList.add("show"), 50);
+  }
+
+  closeBtn.addEventListener("click", () => {
+    banner.classList.remove("show");
+    setTimeout(() => banner.style.display = "none", 500); // Animation warten
+  });
+});
+</script>
+
+    
   <div class="app">
     <aside id="sidebar" class="sidebar">
       <div class="sidebar-top">
