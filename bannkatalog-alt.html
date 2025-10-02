@@ -370,33 +370,67 @@ async function sendToDiscord() {
     return;
   }
 
-  // Bannkatalog-Text sammeln
-  let text = "";
+  statusMsg.textContent = "📤 Erstelle Embeds & sende...";
+  statusMsg.style.color = "#ccc";
+
+  // 🧠 Embeds aus HTML generieren
+  const embeds = [];
   document.querySelectorAll(".section .entry").forEach(entry => {
-    const title = entry.querySelector("h3")?.innerText || "";
-    const content = entry.innerText.trim();
-    text += `**${title}**\n${content}\n\n`;
+    const title = entry.querySelector("h3")?.innerText.trim() || "Unbekannt";
+    const beschreibung = entry.querySelector("p strong")?.parentNode.innerText.replace("Beschreibung:", "").trim() || "Keine Beschreibung";
+    const strafenList = Array.from(entry.querySelectorAll("ul li")).map(li => `- ${li.innerText}`).join("\n");
+    const hinweis = entry.querySelector(".note")?.innerText.replace("Hinweis:", "").trim() || null;
+
+    const embed = {
+      title: `📌 ${title}`,
+      color: 0x5865F2,
+      description: beschreibung,
+      fields: []
+    };
+
+    if (strafenList) {
+      embed.fields.push({
+        name: "⚖️ Strafen",
+        value: strafenList,
+        inline: false
+      });
+    }
+
+    if (hinweis) {
+      embed.fields.push({
+        name: "💡 Hinweis",
+        value: hinweis,
+        inline: false
+      });
+    }
+
+    embeds.push(embed);
   });
 
-  // In 2000 Zeichen Blöcke teilen
-  const chunks = text.match(/[\s\S]{1,1900}/g) || [];
-
-  statusMsg.textContent = "📤 Sende Bannkatalog...";
-  statusMsg.style.color = "#ccc";
+  // Discord erlaubt max. 10 Embeds pro Nachricht – also splitten
+  const chunks = [];
+  for (let i = 0; i < embeds.length; i += 10) {
+    chunks.push(embeds.slice(i, i + 10));
+  }
 
   try {
     for (let i = 0; i < chunks.length; i++) {
       await fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: chunks[i] })
+        body: JSON.stringify({
+          content: i === 0 ? "📜 **NRW RP DE – Bannkatalog**" : null,
+          embeds: chunks[i]
+        })
       });
-      await new Promise(r => setTimeout(r, 500)); // kleine Pause zwischen Nachrichten
+      await new Promise(r => setTimeout(r, 500));
     }
-    statusMsg.textContent = "✅ Bannkatalog erfolgreich an Discord gesendet!";
+
+    statusMsg.textContent = "✅ Bannkatalog erfolgreich als Embeds gesendet!";
     statusMsg.style.color = "lime";
   } catch (err) {
-    statusMsg.textContent = "❌ Fehler beim Senden. Überprüfe die URL.";
+    console.error(err);
+    statusMsg.textContent = "❌ Fehler beim Senden – siehe Konsole.";
     statusMsg.style.color = "red";
   }
 }
