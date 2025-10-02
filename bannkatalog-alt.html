@@ -65,28 +65,32 @@ p { color: var(--text-light); line-height:1.6; margin-bottom:1rem; }
 
 .topbar { background:#1c1f2b; padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:10; box-shadow:0 2px 8px var(--shadow); }
 .topbar-title { font-size:1.3rem; font-weight:bold; }
-.btn-primary { background: var(--primary); color:#fff; padding:0.6rem 1.3rem; border-radius:8px; font-weight:bold; transition:0.3s; }
+.btn-primary { background: var(--primary); color:#fff; padding:0.6rem 1.3rem; border-radius:8px; font-weight:bold; transition:0.3s; cursor:pointer; }
 .btn-primary:hover { background: var(--primary-dark); }
 
 .section { padding:4rem 2rem; max-width:900px; margin:0 auto; }
 .section h1 { font-size:2.4rem; margin-bottom:2rem; text-align:center; }
+.section h2 { font-size:1.8rem; margin:3rem 0 1.5rem; border-bottom:2px solid var(--primary); padding-bottom:0.5rem; }
 
-.entry { background:#101217; padding:1rem; border-left:4px solid var(--primary); margin-bottom:1rem; border-radius:6px; }
+.entry { background:#101217; padding:1rem; border-left:4px solid var(--primary); margin-bottom:1.5rem; border-radius:6px; }
 .entry h3 { color:#fff; margin-bottom:0.5rem; }
 .entry p { margin-bottom:0.5rem; }
-.warning { background:#2a120f; padding:0.9rem 1rem; border-left:4px solid var(--warning); color:#ffdede; border-radius:6px; margin-bottom:1rem; }
-.note { background:#332211; padding:0.8rem 1rem; border-left:4px solid var(--note); color:#ffe7b3; border-radius:6px; margin-bottom:1rem; }
+.entry ul { margin-left:1.2rem; margin-bottom:0.5rem; }
+.note { background:#332211; padding:0.8rem 1rem; border-left:4px solid var(--note); color:#ffe7b3; border-radius:6px; margin-top:0.5rem; }
 
 .footer { text-align:center; padding:1.5rem; background: var(--sidebar-bg); color:#777; font-size:0.9rem; }
 
-@media(max-width:900px) {
-  .sidebar { transform:translateX(-100%); position:fixed; left:0; }
-  .sidebar.open { transform:translateX(0); }
-  .main { margin-left:0; width:100%; }
+#webhookContainer {
+  margin-bottom: 2rem;
+  text-align: center;
 }
-@media(max-width:600px) {
-  .section { padding:2.5rem 1rem; }
-  .section h1 { font-size:2rem; }
+#webhookUrl {
+  width: 80%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
 }
 </style>
 </head>
@@ -103,7 +107,7 @@ p { color: var(--text-light); line-height:1.6; margin-bottom:1rem; }
         <a href="about.html">Über uns</a>
         <a href="factions.html">Fraktionen</a>
         <a href="rules.html">Regelwerke</a>
-        <a href="bannkatalog.html" class="activ">Admin-Regeln</a>
+        <a href="bannkatalog.html" class="active">Admin-Regeln</a>
         <a href="events.html">Events</a>
         <a href="team.html">Team</a>
         <a href="join.html" class="discord-cta">Beitreten</a>
@@ -119,133 +123,232 @@ p { color: var(--text-light); line-height:1.6; margin-bottom:1rem; }
 </header>
 
 <section class="section">
-<h1>🏛️ Bannkatalog Übersicht</h1>
+
+<div id="webhookContainer">
+  <h2>📤 Bannkatalog an Discord senden</h2>
+  <input type="text" id="webhookUrl" placeholder="Discord Webhook URL hier einfügen...">
+  <br>
+  <button class="btn-primary" onclick="sendToDiscord()">📨 Senden</button>
+  <p id="statusMsg"></p>
+</div>
+
+<h1>Bannkatalog</h1>
+
+
+<!-- 🛠️ ADMIN-REGELN -->
+<h2>Admin-Regeln</h2>
 
 <div class="entry">
   <h3>Admin-Flucht</h3>
-  <p>Das absichtliche Verlassen des Spiels oder Ignorieren eines Admin-Signals, um einer Strafe zu entgehen.</p>
-  <div class="note"><strong>Strafen:</strong> <br>
-  - Bis 10 Sekunden: Verwarnung<br>
-  - 10–30 Sekunden: 1 Tag Bann<br>
-  - Über 30 Sekunden: 2 Tage Bann + 1 Tag pro Minute</div>
-  <div class="note">Wiederholte Verstöße verlängern die Strafe. Admin-Kollege muss nach 30 Sekunden informiert werden.</div>
-</div>
-
-<div class="entry">
-  <h3>Crash RP</h3>
-  <p>Absichtliches Herbeiführen von Unfällen ohne RP-Hintergrund oder unrealistisches Verhalten nach einem Unfall.</p>
-  <div class="note"><strong>Strafen:</strong><br>
-  Leicht: Verwarnung oder Kick<br>
-  Mittel: 1–3 Tage Bann<br>
-  Schwer: 7–14 Tage Bann<br>
-  Extrem: 30 Tage Bann</div>
-</div>
-
-<div class="entry">
-  <h3>RDM (Random Deathmatch)</h3>
-  <p>Grundloses Angreifen oder Töten anderer Spieler ohne RP-Hintergrund.</p>
-  <div class="note"><strong>Strafen:</strong><br>
-  Leicht: Verwarnung oder Kick<br>
-  Mittel: 1–3 Tage Bann<br>
-  Schwer: 7–14 Tage Bann<br>
-  Extrem: 30 Tage Bann</div>
-</div>
-
-<div class="entry">
-  <h3>VDM (Vehicle Deathmatch)</h3>
-  <p>Absichtliches Überfahren oder Rammen anderer Spieler ohne RP-Hintergrund.</p>
-  <div class="note"><strong>Strafen:</strong><br>
-  Leicht: Verwarnung oder Kick<br>
-  Mittel: 1–3 Tage Bann<br>
-  Schwer: 7–14 Tage Bann<br>
-  Extrem: Permanenter Bann</div>
-</div>
-
-<div class="entry">
-  <h3>Metagaming</h3>
-  <p>Nutzen von Infos aus externen Quellen (Discord, Streams) für RP-Vorteile.</p>
-  <div class="note"><strong>Strafen:</strong><br>
-  Leicht: Verwarnung oder Kick<br>
-  Mittel: 1–3 Tage Bann<br>
-  Schwer: 7–14 Tage Bann<br>
-  Extrem: 30 Tage Bann</div>
-</div>
-
-<div class="entry">
-  <h3>Powergaming</h3>
-  <p>Erzwingen von RP-Situationen oder unrealistische Darstellung der eigenen Fähigkeiten.</p>
-  <div class="note"><strong>Strafen:</strong><br>
-  Leicht: Verwarnung oder Kick<br>
-  Mittel: 1–3 Tage Bann<br>
-  Schwer: 7–14 Tage Bann<br>
-  Extrem: 30 Tage Bann</div>
+  <p><strong>Beschreibung:</strong> Absichtliches flüchten vor einem Admin oder Ignorieren eines Admin-Signals.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Bis 10 Sekunden: Verwarnung</li>
+    <li>10–30 Sekunden: 1 Tag Bann</li>
+    <li>Über 30 Sekunden: 2 Tage Bann + 1 Tag pro Minute</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Wiederholte Verstöße verlängern die Strafe. Nach 30 Sekunden ist ein Admin-Kollege zu informieren.</p>
 </div>
 
 <div class="entry">
   <h3>Admin Abuse</h3>
-  <p>Missbrauch von Admin-Rechten für persönliche Vorteile oder Manipulation von RP.</p>
-  <div class="note"><strong>Strafen:</strong><br>
-  Leicht: Verwarnung / temporäre Admin-Entziehung<br>
-  Mittel: 3–7 Tage Bann + Admin-Entziehung 2 Wochen<br>
-  Schwer: 14–30 Tage Bann + dauerhafte Admin-Entziehung<br>
-  Extrem: 30 Tage Bann oder Entfernung aus Admin-Team</div>
+  <p><strong>Beschreibung:</strong> Missbrauch von Admin-Rechten zur persönlichen Bereicherung oder Manipulation von RP-Situationen.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Verwarnung oder Ausschluss aus dem Admin-Team</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Die Serverleitung entscheidet in jeder Situation die Strafe. Bestrafungen können abweichen!</p>
 </div>
 
 <div class="entry">
   <h3>Admin-Notruf Abuse</h3>
-  <p>Missbräuchliche Nutzung von Admin-Notrufen (/report, /help).</p>
-  <div class="note"><strong>Strafen:</strong><br>
-  Leicht: Verwarnung<br>
-  Mittel: 1–3 Tage Bann<br>
-  Schwer: 7–14 Tage Bann<br>
-  Extrem: 30 Tage Bann</div>
-</div>
-
-<div class="entry">
-  <h3>Unrealistisches Ziehen von Langwaffen / Items</h3>
-  <p>Langwaffen oder Items ohne RP-Kontext ziehen.</p>
-  <div class="note"><strong>Strafen:</strong><br>
-  1. Verstoß: Verwarnung<br>
-  2. Verstoß: Kick<br>
-  3. Verstoß: 1-Tages-Bann</div>
-  <div class="note">Langwaffen nur realistisch mit /me, aus Fahrzeugen oder Taschen.</div>
-</div>
-
-<div class="entry">
-  <h3>Stop Sticks unrealistisch einsetzen</h3>
-  <p>Stop Sticks ohne RP-Kontext oder direkt aus dem Nichts platzieren.</p>
-  <div class="note"><strong>Strafen:</strong> 1 Warnung + ggf. Schadensersatz 3.000€ Ingame</div>
-</div>
-
-<div class="entry">
-  <h3>Blaulichtmissbrauch</h3>
-  <p>Blaulicht ohne RP-relevanten Grund oder zur Umgehung von Regeln.</p>
-  <div class="note"><strong>Strafen:</strong> 1. Warnung → 2. Warnung → Kick → 1-Tages-Bann</div>
-</div>
-
-<div class="entry">
-  <h3>Beleidigungen / Respektloses Verhalten</h3>
-  <p>Direkte Beleidigungen, Diskriminierung, respektloses Verhalten.</p>
-  <div class="note"><strong>Strafen:</strong> 1 Warnung → 2 Warnung → Kick → 1-Tages-Bann → bis 7-Tage oder Permaban</div>
-</div>
-
-<div class="entry">
-  <h3>Blitzer auf Kreiseln</h3>
-  <p>Blitzer auf Kreisverkehr platzieren, um unfair Spieler zu bestrafen.</p>
-  <div class="note"><strong>Strafen:</strong> 1 Warnung → 2 Warnung → Kick → 1-Tages-Bann</div>
+  <p><strong>Beschreibung:</strong> Missbräuchliche Nutzung von Admin-Notrufen ohne triftigen Grund.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: Verwarnung/Kick</li>
+    <li>Mittel: 1–3 Tage Bann</li>
+    <li>Schwer: 7–14 Tage Bann</li>
+    <li>Extrem: 30 Tage Bann</li>
+  </ul>
 </div>
 
 <div class="entry">
   <h3>Fake-Admin</h3>
-  <p>Ausgeben als Admin / Teammitglied ohne Berechtigung.</p>
-  <div class="note"><strong>Strafen:</strong> Kick → 30-Tage-Bann → Permanenter Bann</div>
+  <p><strong>Beschreibung:</strong> Vortäuschen von Admin- oder Teammitgliedschaft ohne Berechtigung.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Erster Verstoß: 7-14 Tage Bann</li>
+    <li>Zweiter Verstoß: 30 Tage Bann</li>
+    <li>Dritter Verstoß: Permanenter Bann</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Das tragen von Admin-Ausrüstung ist für Spieler verboten, wenn diese nicht dem Admin-Team von NRW angehören. Diese Spieler sollen ihr Outfit wechseln (Kick).</p>
+</div>
+<div class="entry">
+  <h3>Combat-Logging</h3>
+  <p><strong>Beschreibung:</strong> Verlassen des Spiels, um einer Bestrafung zu entgehen.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Kein Nutzername vorhanden: Keine Maßnahme</li>
+    <li>Nutzername vorhanden: Eigendliche Bestrafung + 2 Tage Bann.</li>
+  </ul>
+</div>
+
+
+<!-- ⚖️ RP-REGELN -->
+<h2>RP-Regeln</h2>
+
+<div class="entry">
+  <h3>Crash RP</h3>
+  <p><strong>Beschreibung:</strong> Absichtliches Verursachen von Unfällen ohne RP-Hintergrund oder unrealistisches Verhalten nach einem Unfall.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: Verwarnung oder Kick</li>
+    <li>Mittel: 1–3 Tage Bann</li>
+    <li>Schwer: 7–14 Tage Bann</li>
+    <li>Extrem: 30 Tage Bann</li>
+  </ul>
 </div>
 
 <div class="entry">
+  <h3>RDM (Random Deathmatch)</h3>
+  <p><strong>Beschreibung:</strong> Grundloses Angreifen oder Töten anderer Spieler ohne RP-Hintergrund.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: Verwarnung oder Kick</li>
+    <li>Mittel: 1–3 Tage Bann</li>
+    <li>Schwer: 7–14 Tage Bann</li>
+    <li>Extrem: 30 Tage Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>VDM (Vehicle Deathmatch)</h3>
+  <p><strong>Beschreibung:</strong> Absichtliches Überfahren oder Rammen anderer Spieler ohne RP-Hintergrund.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: Verwarnung oder Kick</li>
+    <li>Mittel: 1–3 Tage Bann</li>
+    <li>Schwer: 7–14 Tage Bann</li>
+    <li>Extrem: Permanenter Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>Metagaming</h3>
+  <p><strong>Beschreibung:</strong> Verwendung von Informationen aus externen Quellen (Discord, Streams etc.) für RP-Vorteile.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: Verwarnung oder Kick</li>
+    <li>Mittel: 1–3 Tage Bann</li>
+    <li>Schwer: 7–14 Tage Bann</li>
+    <li>Extrem: 30 Tage Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>Powergaming</h3>
+  <p><strong>Beschreibung:</strong> Erzwingen von RP-Situationen oder unrealistische Darstellung eigener Fähigkeiten.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: Verwarnung oder Kick</li>
+    <li>Mittel: 1–3 Tage Bann</li>
+    <li>Schwer: 7–14 Tage Bann</li>
+    <li>Extrem: 30 Tage Bann</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong>Unnartürlicher Krafteinsatz (z.B. Auto verschieben) zählt auch unter Powergaming.</p>
+</div>
+
+<div class="entry">
+  <h3>Unrealistisches Ziehen von Langwaffen / Items - Hosentaschen RP</h3>
+  <p><strong>Beschreibung:</strong> Ziehen von Langwaffen oder Items ohne RP-Kontext.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>1. Verstoß: Verwarnung</li>
+    <li>2. Verstoß: Kick</li>
+    <li>3. Verstoß: 1 Tag Bann</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Langwaffen oder schwere Gegenstände (bspw. Leitern) dürfen nur realistisch (z. B. aus Fahrzeugen) gezogen werden.</p>
+</div>
+
+<div class="entry">
+  <h3>Stop Sticks – unrealistischer Einsatz</h3>
+  <p><strong>Beschreibung:</strong> Platzieren von Stop Sticks ohne RP-Kontext oder „aus dem Nichts“.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>1 Verwarnung + ggf. Schadensersatz von 3.000 € Ingame</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Bei wiederholten Verstößen muss der Schadensersatz gezahlt werden!</p>
+</div>
+
+<!-- 💬 VERHALTEN -->
+<h2>Verhalten & Kommunikation</h2>
+
+<div class="entry">
+  <h3>Beleidigungen / Respektloses Verhalten</h3>
+  <p><strong>Beschreibung:</strong> Beleidigungen, Diskriminierung oder respektloses Verhalten gegenüber Spielern oder Teammitgliedern.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>1. Verstoß: Verwarnung</li>
+    <li>2. Verstoß: Kick</li>
+    <li>3. Verstoß: 1-7 Tage Bann</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Schwere Beleidigungen werden direkt mit 7 Tagen Bann bestraft.</p>
+</div>
+
+<div class="entry">
+  <h3>Blaulichtmissbrauch</h3>
+  <p><strong>Beschreibung:</strong> Nutzung von Blaulicht ohne RP-Grund oder zur Umgehung von Strafen.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>1. Verstoß: Verwarnung</li>
+    <li>2. Verstoß: Kick</li>
+    <li>3. Verstoß: 1 Tag Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>Blitzer auf Kreisverkehren - Blitzen in nicht einsehbaren Stellen</h3>
+  <p><strong>Beschreibung:</strong> Blitzen auf Kreisverkehren/Blitzen in nicht einsehbaren Stellen, um Spieler unfair zu bestrafen.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>1. Verstoß: Verwarnung</li>
+    <li>2. Verstoß: Kick</li>
+    <li>3. Verstoß: 1 Tag Bann</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Zu nicht einsehbaren Stellen zählen auch Dächer von Gebäuden. Des Weiteren ist auch das Blitzen direkt hinter Verkehrsschildern ist ebenfalls verboten.</p>
+</div>
+
+<!-- 🚫 MISSBRAUCH & EXPLOITS -->
+<h2>Missbrauch & Exploits</h2>
+
+<div class="entry">
   <h3>Hacking</h3>
-  <p>Nutzen von Exploits/Tools, die verboten sind.</p>
-  <div class="note"><strong>Strafen:</strong>Permanenter Bann</div>
-</div>  
+  <p><strong>Beschreibung:</strong> Nutzung von Exploits oder verbotenen Tools.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Permanenter Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>Server Raiding</h3>
+  <p><strong>Beschreibung:</strong> Absichtliches Stören des Roleplays, um dem Server zu schaden.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: 10 Tage Bann</li>
+    <li>Mittel: 30 Tage Bann</li>
+    <li>Schwer: Permanenter Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>Terror-, Suizid- oder Drogen-RP</h3>
+  <p><strong>Beschreibung:</strong> Ausspielen dieser Themen, um gegen die Roblox-Nutzungsbedingungen zu verstoßen.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Permanenter Bann</li>
+  </ul>
+</div>
 
 </section>
 <footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
@@ -256,6 +359,275 @@ p { color: var(--text-light); line-height:1.6; margin-bottom:1rem; }
 const sidebar=document.getElementById('sidebar');
 document.getElementById('toggleSidebar').addEventListener('click',()=>sidebar.classList.toggle('open'));
 document.getElementById('closeSidebar').addEventListener('click',()=>sidebar.classList.remove('open'));
+</script>
+</body>
+</html>
+
+<!-- 🛠️ ADMIN-REGELN -->
+<h2>Admin-Regeln</h2>
+
+<div class="entry">
+  <h3>Admin-Flucht</h3>
+  <p><strong>Beschreibung:</strong> Absichtliches flüchten vor einem Admin oder Ignorieren eines Admin-Signals.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Bis 10 Sekunden: Verwarnung</li>
+    <li>10–30 Sekunden: 1 Tag Bann</li>
+    <li>Über 30 Sekunden: 2 Tage Bann + 1 Tag pro Minute</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Wiederholte Verstöße verlängern die Strafe. Nach 30 Sekunden ist ein Admin-Kollege zu informieren.</p>
+</div>
+
+<div class="entry">
+  <h3>Admin Abuse</h3>
+  <p><strong>Beschreibung:</strong> Missbrauch von Admin-Rechten zur persönlichen Bereicherung oder Manipulation von RP-Situationen.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Verwarnung oder Ausschluss aus dem Admin-Team</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Die Serverleitung entscheidet in jeder Situation die Strafe. Bestrafungen können abweichen!</p>
+</div>
+
+<div class="entry">
+  <h3>Admin-Notruf Abuse</h3>
+  <p><strong>Beschreibung:</strong> Missbräuchliche Nutzung von Admin-Notrufen ohne triftigen Grund.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: Verwarnung/Kick</li>
+    <li>Mittel: 1–3 Tage Bann</li>
+    <li>Schwer: 7–14 Tage Bann</li>
+    <li>Extrem: 30 Tage Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>Fake-Admin</h3>
+  <p><strong>Beschreibung:</strong> Vortäuschen von Admin- oder Teammitgliedschaft ohne Berechtigung.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Erster Verstoß: 7-14 Tage Bann</li>
+    <li>Zweiter Verstoß: 30 Tage Bann</li>
+    <li>Dritter Verstoß: Permanenter Bann</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Das tragen von Admin-Ausrüstung ist für Spieler verboten, wenn diese nicht dem Admin-Team von NRW angehören. Diese Spieler sollen ihr Outfit wechseln (Kick).</p>
+</div>
+<div class="entry">
+  <h3>Combat-Logging</h3>
+  <p><strong>Beschreibung:</strong> Verlassen des Spiels, um einer Bestrafung zu entgehen.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Kein Nutzername vorhanden: Keine Maßnahme</li>
+    <li>Nutzername vorhanden: Eigendliche Bestrafung + 2 Tage Bann.</li>
+  </ul>
+</div>
+
+
+<!-- ⚖️ RP-REGELN -->
+<h2>RP-Regeln</h2>
+
+<div class="entry">
+  <h3>Crash RP</h3>
+  <p><strong>Beschreibung:</strong> Absichtliches Verursachen von Unfällen ohne RP-Hintergrund oder unrealistisches Verhalten nach einem Unfall.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: Verwarnung oder Kick</li>
+    <li>Mittel: 1–3 Tage Bann</li>
+    <li>Schwer: 7–14 Tage Bann</li>
+    <li>Extrem: 30 Tage Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>RDM (Random Deathmatch)</h3>
+  <p><strong>Beschreibung:</strong> Grundloses Angreifen oder Töten anderer Spieler ohne RP-Hintergrund.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: Verwarnung oder Kick</li>
+    <li>Mittel: 1–3 Tage Bann</li>
+    <li>Schwer: 7–14 Tage Bann</li>
+    <li>Extrem: 30 Tage Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>VDM (Vehicle Deathmatch)</h3>
+  <p><strong>Beschreibung:</strong> Absichtliches Überfahren oder Rammen anderer Spieler ohne RP-Hintergrund.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: Verwarnung oder Kick</li>
+    <li>Mittel: 1–3 Tage Bann</li>
+    <li>Schwer: 7–14 Tage Bann</li>
+    <li>Extrem: Permanenter Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>Metagaming</h3>
+  <p><strong>Beschreibung:</strong> Verwendung von Informationen aus externen Quellen (Discord, Streams etc.) für RP-Vorteile.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: Verwarnung oder Kick</li>
+    <li>Mittel: 1–3 Tage Bann</li>
+    <li>Schwer: 7–14 Tage Bann</li>
+    <li>Extrem: 30 Tage Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>Powergaming</h3>
+  <p><strong>Beschreibung:</strong> Erzwingen von RP-Situationen oder unrealistische Darstellung eigener Fähigkeiten.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: Verwarnung oder Kick</li>
+    <li>Mittel: 1–3 Tage Bann</li>
+    <li>Schwer: 7–14 Tage Bann</li>
+    <li>Extrem: 30 Tage Bann</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong>Unnartürlicher Krafteinsatz (z.B. Auto verschieben) zählt auch unter Powergaming.</p>
+</div>
+
+<div class="entry">
+  <h3>Unrealistisches Ziehen von Langwaffen / Items - Hosentaschen RP</h3>
+  <p><strong>Beschreibung:</strong> Ziehen von Langwaffen oder Items ohne RP-Kontext.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>1. Verstoß: Verwarnung</li>
+    <li>2. Verstoß: Kick</li>
+    <li>3. Verstoß: 1 Tag Bann</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Langwaffen oder schwere Gegenstände (bspw. Leitern) dürfen nur realistisch (z. B. aus Fahrzeugen) gezogen werden.</p>
+</div>
+
+<div class="entry">
+  <h3>Stop Sticks – unrealistischer Einsatz</h3>
+  <p><strong>Beschreibung:</strong> Platzieren von Stop Sticks ohne RP-Kontext oder „aus dem Nichts“.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>1 Verwarnung + ggf. Schadensersatz von 3.000 € Ingame</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Bei wiederholten Verstößen muss der Schadensersatz gezahlt werden!</p>
+</div>
+
+<!-- 💬 VERHALTEN -->
+<h2>Verhalten & Kommunikation</h2>
+
+<div class="entry">
+  <h3>Beleidigungen / Respektloses Verhalten</h3>
+  <p><strong>Beschreibung:</strong> Beleidigungen, Diskriminierung oder respektloses Verhalten gegenüber Spielern oder Teammitgliedern.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>1. Verstoß: Verwarnung</li>
+    <li>2. Verstoß: Kick</li>
+    <li>3. Verstoß: 1-7 Tage Bann</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Schwere Beleidigungen werden direkt mit 7 Tagen Bann bestraft.</p>
+</div>
+
+<div class="entry">
+  <h3>Blaulichtmissbrauch</h3>
+  <p><strong>Beschreibung:</strong> Nutzung von Blaulicht ohne RP-Grund oder zur Umgehung von Strafen.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>1. Verstoß: Verwarnung</li>
+    <li>2. Verstoß: Kick</li>
+    <li>3. Verstoß: 1 Tag Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>Blitzer auf Kreisverkehren - Blitzen in nicht einsehbaren Stellen</h3>
+  <p><strong>Beschreibung:</strong> Blitzen auf Kreisverkehren/Blitzen in nicht einsehbaren Stellen, um Spieler unfair zu bestrafen.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>1. Verstoß: Verwarnung</li>
+    <li>2. Verstoß: Kick</li>
+    <li>3. Verstoß: 1 Tag Bann</li>
+  </ul>
+  <p class="note"><strong>Hinweis:</strong> Zu nicht einsehbaren Stellen zählen auch Dächer von Gebäuden. Des Weiteren ist auch das Blitzen direkt hinter Verkehrsschildern ist ebenfalls verboten.</p>
+</div>
+
+<!-- 🚫 MISSBRAUCH & EXPLOITS -->
+<h2>Missbrauch & Exploits</h2>
+
+<div class="entry">
+  <h3>Hacking</h3>
+  <p><strong>Beschreibung:</strong> Nutzung von Exploits oder verbotenen Tools.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Permanenter Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>Server Raiding</h3>
+  <p><strong>Beschreibung:</strong> Absichtliches Stören des Roleplays, um dem Server zu schaden.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Leicht: 10 Tage Bann</li>
+    <li>Mittel: 30 Tage Bann</li>
+    <li>Schwer: Permanenter Bann</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <h3>Terror-, Suizid- oder Drogen-RP</h3>
+  <p><strong>Beschreibung:</strong> Ausspielen dieser Themen, um gegen die Roblox-Nutzungsbedingungen zu verstoßen.</p>
+  <p><strong>Strafen:</strong></p>
+  <ul>
+    <li>Permanenter Bann</li>
+  </ul>
+</div>
+
+</section>
+<footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
+</main>
+</div>
+
+<script>
+const sidebar=document.getElementById('sidebar');
+document.getElementById('toggleSidebar').addEventListener('click',()=>sidebar.classList.toggle('open'));
+document.getElementById('closeSidebar').addEventListener('click',()=>sidebar.classList.remove('open'));
+
+async function sendToDiscord() {
+  const webhookUrl = document.getElementById("webhookUrl").value;
+  const statusMsg = document.getElementById("statusMsg");
+
+  if (!webhookUrl.startsWith("https://discord.com/api/webhooks/")) {
+    statusMsg.textContent = "❌ Bitte eine gültige Discord-Webhook-URL eingeben!";
+    statusMsg.style.color = "red";
+    return;
+  }
+
+  // Bannkatalog-Text sammeln
+  let text = "";
+  document.querySelectorAll(".section .entry").forEach(entry => {
+    const title = entry.querySelector("h3")?.innerText || "";
+    const content = entry.innerText.trim();
+    text += `**${title}**\n${content}\n\n`;
+  });
+
+  // In 2000 Zeichen Blöcke teilen
+  const chunks = text.match(/[\s\S]{1,1900}/g) || [];
+
+  statusMsg.textContent = "📤 Sende Bannkatalog...";
+  statusMsg.style.color = "#ccc";
+
+  try {
+    for (let i = 0; i < chunks.length; i++) {
+      await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: chunks[i] })
+      });
+      await new Promise(r => setTimeout(r, 500)); // kleine Pause zwischen Nachrichten
+    }
+    statusMsg.textContent = "✅ Bannkatalog erfolgreich an Discord gesendet!";
+    statusMsg.style.color = "lime";
+  } catch (err) {
+    statusMsg.textContent = "❌ Fehler beim Senden. Überprüfe die URL.";
+    statusMsg.style.color = "red";
+  }
+}
 </script>
 </body>
 </html>
