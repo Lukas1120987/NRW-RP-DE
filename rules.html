@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Regelwerke Übersicht – NRW RP DE</title>
+  <meta name="description" content="Übersicht aller Regelwerke von NRW RP DE – RP-Regeln, Discord-Regeln, Fraktions-Regeln, Event-Regeln & Bannkatalog.">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -65,6 +66,18 @@
     .discord-cta { background: var(--accent); color:#fff; font-weight:bold; text-align:center; }
     .sidebar-footer { text-align:center; color:#777; font-size:0.85rem; margin-top:auto; }
 
+    /* Overlay für Mobile */
+    .overlay {
+      position:fixed;
+      top:0; left:0; right:0; bottom:0;
+      background:rgba(0,0,0,0.5);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity 0.3s ease;
+      z-index:500;
+    }
+    .overlay.show { opacity:1; pointer-events:auto; }
+
     /* Main */
     .main { margin-left:260px; width:calc(100% - 260px); display:flex; flex-direction:column; transition: margin-left 0.3s ease; }
 
@@ -98,6 +111,7 @@
 
     .rules-overview {
       display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
       gap:1.5rem;
       margin-top:1rem;
     }
@@ -107,8 +121,9 @@
       padding:1.5rem;
       border-radius:12px;
       transition:0.3s;
+      cursor:pointer;
     }
-    .rule-card:hover { transform:translateY(-4px); border-left-color: var(--primary); }
+    .rule-card:hover { transform:translateY(-4px); border-left-color: var(--primary); box-shadow:0 4px 12px var(--shadow); }
     .rule-card a { font-weight:bold; color:#fff; font-size:1.1rem; display:block; margin-bottom:0.5rem; }
     .rule-card p { font-size:0.95rem; color:#ccc; margin:0; }
 
@@ -123,6 +138,7 @@
       .section { padding:2.5rem 1rem; }
       .section h1 { font-size:2rem; }
       .rules-overview { display:block; }
+      .rule-card { margin-bottom:1rem; }
     }
   </style>
 </head>
@@ -131,7 +147,7 @@
     <aside id="sidebar" class="sidebar">
       <div class="sidebar-top">
         <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
-        <button id="closeSidebar" class="btn-icon" title="Schließen">&times;</button>
+        <button id="closeSidebar" class="btn-icon" aria-label="Sidebar schließen">&times;</button>
       </div>
       <nav class="sidebar-nav">
         <a href="index.html">Start</a>
@@ -144,10 +160,11 @@
       </nav>
       <div class="sidebar-footer"><small>&copy; 2025 NRW RP DE</small></div>
     </aside>
+    <div class="overlay" id="overlay"></div>
 
     <main class="main" id="top">
       <header class="topbar">
-        <button id="toggleSidebar" class="btn-icon">&#9776;</button>
+        <button id="toggleSidebar" class="btn-icon" aria-label="Sidebar öffnen">&#9776;</button>
         <div class="topbar-title">Übersicht Regelwerke</div>
       </header>
 
@@ -157,24 +174,37 @@
 
         <div class="rules-overview">
           <div class="rule-card">
-            <a href="rules-alt.html">RP-Regeln</a>
-            <p>Alle allgemeinen Server-Regeln, Rollenspiel-Verhalten, FailRP, Powergaming und Eskalationsregeln.</p>
+            <a href="rules-rp.html">⚖️ RP-Regeln</a>
+            <p>Allgemeine Server-Regeln, Rollenspiel-Verhalten, FailRP, Powergaming und Eskalationsregeln.</p>
           </div>
           <div class="rule-card">
-            <a href="dc-regeln.html">Discord-Regeln</a>
+            <a href="rules-discord.html">💬 Discord-Regeln</a>
             <p>Verhalten auf dem Discord-Server, OOC-Kommunikation, Beleidigungen, Meldungen und Sanktionen.</p>
           </div>
           <div class="rule-card">
-            <a href="fraktionen.html">Fraktions-Regeln</a>
-            <p>Regeln der Fraktionen (Externe Server).</p>
+            <a href="rules-factions.html">💼 Fraktions-Regeln</a>
+            <p>Regeln für alle Fraktionen, inklusive Verhalten, Jobs und interne Abläufe.</p>
           </div>
           <div class="rule-card">
-            <a href="bannkatalog.html">Bankatalog</a>
-            <p>Bankatalog für Admins (Bestrafungen für Vergehen)</p>
+            <a href="rules-bannkatalog.html">🛑 Bannkatalog</a>
+            <p>Bestrafungen für Regelverstöße, Übersicht von Verwarnungen bis Bann.</p>
+          </div>
+          <!-- Platzhalter für weitere Regelwerke -->
+          <div class="rule-card">
+            <a href="#">🎉 Event-Regeln</a>
+            <p>Regeln und Abläufe für Server-Events und besondere Rollenspiel-Situationen.</p>
+          </div>
+          <div class="rule-card">
+            <a href="#">🎤 Voice-Chat-Regeln</a>
+            <p>Verhalten im Voice-Chat, OOC-Kommunikation, Stimmverhalten und Mikrofon-Etikette.</p>
+          </div>
+          <div class="rule-card">
+            <a href="#">💼 Job-Regeln</a>
+            <p>Speziell für Ingame-Jobs, Polizei, Rettungsdienste, Fraktionen oder freie Jobs.</p>
           </div>
         </div>
 
-        <p style="margin-top:1rem;"><a href="#top">Zurück nach oben ↑</a></p>
+        <p class="back-to-top"><a href="#top">Zurück nach oben ↑</a></p>
       </section>
 
       <footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
@@ -184,14 +214,19 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
       const toggleSidebar = document.getElementById("toggleSidebar");
       const closeSidebar = document.getElementById("closeSidebar");
 
-      if(toggleSidebar){ toggleSidebar.addEventListener("click", ()=>{ sidebar.classList.toggle("open"); }); }
-      if(closeSidebar){ closeSidebar.addEventListener("click", ()=>{ sidebar.classList.remove("open"); }); }
+      function openSidebar(){ sidebar.classList.add("open"); overlay.classList.add("show"); }
+      function closeSidebarFunc(){ sidebar.classList.remove("open"); overlay.classList.remove("show"); }
+
+      toggleSidebar?.addEventListener("click", openSidebar);
+      closeSidebar?.addEventListener("click", closeSidebarFunc);
+      overlay?.addEventListener("click", closeSidebarFunc);
 
       document.querySelectorAll('.sidebar-nav a').forEach(link=>{
-        link.addEventListener('click', ()=>{ sidebar.classList.remove('open'); });
+        link.addEventListener('click', closeSidebarFunc);
       });
     });
   </script>
