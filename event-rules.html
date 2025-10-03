@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Event-Regeln – NRW RP DE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #5865F2;
+      --primary-dark: #4752C4;
+      --background: #0f111a;
+      --text: #f0f0f0;
+      --text-light: #ccc;
+      --accent: #7289da;
+      --shadow: rgba(0,0,0,0.4);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Roboto', sans-serif; background: var(--background); color: var(--text); min-height:100vh; }
+    h1,h2 { margin-bottom:1rem; font-weight:700; }
+    p { line-height:1.5; color: var(--text-light); margin-bottom:1rem; }
+
+    .section { max-width:900px; margin:2rem auto; padding:0 1rem; }
+    .events-grid { display:grid; gap:1.5rem; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
+
+    .event-card {
+      background:#1a1d2b;
+      border-left:5px solid var(--accent);
+      border-radius:12px;
+      padding:1.5rem;
+      transition:0.3s;
+      cursor:pointer;
+      box-shadow:0 2px 8px var(--shadow);
+    }
+    .event-card:hover { transform:translateY(-4px); border-left-color: var(--primary); box-shadow:0 4px 12px var(--shadow); }
+    .event-card h2 { font-size:1.3rem; margin-bottom:0.5rem; color:#fff; }
+    .event-card .date { font-size:0.9rem; color: var(--text-light); margin-bottom:1rem; }
+    .event-card ul { padding-left:1.2rem; color: var(--text-light); }
+
+    /* Modal Fenster */
+    .modal { position:fixed; top:0; left:0; right:0; bottom:0; display:flex; justify-content:center; align-items:center; background:rgba(0,0,0,0.7); opacity:0; pointer-events:none; transition:0.3s; z-index:1000; }
+    .modal.show { opacity:1; pointer-events:auto; }
+    .modal-content {
+      background:#1a1d2b;
+      padding:2rem;
+      border-radius:12px;
+      max-width:500px;
+      width:90%;
+      position:relative;
+      box-shadow:0 4px 12px var(--shadow);
+      transform: translateY(-20px);
+      transition: transform 0.3s;
+    }
+    .modal.show .modal-content { transform: translateY(0); }
+    .close-btn {
+      position:absolute;
+      top:10px; right:15px;
+      background:none; border:none; color:#fff;
+      font-size:1.5rem; cursor:pointer;
+    }
+    .modal-content h2 { margin-bottom:0.5rem; }
+    .modal-content ul { margin-top:1rem; padding-left:1.2rem; }
+
+    @media(max-width:600px){ .events-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <section class="section">
+    <h1>Event-Regeln</h1>
+    <p>Hier findest du alle aktuellen Events und ihre spezifischen Regeln.</p>
+
+    <div class="events-grid" id="eventsGrid">
+      <!-- Event Cards werden hier dynamisch eingefügt -->
+    </div>
+  </section>
+
+  <!-- Modal Fenster -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="close-btn" id="closeModal">&times;</button>
+      <h2 id="modalTitle"></h2>
+      <p class="date" id="modalDate"></p>
+      <ul id="modalRules"></ul>
+    </div>
+  </div>
+
+  <script>
+    async function loadEvents() {
+      try {
+        const res = await fetch('events.json');
+        const events = await res.json();
+        const grid = document.getElementById('eventsGrid');
+
+        events.forEach((event, index) => {
+          const card = document.createElement('div');
+          card.classList.add('event-card');
+          card.innerHTML = `<h2>${event.title}</h2><p class="date">${event.date}</p><p>Klicke für Regeln</p>`;
+          card.addEventListener('click', () => openModal(event));
+          grid.appendChild(card);
+        });
+      } catch(err) {
+        console.error('Fehler beim Laden der Events:', err);
+      }
+    }
+
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDate = document.getElementById('modalDate');
+    const modalRules = document.getElementById('modalRules');
+    const closeModalBtn = document.getElementById('closeModal');
+
+    function openModal(event) {
+      modalTitle.textContent = event.title;
+      modalDate.textContent = event.date;
+      modalRules.innerHTML = '';
+      event.rules.forEach(rule => {
+        const li = document.createElement('li');
+        li.textContent = rule;
+        modalRules.appendChild(li);
+      });
+      modal.classList.add('show');
+    }
+
+    function closeModal() { modal.classList.remove('show'); }
+    closeModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+
+    // Lade Events beim Start
+    loadEvents();
+  </script>
+</body>
+</html>
