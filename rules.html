@@ -6,6 +6,7 @@
   <title>Regelwerke Übersicht – NRW RP DE</title>
   <meta name="description" content="Übersicht aller Regelwerke von NRW RP DE – RP-Regeln, Discord-Regeln, Fraktions-Regeln, Event-Regeln & Bannkatalog.">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <style>
     :root {
       --primary: #5865F2;
@@ -17,24 +18,18 @@
       --accent: #7289da;
       --shadow: rgba(0,0,0,0.4);
     }
-
     * { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior: smooth; }
     body {
       font-family:'Roboto', sans-serif;
       background: var(--background);
       color: var(--text);
       min-height:100vh;
-      overflow-x:hidden;
     }
     a { color: var(--primary); text-decoration:none; transition:0.3s; }
     a:hover { color: var(--accent); }
 
-    h1,h2,h3 { font-weight:700; margin-bottom:0.7rem; }
-    p { color: var(--text-light); line-height:1.6; margin-bottom:1.2rem; }
-
     /* Layout */
-    .app { display:flex; min-height:100vh; }
+    .app { display:flex; }
     .sidebar {
       width:260px;
       background: var(--sidebar-bg);
@@ -44,43 +39,28 @@
       justify-content:space-between;
       position:fixed;
       top:0; bottom:0; left:0;
-      transition: transform 0.3s ease;
-      z-index:1000;
     }
     .sidebar-logo { width:90px; margin:0 auto 1rem; }
-    .sidebar-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:2rem; }
-    .btn-icon { background:none; border:none; color: var(--text); font-size:1.8rem; cursor:pointer; transition:0.2s; }
-    .btn-icon:hover { color: var(--accent); }
-
     .sidebar-nav a {
       display:block;
       padding:0.8rem 1rem;
       color: var(--text-light);
       font-weight:500;
       border-radius:6px;
-      transition:0.3s;
       margin-bottom:0.5rem;
+      transition:0.3s;
     }
     .sidebar-nav a:hover { background: var(--primary-dark); color:#fff; }
     .sidebar-nav a.active { background: var(--primary); color:#fff; }
-    .discord-cta { background: var(--accent); color:#fff; font-weight:bold; text-align:center; }
-    .sidebar-footer { text-align:center; color:#777; font-size:0.85rem; margin-top:auto; }
 
-    /* Overlay für Mobile */
-    .overlay {
-      position:fixed;
-      top:0; left:0; right:0; bottom:0;
-      background:rgba(0,0,0,0.5);
-      opacity:0;
-      pointer-events:none;
-      transition:opacity 0.3s ease;
-      z-index:500;
+    .main {
+      margin-left:260px;
+      width:calc(100% - 260px);
+      display:flex;
+      flex-direction:column;
     }
-    .overlay.show { opacity:1; pointer-events:auto; }
 
-    /* Main */
-    .main { margin-left:260px; width:calc(100% - 260px); display:flex; flex-direction:column; transition: margin-left 0.3s ease; }
-
+    /* Topbar */
     .topbar {
       background:#1c1f2b;
       padding:1rem 2rem;
@@ -92,63 +72,96 @@
       z-index:10;
       box-shadow:0 2px 8px var(--shadow);
     }
-    .topbar-title { font-size:1.3rem; font-weight:bold; }
-    .btn-primary {
-      background: var(--primary);
-      color:#fff;
-      padding:0.6rem 1.3rem;
-      border-radius:8px;
-      font-weight:bold;
-      transition:0.3s;
-    }
-    .btn-primary:hover { background: var(--primary-dark); }
+    .topbar-title { font-size:1.5rem; font-weight:700; }
 
     /* Section */
-    .section { padding:4rem 2rem; max-width:900px; margin:0 auto; }
-    .section h1 { font-size:2.4rem; margin-bottom:2rem; }
-    .section h2 { font-size:1.5rem; margin-top:2rem; margin-bottom:1rem; }
-    .section p { margin-bottom:1rem; line-height:1.6; }
+    .section { padding:4rem 2rem; max-width:1000px; margin:0 auto; }
+    .section h1 { font-size:2.5rem; margin-bottom:1rem; text-align:center; }
+    .section p.small { text-align:center; margin-bottom:2rem; color: var(--text-light); }
 
+    /* Suchfeld */
+    .search-container {
+      display:flex;
+      justify-content:center;
+      margin-bottom:2.5rem;
+    }
+    .search-container input {
+      width:100%;
+      max-width:400px;
+      padding:0.8rem 1rem;
+      border:none;
+      border-radius:8px;
+      background:#1a1d2b;
+      color:#fff;
+      font-size:1rem;
+    }
+    .search-container input::placeholder { color:#777; }
+
+    /* Regelkarten */
     .rules-overview {
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
-      gap:1.5rem;
-      margin-top:1rem;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:1.8rem;
     }
     .rule-card {
       background:#1a1d2b;
-      border-left:5px solid var(--accent);
-      padding:1.5rem;
-      border-radius:12px;
-      transition:0.3s;
-      cursor:pointer;
+      border:1px solid rgba(255,255,255,0.08);
+      padding:2rem 1.5rem;
+      border-radius:14px;
+      transition:transform 0.3s, box-shadow 0.3s;
+      text-align:center;
+      position:relative;
     }
-    .rule-card:hover { transform:translateY(-4px); border-left-color: var(--primary); box-shadow:0 4px 12px var(--shadow); }
-    .rule-card a { font-weight:bold; color:#fff; font-size:1.1rem; display:block; margin-bottom:0.5rem; }
-    .rule-card p { font-size:0.95rem; color:#ccc; margin:0; }
+    .rule-card:hover {
+      transform:translateY(-6px);
+      box-shadow:0 8px 20px var(--shadow);
+    }
+    .rule-card i {
+      font-size:2.5rem;
+      color:var(--accent);
+      margin-bottom:1rem;
+    }
+    .rule-card a {
+      display:block;
+      font-size:1.3rem;
+      font-weight:700;
+      color:#fff;
+      margin-bottom:0.8rem;
+    }
+    .rule-card p {
+      font-size:0.95rem;
+      color: var(--text-light);
+      line-height:1.5;
+    }
 
-    /* Footer */
-    .footer { text-align:center; padding:1.5rem; background: var(--sidebar-bg); color:#777; font-size:0.9rem; }
+    /* Floating Top Button */
+    .back-to-top {
+      position:fixed;
+      bottom:30px;
+      right:30px;
+      background:var(--primary);
+      color:#fff;
+      padding:0.8rem 1rem;
+      border-radius:50%;
+      font-size:1.4rem;
+      display:none;
+      cursor:pointer;
+      box-shadow:0 4px 10px var(--shadow);
+      transition:0.3s;
+    }
+    .back-to-top:hover { background:var(--primary-dark); }
 
     /* Responsive */
     @media(max-width:900px){
-      .sidebar { transform:translateX(-100%); position:fixed; }
-      .sidebar.open { transform:translateX(0); }
+      .sidebar { display:none; }
       .main { margin-left:0; width:100%; }
-      .section { padding:2.5rem 1rem; }
-      .section h1 { font-size:2rem; }
-      .rules-overview { display:block; }
-      .rule-card { margin-bottom:1rem; }
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <aside id="sidebar" class="sidebar">
-      <div class="sidebar-top">
-        <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
-        <button id="closeSidebar" class="btn-icon" aria-label="Sidebar schließen">&times;</button>
-      </div>
+    <aside class="sidebar">
+      <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
       <nav class="sidebar-nav">
         <a href="index.html">Start</a>
         <a href="about.html">Über uns</a>
@@ -160,75 +173,81 @@
       </nav>
       <div class="sidebar-footer"><small>&copy; 2025 NRW RP DE</small></div>
     </aside>
-    <div class="overlay" id="overlay"></div>
 
     <main class="main" id="top">
       <header class="topbar">
-        <button id="toggleSidebar" class="btn-icon" aria-label="Sidebar öffnen">&#9776;</button>
-        <div class="topbar-title">Übersicht Regelwerke</div>
+        <div class="topbar-title">📚 Regelwerke Übersicht</div>
       </header>
 
       <section class="section">
-        <h1>📚 Übersicht aller Regelwerke</h1>
-        <p class="small">Hier findest du alle wichtigen Regelwerke des Servers. Klicke auf einen Eintrag, um direkt zum ausführlichen Regelwerk zu gelangen.</p>
+        <h1>Regelwerke auf einen Blick</h1>
+        <p class="small">Klicke auf eine Kategorie, um direkt zum vollständigen Regelwerk zu gelangen.</p>
 
-        <div class="rules-overview">
+        <div class="search-container">
+          <input type="text" id="search" placeholder="🔍 Regelwerk suchen...">
+        </div>
+
+        <div class="rules-overview" id="rules">
           <div class="rule-card">
+            <i class="ri-shield-line"></i>
             <a href="rules-alt.html">RP-Regeln</a>
             <p>Allgemeine Server-Regeln, Rollenspiel-Verhalten, FailRP, Powergaming und Eskalationsregeln.</p>
           </div>
           <div class="rule-card">
+            <i class="ri-discord-line"></i>
             <a href="dc-regeln.html">Discord-Regeln</a>
-            <p>Verhalten auf dem Discord-Server, OOC-Kommunikation, Beleidigungen, Meldungen und Sanktionen.</p>
+            <p>Verhalten auf dem Discord-Server, OOC-Kommunikation, Beleidigungen und Sanktionen.</p>
           </div>
           <div class="rule-card">
+            <i class="ri-group-line"></i>
             <a href="rules-factions.html">Fraktions-Regeln</a>
-            <p>Regeln für alle Fraktionen, inklusive Verhalten, Jobs und interne Abläufe.</p>
+            <p>Regeln für Fraktionen, Verhalten, interne Abläufe und Rollenbeschreibung.</p>
           </div>
           <div class="rule-card">
+            <i class="ri-hammer-line"></i>
             <a href="bannkatalog.html">Bannkatalog</a>
-            <p>Bestrafungen für Regelverstöße, Übersicht von Verwarnungen bis Bann.</p>
+            <p>Bestrafungen für Regelverstöße – von Verwarnungen bis zu permanenten Banns.</p>
           </div>
-          <!-- Platzhalter für weitere Regelwerke -->
           <div class="rule-card">
+            <i class="ri-calendar-event-line"></i>
             <a href="event-rules.html">Event-Regeln</a>
-            <p>Regeln und Abläufe für Server-Events und besondere Rollenspiel-Situationen.</p>
+            <p>Regeln und Abläufe für Server-Events und spezielle RP-Situationen.</p>
           </div>
           <div class="rule-card">
+            <i class="ri-mic-line"></i>
             <a href="vc.html">Voice-Chat-Regeln</a>
-            <p>Verhalten im Voice-Chat, OOC-Kommunikation, Stimmverhalten und Mikrofon-Etikette.</p>
+            <p>Verhalten im Voice-Chat, Mikrofon-Etikette und Kommunikation im RP.</p>
           </div>
           <div class="rule-card">
+            <i class="ri-briefcase-line"></i>
             <a href="job.html">Job-Regeln</a>
-            <p>Speziell für Ingame-Jobs, Polizei, Rettungsdienste, Fraktionen oder freie Jobs.</p>
+            <p>Regeln für Polizei, Rettungsdienst, Fraktionen und freie Jobs.</p>
           </div>
         </div>
-
-        <p class="back-to-top"><a href="#top">Zurück nach oben ↑</a></p>
       </section>
 
       <footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
+
+      <button class="back-to-top" id="backToTop" title="Nach oben"><i class="ri-arrow-up-line"></i></button>
     </main>
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const sidebar = document.getElementById("sidebar");
-      const overlay = document.getElementById("overlay");
-      const toggleSidebar = document.getElementById("toggleSidebar");
-      const closeSidebar = document.getElementById("closeSidebar");
-
-      function openSidebar(){ sidebar.classList.add("open"); overlay.classList.add("show"); }
-      function closeSidebarFunc(){ sidebar.classList.remove("open"); overlay.classList.remove("show"); }
-
-      toggleSidebar?.addEventListener("click", openSidebar);
-      closeSidebar?.addEventListener("click", closeSidebarFunc);
-      overlay?.addEventListener("click", closeSidebarFunc);
-
-      document.querySelectorAll('.sidebar-nav a').forEach(link=>{
-        link.addEventListener('click', closeSidebarFunc);
+    // 🔍 Live-Suche
+    document.getElementById("search").addEventListener("input", function() {
+      const query = this.value.toLowerCase();
+      document.querySelectorAll(".rule-card").forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(query) ? "block" : "none";
       });
     });
+
+    // ⬆️ Scroll-Button
+    const backToTop = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+      backToTop.style.display = window.scrollY > 300 ? "block" : "none";
+    });
+    backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   </script>
 </body>
 </html>
