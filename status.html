@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Übersicht – NRW RP DE</title>
+  <style>
+    /* ========== RESET & GRUNDSTIL ========== */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family:'Roboto', sans-serif;
+      background:#0e0e12;
+      color:#e0e0e0;
+      display:flex;
+      min-height:100vh;
+    }
+    a { color:#7289da; text-decoration:none; }
+    a:hover { text-decoration:underline; }
+
+    /* ========== APP LAYOUT ========== */
+    .app { display:flex; width:100%; }
+    .sidebar {
+      width:260px;
+      background:#1a1b20;
+      display:flex;
+      flex-direction:column;
+      position:fixed;
+      top:0; left:0; bottom:0;
+      padding:1rem;
+      transition: transform 0.3s ease;
+      z-index:1000;
+    }
+    .sidebar.open { transform:translateX(0); }
+    .sidebar-top {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .sidebar-logo { width:50px; height:50px; border-radius:8px; }
+    .btn-icon { background:none; border:none; color:#aaa; font-size:2rem; cursor:pointer; }
+    .btn-icon:hover { color:#fff; }
+
+    .sidebar-nav { margin-top:2rem; display:flex; flex-direction:column; gap:0.8rem; }
+    .sidebar-nav a {
+      padding:0.8rem 1rem;
+      border-radius:6px;
+      transition: background 0.2s;
+      font-weight:500;
+      color:#cfcfcf;
+    }
+    .sidebar-nav a:hover { background:#2a2b30; }
+    .sidebar-nav a.active { background:#7289da; color:#fff; }
+    .discord-cta { background:#5865f2; color:#fff !important; text-align:center; }
+    .discord-cta:hover { background:#4752c4; }
+    .sidebar-footer { margin-top:auto; text-align:center; font-size:0.8rem; color:#888; }
+
+    /* ========== MAIN CONTENT ========== */
+    .main { margin-left:260px; width:100%; display:flex; flex-direction:column; min-height:100vh; }
+
+    /* ========== TOPBAR ========== */
+    .topbar {
+      background:#18191c;
+      padding:1rem 2rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:sticky;
+      top:0;
+      z-index:900;
+      border-bottom:1px solid #2c2d33;
+    }
+    .topbar-title { font-size:1.4rem; font-weight:bold; }
+    .btn-primary {
+      background:#5865f2;
+      padding:0.7rem 1.4rem;
+      color:#fff;
+      border-radius:6px;
+      font-weight:bold;
+      transition:background 0.2s;
+    }
+    .btn-primary:hover { background:#4752c4; }
+
+    /* ========== SECTION ========== */
+    .section { padding:2rem 3rem; max-width:900px; margin:0 auto; }
+    .section h1 { font-size:2rem; margin-bottom:1rem; }
+    .section h2 { font-size:1.6rem; margin-top:2rem; margin-bottom:1rem; }
+    .section h3 { font-size:1.2rem; margin-top:1.5rem; margin-bottom:0.6rem; color:#cfcfcf; }
+    .section p { margin-bottom:1rem; line-height:1.45; }
+    .rules-list { list-style:decimal inside; margin-top:1rem; margin-bottom:2rem; }
+    .rules-list li { margin-bottom:0.7rem; padding-left:0.3rem; }
+    ul { margin-left:1.5rem; }
+
+    .definition { background:#101217; padding:1rem; border-left:4px solid #7289da; margin-bottom:1rem; border-radius:6px; }
+    .warning { background:#2a120f; padding:0.8rem; border-left:4px solid #e74c3c; color:#ffdede; border-radius:6px; margin-bottom:1rem; }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      text-align:center;
+      padding:1rem;
+      font-size:0.9rem;
+      color:#888;
+      border-top:1px solid #2c2d33;
+      margin-top:auto;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width:900px) {
+      .sidebar { transform:translateX(-100%); position:fixed; }
+      .sidebar.open { transform:translateX(0); }
+      .main { margin-left:0; }
+      .topbar { padding:1rem; }
+      .section { padding:1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-top">
+        <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
+        <button id="closeSidebar" class="btn-icon" title="Schließen">&times;</button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html">Start</a>
+        <a href="about.html">Über uns</a>
+        <a href="factions.html">Fraktionen</a>
+        <a href="rules.html">Regelwerk</a>
+        <a href="admin.html" class="active">Admin Übersicht</a>
+        <a href="events.html">Events</a>
+        <a href="team.html">Team</a>
+        <a href="join.html" class="discord-cta">Beitreten</a>
+      </nav>
+      <div class="sidebar-footer"><small>&copy; 2025 NRW RP DE</small></div>
+    </aside>
+
+    <main class="main" id="top">
+      <header class="topbar">
+        <button id="toggleSidebar" class="btn-icon">&#9776;</button>
+        <div class="topbar-title">Admin Übersicht</div>
+      </header>
+
+      <section class="section">
+        <h1>🛠️ Admin Übersicht</h1>
+        <p class="small">Diese Seite enthält alle wichtigen Informationen für Admins im Einsatz – inklusive Statuscodes, Fehlercodes, Befehle und Richtlinien.</p>
+
+        <h2>Status</h2>
+        <ul>
+          <li><strong>Status 1:</strong> Wartet auf Aufträge – Admin ist im Dienst, einsatzbereit, aber aktuell ohne aktiven Auftrag.</li>
+          <li><strong>Status 2:</strong> Auf Anfahrt – Admin ist unterwegs zu einem Report oder Auftrag.</li>
+          <li><strong>Status 3:</strong> Undercover unterwegs – Nur mit Genehmigung verdeckt im Einsatz.</li>
+          <li><strong>Status 4:</strong> In Verfolgung (kein Backup nötig) – Admin kommt allein zurecht.</li>
+          <li><strong>Status 5:</strong> In Verfolgung (Backup nötig) – Admin benötigt dringend Unterstützung.</li>
+          <li><strong>Status 6:</strong> Stille Anfahrt – Admin bleibt unauffällig auf dem Weg zum Einsatzort.</li>
+          <li><strong>Status 7:</strong> Beobachtung eines Spielers – Diskrete Überwachung eines Spielers.</li>
+        </ul>
+
+        <h2>Fehlercodes</h2>
+        <ul>
+          <li><strong>Code 20:</strong> Standortabfrage</li>
+          <li><strong>Code 77:</strong> Verdacht auf Regelverstoß</li>
+          <li><strong>Code 88:</strong> Massive Störung / Troll-Aktion</li>
+          <li><strong>Code 99:</strong> Admin in Gefahr / unter Beschuss</li>
+        </ul>
+
+        <h2>Wichtige Befehle</h2>
+        <div class="definition">
+          <p><code>bring (Benutzer Name)</code> – Spieler teleportieren</p>
+          <p><code>broadcast @all (Text)</code> – Nachricht an alle</p>
+          <p><code>flight / fly (Benutzer Name)</code> – Flugmodus aktivieren</p>
+          <p><code>list</code> – Alle Spieler + Beruf anzeigen</p>
+          <p><code>nametag set/reset @me</code> – Nametag setzen oder zurücksetzen</p>
+          <p><code>server ban/kick/unban (Benutzer Name)</code> – Bann-/Kickverwaltung</p>
+          <p><code>to player (Benutzer Name)</code> – Teleport zu Spieler</p>
+          <p><code>to vehicle @me/(Benutzer Name)</code> – Teleport zu Fahrzeug</p>
+          <p><code>vehicle spawnadmin ...</code> – Admin-Fahrzeug spawnen</p>
+          <p><code>watch (Benutzer Name)</code> – Spieler beobachten</p>
+        </div>
+
+        <h2>Werbung & Nametags</h2>
+        <p><code>Broadcast @all Schaut doch gerne bei unserem Dizzy vorbei (7ftwm9kN9B)</code></p>
+        <p><strong>Nametag setzen:</strong> <code>nametag set @me Rank Anzeigename Dizzy Code 7ftwm9kN9B out of RP</code><br>
+        oder <code>{höchste Rolle} | {Name} | Out of RP</code></p>
+
+        <h2>Fahrzeugliste & Berechtigungen</h2>
+        <ul>
+          <li><strong>Eigentümer:</strong> Darf alle Fahrzeuge fahren</li>
+          <li><strong>Stellvertretender Eigentümer:</strong> Darf Bullhorn fahren</li>
+          <li><strong>Leitende Admins:</strong> Darf BMW Undercover fahren</li>
+          <li><strong>Head Moderator:</strong> Darf BMW M5 fahren</li>
+          <li><strong>Head Admin / Hamburg Admin:</strong> Darf Audi A6 fahren</li>
+          <li><strong>Probe Admin:</strong> Darf nur G-Klasse fahren</li>
+        </ul>
+
+        <h2>Tuning-Regeln</h2>
+        <div class="definition">
+          <p><strong>Erlaubt:</strong> Volle PS-Tuningstufe, maximale Bremskraft, Front- & Heckblitzer, Panzerung, zusätzliche Blinker</p>
+          <p><strong>Nicht erlaubt:</strong> Felgen ändern</p>
+          <p><strong>Kennzeichen:</strong> Bei Kennzeichen Kategorie <code>admin</code> anmelden</p>
+        </div>
+        
+        <h2>Clip Pflicht</h2>
+        <div class="definition">
+          <p><strong>Wichtig:</strong> Clips müssen während der Admin Schicht an sein!</p>
+          <p><strong>Nicht erlaubt:</strong> Kein Clip</p>
+          <p><strong>Warum:</strong> Damit Adminfälle nachvollzogen werden können.</p>
+        </div>
+
+        <h2>Polizeiausstattung & Fahrzeugbeleuchtung</h2>
+        <ul>
+          <li><strong>Audi A6:</strong> DBS 4000 oder Zirkon</li>
+          <li><strong>Bullhorn Prancer SFP Fury:</strong> DBS 4000 oder Zirkon</li>
+          <li><strong>G-Klasse:</strong> nur DBS 5000</li>
+        </ul>
+        <p><strong>Admin als Polizist:</strong> GPS-Tracker ausgerüstet, Stopsticks im Inventar<br>
+           <strong>Nicht-Polizisten:</strong> Mindestens 1 GPS-Tracker erforderlich</p>
+
+        <div class="warning">
+          <strong>Hinweis:</strong> Verstöße gegen diese Richtlinien können zu Verwarnungen oder Sanktionen führen.
+        </div>
+
+        <p style="margin-top:1.5rem;"><a href="#top">Zurück nach oben ↑</a></p>
+      </section>
+
+      <footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sidebar = document.getElementById("sidebar");
+      const toggleSidebar = document.getElementById("toggleSidebar");
+      const closeSidebar = document.getElementById("closeSidebar");
+
+      if(toggleSidebar) toggleSidebar.addEventListener("click", () => sidebar.classList.toggle("open"));
+      if(closeSidebar) closeSidebar.addEventListener("click", () => sidebar.classList.remove("open"));
+
+      document.querySelectorAll('.sidebar-nav a').forEach(link => {
+        link.addEventListener('click', () => sidebar.classList.remove('open'));
+      });
+    });
+  </script>
+</body>
+</html>
