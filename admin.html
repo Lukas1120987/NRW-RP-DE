@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Admin – NRW RP DE</title>
+<title>Team Dashboard – NRW RP DE</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
@@ -18,241 +18,238 @@ a{color:var(--primary);text-decoration:none;transition:0.3s;}
 a:hover{color:var(--accent);}
 h1,h2,h3{font-weight:700;margin-bottom:0.7rem;}
 p{color:var(--text-light);line-height:1.6;margin-bottom:1.2rem;}
+input{width:100%;padding:0.8rem;margin-bottom:0.8rem;border:none;border-radius:8px;background:#25283a;color:#fff;font-size:1rem;}
+button{margin-top:0.2rem;}
 
 /* Layout */
-.app{display:flex;min-height:100vh;}
-.sidebar{width:260px;background:var(--sidebar-bg);padding:1.5rem 1rem;display:flex;flex-direction:column;justify-content:space-between;position:fixed;top:0;bottom:0;left:0;transition:transform 0.3s ease;z-index:1000;}
-.sidebar-logo{width:90px;margin:0 auto 1rem;}
-.sidebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
-.btn-icon{background:none;border:none;color:var(--text);font-size:1.8rem;cursor:pointer;transition:0.2s;}
-.btn-icon:hover{color:var(--accent);}
-.sidebar-nav a{display:block;padding:0.8rem 1rem;color:var(--text-light);font-weight:500;border-radius:6px;transition:0.3s;margin-bottom:0.5rem;}
-.sidebar-nav a:hover{background:var(--primary-dark);color:#fff;}
-.sidebar-nav a.active{background:var(--primary);color:#fff;}
-.discord-cta{background:var(--accent);color:#fff;font-weight:bold;}
-.sidebar-footer{text-align:center;color:#777;font-size:0.85rem;margin-top:auto;}
-
-/* Main */
-.main{margin-left:260px;width:calc(100% - 260px);display:flex;flex-direction:column;transition:margin-left 0.3s ease;}
-.topbar{background:#1c1f2b;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px var(--shadow);}
-.topbar-title{font-size:1.3rem;font-weight:bold;}
-.btn-primary{background:var(--primary);color:#fff;padding:0.6rem 1.3rem;border-radius:8px;font-weight:bold;transition:0.3s;cursor:pointer;}
+.main{padding:2rem;max-width:1200px;margin:0 auto;}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
+.header h1{font-size:2rem;}
+.btn{padding:0.6rem 1.3rem;border:none;border-radius:8px;cursor:pointer;font-weight:bold;}
+.btn-primary{background:var(--primary);color:#fff;}
 .btn-primary:hover{background:var(--primary-dark);}
+.btn-secondary{background:#1c1f2b;color:#fff;}
+.card{background:#1a1d2b;padding:1.5rem;border-radius:12px;box-shadow:0 4px 15px var(--shadow);margin-bottom:1.5rem;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;}
+.user-info{display:flex;align-items:center;gap:1rem;}
+.user-info img{width:80px;height:80px;border-radius:50%;box-shadow:0 0 10px rgba(0,0,0,0.5);}
+#countdown{font-weight:bold;color:#aaa;margin-bottom:1rem;}
 
 /* Login */
 .login-container{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;}
 .login-box{background:#1a1d2b;padding:2.5rem;border-radius:12px;box-shadow:0 4px 15px var(--shadow);max-width:400px;width:100%;}
 .login-box h2{margin-bottom:1.5rem;font-size:2rem;}
-.login-box input{width:100%;padding:0.8rem;margin-bottom:1rem;border:none;border-radius:8px;background:#25283a;color:#fff;font-size:1rem;}
-.login-box button{width:100%;padding:0.8rem;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:1.1rem;font-weight:bold;cursor:pointer;transition:0.3s;}
-.login-box button:hover{background:var(--primary-dark);}
-.login-error{color:#ff5555;margin-top:0.5rem;font-size:0.95rem;}
-
-/* Section */
-.section{padding:4rem 2rem;max-width:900px;margin:0 auto;}
-.link-card{background:#1a1d2b;padding:2rem;border-radius:12px;box-shadow:0 4px 15px var(--shadow);margin-bottom:2rem;border-left:5px solid var(--accent);transition:0.3s;}
-.link-card:hover{transform:translateY(-4px);border-left-color:var(--primary);}
-.link-card h3{font-size:1.6rem;margin-bottom:0.5rem;}
-.link-card a{display:inline-block;margin-top:0.5rem;font-weight:bold;}
-.footer{text-align:center;padding:1.5rem;background:#151823;color:#777;font-size:0.9rem;}
-
-/* Ticket System */
-.ticket-card{background:#1a1d2b;padding:1rem;margin-bottom:1rem;border-left:5px solid var(--accent);}
-.ticket-card h3{margin-bottom:0.5rem;}
-.ticket-card p{color:var(--text-light);}
-.status-Offen{color:#ff5555;font-weight:bold;}
-.status-InProgress{color:#ffaa00;font-weight:bold;}
-.status-Erledigt{color:#55ff55;font-weight:bold;}
-input,textarea,select{margin-bottom:0.8rem;}
-button{margin-top:0.2rem;}
+.login-box p{margin-bottom:1.2rem;}
+.login-box a{display:block;margin-top:1rem;}
+.footer{text-align:center;padding:1rem;color:#777;}
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div id="login" class="login-container">
-  <div class="login-box">
-    <h2>🔐 Admin Login</h2>
-    <p>Bitte Passwort eingeben oder über Discord einloggen.</p>
-    <input type="password" id="adminPassword" placeholder="Passwort eingeben..." />
-    <button onclick="checkLogin()">Login</button>
-    <p>Oder via Discord:</p>
-    <a class="btn-primary" href="https://discord.com/oauth2/authorize?client_id=1391061610445017178&response_type=token&redirect_uri=https%3A%2F%2Flukas1120987.github.io%2FNRW-RP-DE%2Fadmin.html#login-success&scope=identify">Discord Login</a>
-    <div class="login-error" id="loginError"></div>
+  <div class="login-box" id="discordLoginBox">
+    <h2>🔑 Team Login</h2>
+    <p>Bitte über Discord einloggen:</p>
+    <a class="btn btn-primary" 
+      href="https://discord.com/oauth2/authorize?client_id=1391061610445017178&response_type=token&redirect_uri=https%3A%2F%2Flukas1120987.github.io%2FNRW-RP-DE%2Fadmin.html&scope=identify">
+      Login mit Discord
+    </a>
+  </div>
+
+  <!-- Code-Login -->
+  <div class="login-box" id="codeLoginBox" style="display:none;">
+    <h2>🔑 Zugangscode eingeben</h2>
+    <p>Bitte den Code aus Discord hier eingeben:</p>
+    <input type="text" id="inputCode" placeholder="6-stelliger Code" />
+    <button class="btn btn-primary" onclick="checkCode()">Anmelden</button>
+    <div id="codeError" style="color:#ff5555;margin-top:0.5rem;"></div>
   </div>
 </div>
 
-<!-- APP -->
-<div id="app" class="app" style="display:none;">
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-top">
-      <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
-      <button id="closeSidebar" class="btn-icon" title="Schließen">&times;</button>
+<!-- DASHBOARD -->
+<div id="dashboard" style="display:none;">
+  <div class="main">
+    <div class="header">
+      <h1>👥 Team Dashboard</h1>
+      <button class="btn btn-secondary" onclick="logout()">Logout</button>
     </div>
-    <nav class="sidebar-nav">
-      <a href="index.html">Start</a>
-      <a href="about.html">Über uns</a>
-      <a href="factions.html">Fraktionen</a>
-      <a href="rules.html">Regelwerk</a>
-      <a href="admin.html" class="active">Admin</a>
-      <a href="team.html">Team</a>
-      <a href="join.html" class="discord-cta">Beitreten</a>
-    </nav>
-    <div class="sidebar-footer"><small>&copy; 2025 NRW RP DE</small></div>
-  </aside>
 
-  <main class="main">
-    <header class="topbar">
-      <button id="toggleSidebar" class="btn-icon">&#9776;</button>
-      <div class="topbar-title">Admin Übersicht</div>
-      <button onclick="logout()" class="btn-primary">Logout</button>
-    </header>
+    <div id="userSection" class="card"></div>
+    <div id="countdown"></div>
 
-    <section class="section">
-      <h1>📋 Admin Übersicht</h1>
-
-      <div class="link-card">
-        <h3>📜 Regelwerke</h3>
-        <a href="rules.html" target="_blank">📘 Regelwerk</a><br>
-        <a href="rules-alt.html" target="_blank">📙 RP-Regeln</a><br>
-        <a href="dc-regeln.html" target="_blank">📕 Discord-Regeln</a><br>
-        <a href="status.html" target="_blank"> 🗓️ Admin-Infos</a>
+    <div class="grid">
+      <div class="card">
+        <h3>🎫 Ticketsystem</h3>
+        <p>Support- und Bug-Tickets verwalten.</p>
+        <a href="https://teams.galaxybot.app/team/1343137566068838480" class="btn btn-primary" target="_blank">Öffnen</a>
       </div>
 
-      <div class="link-card">
-        <h3>🔗 Wichtige Links</h3>
-        <a href="https://teams.galaxybot.app/team/1343137566068838480" target="_blank">🛠️ Team Dashboard</a><br>
-        <a href="https://teams.galaxybot.app/application/1343137566068838480" target="_blank">📋 Bewerbungsportal</a><br>
-        <a href="https://teams.galaxybot.app/team/1343137566068838480/calendar" target="_blank">📅 Team-Kalender</a><br>
-        <a href="https://teams.galaxybot.app/team/1343137566068838480/member" target="_blank">👤 Team-Liste</a>
+      <div class="card">
+        <h3>📅 Team-Kalender</h3>
+        <p>Termine & Schichten auf einen Blick.</p>
+        <a href="https://teams.galaxybot.app/team/1343137566068838480/calendar" class="btn btn-primary" target="_blank">Ansehen</a>
       </div>
 
-      <hr>
+      <div class="card">
+        <h3>📋 Aufgaben</h3>
+        <p>Offene Aufgaben oder Projekte ansehen.</p>
+        <button class="btn btn-primary" onclick="alert('Demnächst verfügbar!')">Geplant</button>
+      </div>
 
-      <h2>🛠️ Online-Tickets</h2>
-      <input type="text" id="ticketTitle" placeholder="Titel">
-      <select id="ticketCategory">
-        <option value="Support">Support</option>
-        <option value="Bug">Bug</option>
-        <option value="Feedback">Feedback</option>
-      </select>
-      <textarea id="ticketMessage" rows="4" placeholder="Nachricht"></textarea>
-      <button onclick="createTicket()">Ticket erstellen</button>
+      <div class="card">
+        <h3>🧾 Login-Verlauf</h3>
+        <p>Zeigt deinen letzten Login & Code an.</p>
+        <button class="btn btn-primary" onclick="showLog()">Anzeigen</button>
+      </div>
+    </div>
 
-      <div id="ticketList" style="margin-top:1rem;"></div>
-
-    </section>
-
-    <footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
-  </main>
+    <div id="logContainer"></div>
+    <div class="footer">&copy; 2025 NRW RP DE</div>
+  </div>
 </div>
 
 <script>
-const PASSWORD = "NRWRP";
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1421929533757591612/qYqPEbv-vOh35ldaQI6pIvEcqoqJ37cZ_o2aVCkZWUTRKvscDxmGr0lWocRJew0F2Gxp";
-const API_URL = "http://localhost:3000/tickets"; // Node.js Backend
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1426251310348636251/xbz96yj-pjjfo-hny40hwX4-HnEOEm6LbWXztxaNW_ittySwzd_PCiFNZC9LFAfF-MVH";
+const DISCORD_API = "https://discord.com/api/users/@me";
+const EXPIRATION_MINUTES = 15;
 
-// LOGIN
-function checkLogin(){
-  const input = document.getElementById("adminPassword").value;
-  const error = document.getElementById("loginError");
-  if(input === PASSWORD){
-    localStorage.setItem("adminLoggedIn","true");
-    showApp();
-  } else { error.textContent="❌ Falsches Passwort!"; }
+let pendingLogin = null;
+
+// ===== Helper =====
+function generateCode() { return Math.floor(100000 + Math.random() * 900000); }
+function saveLogin(data){localStorage.setItem("teamLogin", JSON.stringify(data));}
+function loadLogin(){
+  const d = localStorage.getItem("teamLogin");
+  if(!d) return null;
+  const parsed = JSON.parse(d);
+  if(Date.now() > parsed.expires){localStorage.removeItem("teamLogin");return null;}
+  return parsed;
 }
+function logout(){localStorage.removeItem("teamLogin");location.reload();}
 
-function logout(){
-  localStorage.removeItem("adminLoggedIn");
-  location.reload();
-}
-
-function showApp(){
-  document.getElementById("login").style.display="none";
-  document.getElementById("app").style.display="flex";
-}
-
-// Automatisch Login via LocalStorage oder Discord-Hash
-window.addEventListener("DOMContentLoaded", ()=>{
+// ===== Start =====
+window.addEventListener("DOMContentLoaded", async () => {
+  const stored = loadLogin();
   const hash = window.location.hash;
-  if(localStorage.getItem("adminLoggedIn")==="true" || hash.includes("login-success") || hash.includes("access_token")){
-    localStorage.setItem("adminLoggedIn","true");
-    showApp();
-    history.replaceState(null,null,'admin.html');
+
+  if (stored && stored.codeVerified){
+    showDashboard(stored);
+    return;
   }
-  loadTickets();
+
+  if (hash.includes("access_token")) {
+    const token = new URLSearchParams(hash.substring(1)).get("access_token");
+    const res = await fetch(DISCORD_API, { headers: { Authorization: `Bearer ${token}` }});
+    const user = await res.json();
+
+    if(user.id){
+      const code = generateCode();
+      const expires = Date.now() + EXPIRATION_MINUTES * 60 * 1000;
+      pendingLogin = {
+        username: `${user.username}#${user.discriminator}`,
+        id: user.id,
+        avatar: user.avatar 
+          ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+          : "https://cdn.discordapp.com/embed/avatars/0.png",
+        code, expires,
+        codeVerified: false
+      };
+      await sendWebhook(pendingLogin);
+      document.getElementById("discordLoginBox").style.display = "none";
+      document.getElementById("codeLoginBox").style.display = "block";
+      history.replaceState(null,null,'team.html');
+    } else {
+      alert("Login fehlgeschlagen.");
+    }
+  }
 });
 
-// Sidebar Steuerung
-const sidebar=document.getElementById('sidebar');
-document.getElementById('toggleSidebar').addEventListener('click',()=>sidebar.classList.toggle('open'));
-document.getElementById('closeSidebar').addEventListener('click',()=>sidebar.classList.remove('open'));
+// ===== Code-Check =====
+function checkCode(){
+  const input = document.getElementById("inputCode").value.trim();
+  const error = document.getElementById("codeError");
 
-// TICKETS
-let tickets = [];
-async function loadTickets(){
-  try{
-    const res = await fetch(API_URL);
-    tickets = await res.json();
-    renderTickets();
-  }catch(e){console.error("Tickets laden fehlgeschlagen",e);}
+  if(!pendingLogin){error.textContent="❌ Kein Login vorhanden!"; return;}
+  if(Date.now() > pendingLogin.expires){error.textContent="⛔ Code abgelaufen!"; return;}
+
+  if(input === pendingLogin.code.toString()){
+    pendingLogin.codeVerified = true;
+    saveLogin(pendingLogin);
+    showDashboard(pendingLogin);
+  } else {
+    error.textContent="❌ Falscher Code!";
+  }
 }
 
-function renderTickets(){
-  const container=document.getElementById("ticketList");
-  container.innerHTML="";
-  tickets.forEach(t=>{
-    const card=document.createElement("div");
-    card.className="ticket-card";
-    card.innerHTML=`
-      <h3>${t.title} <span class="status-${t.status}">[${t.status}]</span></h3>
-      <p><strong>Kategorie:</strong> ${t.category}</p>
-      <p>${t.message}</p>
-      <button onclick="changeStatus(${t.id})">Status ändern</button>
-    `;
-    container.appendChild(card);
-  });
-}
-
-async function createTicket(){
-  const title=document.getElementById("ticketTitle").value;
-  const category=document.getElementById("ticketCategory").value;
-  const message=document.getElementById("ticketMessage").value;
-  if(!title||!message){alert("Bitte ausfüllen!"); return;}
-
-  // Ticket an Backend senden
-  const res = await fetch(API_URL,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({title,category,message,status:"Offen"})
-  });
-  const ticket = await res.json();
-  sendToDiscord(ticket);
-  loadTickets();
-
-  document.getElementById("ticketTitle").value="";
-  document.getElementById("ticketMessage").value="";
-}
-
-async function changeStatus(id){
-  const ticket = tickets.find(t=>t.id===id);
-  if(!ticket) return;
-  const newStatus = ticket.status==="Offen"?"InProgress":ticket.status==="InProgress"?"Erledigt":"Offen";
-  await fetch(`${API_URL}/${id}`,{
-    method:'PUT',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({status:newStatus})
-  });
-  loadTickets();
-}
-
-function sendToDiscord(ticket){
-  fetch(WEBHOOK_URL,{
+// ===== Webhook mit Ping =====
+async function sendWebhook(data){
+  const payload = {
+    content: `<@${data.id}> 🔓 **Team Login erkannt!**\n👤 ${data.username}\n🔑 **Code:** ${data.code}\n⏰ Gültig für ${EXPIRATION_MINUTES} Minuten`
+  };
+  await fetch(WEBHOOK_URL,{
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({content:`📩 Neues Ticket\n**Titel:** ${ticket.title}\n**Kategorie:** ${ticket.category}\n**Nachricht:** ${ticket.message}`})
+    body:JSON.stringify(payload)
   });
 }
+
+// ===== Dashboard =====
+function showDashboard(data){
+  document.getElementById("login").style.display="none";
+  document.getElementById("dashboard").style.display="block";
+
+  document.getElementById("userSection").innerHTML = `
+    <div class="user-info">
+      <img src="${data.avatar}">
+      <div>
+        <h2>${data.username}</h2>
+        <p>ID: ${data.id}</p>
+        <p>Zugangscode: <strong>${data.code}</strong></p>
+        <p>Gültig bis: ${new Date(data.expires).toLocaleTimeString()}</p>
+      </div>
+    </div>
+  `;
+
+  startCountdown(data.expires);
+}
+
+// ===== Countdown =====
+function startCountdown(expiry){
+  const cd = document.getElementById("countdown");
+  const interval = setInterval(()=>{
+    const diff = expiry - Date.now();
+    if(diff <= 0){
+      cd.textContent = "⛔ Zugangscode abgelaufen – bitte neu einloggen.";
+      clearInterval(interval);
+      localStorage.removeItem("teamLogin");
+      setTimeout(()=>location.reload(),3000);
+      return;
+    }
+    const m = Math.floor(diff/60000);
+    const s = Math.floor((diff%60000)/1000);
+    cd.textContent = `⏳ Code läuft ab in ${m}m ${s}s`;
+    if(m < 1) cd.style.color = "#ff6666";
+  },1000);
+}
+
+// ===== Log =====
+function showLog(){
+  const log = loadLogin();
+  const div = document.getElementById("logContainer");
+  if(!log){div.innerHTML="<p>Keine Logins gefunden.</p>";return;}
+  div.innerHTML = `
+    <div class="card">
+      <h3>Letzter Login</h3>
+      <p><strong>User:</strong> ${log.username}</p>
+      <p><strong>ID:</strong> ${log.id}</p>
+      <p><strong>Code:</strong> ${log.code}</p>
+      <p><strong>Login-Zeit:</strong> ${new Date(log.expires - EXPIRATION_MINUTES*60*1000).toLocaleString()}</p>
+      <p><strong>Läuft ab:</strong> ${new Date(log.expires).toLocaleString()}</p>
+    </div>
+  `;
+}
 </script>
+
 </body>
 </html>
