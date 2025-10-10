@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Team Dashboard – NRW RP DE</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary:#5865F2; --primary-dark:#4752C4; --background:#0f111a;
+  --sidebar-bg:#151823; --text:#f0f0f0; --text-light:#cccccc;
+  --accent:#7289da; --shadow:rgba(0,0,0,0.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Roboto',sans-serif;background:var(--background);color:var(--text);min-height:100vh;overflow-x:hidden;}
+a{color:var(--primary);text-decoration:none;transition:0.3s;}
+a:hover{color:var(--accent);}
+h1,h2,h3{font-weight:700;margin-bottom:0.7rem;}
+p{color:var(--text-light);line-height:1.6;margin-bottom:1.2rem;}
+
+/* Layout */
+.main{padding:2rem;max-width:1200px;margin:0 auto;}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
+.header h1{font-size:2rem;}
+.btn{padding:0.6rem 1.3rem;border:none;border-radius:8px;cursor:pointer;font-weight:bold;}
+.btn-primary{background:var(--primary);color:#fff;}
+.btn-primary:hover{background:var(--primary-dark);}
+.btn-secondary{background:#1c1f2b;color:#fff;}
+.card{background:#1a1d2b;padding:1.5rem;border-radius:12px;box-shadow:0 4px 15px var(--shadow);margin-bottom:1.5rem;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;}
+.user-info{display:flex;align-items:center;gap:1rem;}
+.user-info img{width:80px;height:80px;border-radius:50%;box-shadow:0 0 10px rgba(0,0,0,0.5);}
+#countdown{font-weight:bold;color:#aaa;margin-bottom:1rem;}
+
+/* Login */
+.login-container{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;}
+.login-box{background:#1a1d2b;padding:2.5rem;border-radius:12px;box-shadow:0 4px 15px var(--shadow);max-width:400px;width:100%;}
+.login-box h2{margin-bottom:1.5rem;font-size:2rem;}
+.login-box p{margin-bottom:1.2rem;}
+.login-box a{display:block;margin-top:1rem;}
+.footer{text-align:center;padding:1rem;color:#777;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="login-container">
+  <div class="login-box">
+    <h2>🔑 Team Login</h2>
+    <p>Bitte über Discord einloggen:</p>
+    <a class="btn btn-primary" 
+      href="https://discord.com/oauth2/authorize?client_id=1391061610445017178&response_type=token&redirect_uri=https%3A%2F%2Flukas1120987.github.io%2FNRW-RP-DE%2Fteam.html&scope=identify">
+      Login mit Discord
+    </a>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" style="display:none;">
+  <div class="main">
+    <div class="header">
+      <h1>👥 Team Dashboard</h1>
+      <button class="btn btn-secondary" onclick="logout()">Logout</button>
+    </div>
+
+    <div id="userSection" class="card"></div>
+    <div id="countdown"></div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>🎫 Ticketsystem</h3>
+        <p>Support- und Bug-Tickets verwalten.</p>
+        <a href="https://teams.galaxybot.app/team/1343137566068838480" class="btn btn-primary" target="_blank">Öffnen</a>
+      </div>
+
+      <div class="card">
+        <h3>📅 Team-Kalender</h3>
+        <p>Termine & Schichten auf einen Blick.</p>
+        <a href="https://teams.galaxybot.app/team/1343137566068838480/calendar" class="btn btn-primary" target="_blank">Ansehen</a>
+      </div>
+
+      <div class="card">
+        <h3>📋 Aufgaben</h3>
+        <p>Offene Aufgaben oder Projekte ansehen.</p>
+        <button class="btn btn-primary" onclick="alert('Demnächst verfügbar!')">Geplant</button>
+      </div>
+
+      <div class="card">
+        <h3>🧾 Login-Verlauf</h3>
+        <p>Zeigt deinen letzten Login & Code an.</p>
+        <button class="btn btn-primary" onclick="showLog()">Anzeigen</button>
+      </div>
+    </div>
+
+    <div id="logContainer"></div>
+    <div class="footer">&copy; 2025 NRW RP DE</div>
+  </div>
+</div>
+
+<script>
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1426251310348636251/xbz96yj-pjjfo-hny40hwX4-HnEOEm6LbWXztxaNW_ittySwzd_PCiFNZC9LFAfF-MVH";
+const DISCORD_API = "https://discord.com/api/users/@me";
+const EXPIRATION_MINUTES = 15;
+
+// ===== Helper =====
+function generateCode() {
+  return Math.floor(100000 + Math.random() * 900000);
+}
+function saveLogin(data){localStorage.setItem("teamLogin", JSON.stringify(data));}
+function loadLogin(){
+  const d = localStorage.getItem("teamLogin");
+  if(!d) return null;
+  const parsed = JSON.parse(d);
+  if(Date.now() > parsed.expires){localStorage.removeItem("teamLogin");return null;}
+  return parsed;
+}
+function logout(){localStorage.removeItem("teamLogin");location.reload();}
+
+// ===== Start =====
+window.addEventListener("DOMContentLoaded", async () => {
+  const stored = loadLogin();
+  const hash = window.location.hash;
+
+  if (stored){showDashboard(stored);return;}
+
+  if (hash.includes("access_token")) {
+    const token = new URLSearchParams(hash.substring(1)).get("access_token");
+    const res = await fetch(DISCORD_API, { headers: { Authorization: `Bearer ${token}` }});
+    const user = await res.json();
+
+    if(user.id){
+      const code = generateCode();
+      const expires = Date.now() + EXPIRATION_MINUTES * 60 * 1000;
+      const data = {
+        username: `${user.username}#${user.discriminator}`,
+        id: user.id,
+        avatar: user.avatar 
+          ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
+          : "https://cdn.discordapp.com/embed/avatars/0.png",
+        code, expires
+      };
+      saveLogin(data);
+      await sendWebhook(data);
+      showDashboard(data);
+      history.replaceState(null,null,'team.html');
+    } else {
+      alert("Login fehlgeschlagen.");
+    }
+  }
+});
+
+// ===== Webhook mit Ping =====
+async function sendWebhook(data){
+  const payload = {
+    content: `<@${data.id}> 🔓 **Team Login erkannt!**\n👤 ${data.username}\n🔑 **Code:** ${data.code}\n⏰ Gültig für ${EXPIRATION_MINUTES} Minuten`
+  };
+  await fetch(WEBHOOK_URL,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(payload)
+  });
+}
+
+// ===== Dashboard =====
+function showDashboard(data){
+  document.getElementById("login").style.display="none";
+  document.getElementById("dashboard").style.display="block";
+
+  document.getElementById("userSection").innerHTML = `
+    <div class="user-info">
+      <img src="${data.avatar}">
+      <div>
+        <h2>${data.username}</h2>
+        <p>ID: ${data.id}</p>
+        <p>Zugangscode: <strong>${data.code}</strong></p>
+        <p>Gültig bis: ${new Date(data.expires).toLocaleTimeString()}</p>
+      </div>
+    </div>
+  `;
+
+  startCountdown(data.expires);
+}
+
+// ===== Countdown =====
+function startCountdown(expiry){
+  const cd = document.getElementById("countdown");
+  const interval = setInterval(()=>{
+    const diff = expiry - Date.now();
+    if(diff <= 0){
+      cd.textContent = "⛔ Zugangscode abgelaufen – bitte neu einloggen.";
+      clearInterval(interval);
+      localStorage.removeItem("teamLogin");
+      setTimeout(()=>location.reload(),3000);
+      return;
+    }
+    const m = Math.floor(diff/60000);
+    const s = Math.floor((diff%60000)/1000);
+    cd.textContent = `⏳ Code läuft ab in ${m}m ${s}s`;
+    if(m < 1) cd.style.color = "#ff6666";
+  },1000);
+}
+
+// ===== Log =====
+function showLog(){
+  const log = loadLogin();
+  const div = document.getElementById("logContainer");
+  if(!log){div.innerHTML="<p>Keine Logins gefunden.</p>";return;}
+  div.innerHTML = `
+    <div class="card">
+      <h3>Letzter Login</h3>
+      <p><strong>User:</strong> ${log.username}</p>
+      <p><strong>ID:</strong> ${log.id}</p>
+      <p><strong>Code:</strong> ${log.code}</p>
+      <p><strong>Login-Zeit:</strong> ${new Date(log.expires - EXPIRATION_MINUTES*60*1000).toLocaleString()}</p>
+      <p><strong>Läuft ab:</strong> ${new Date(log.expires).toLocaleString()}</p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
