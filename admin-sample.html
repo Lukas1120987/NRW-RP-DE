@@ -18,6 +18,8 @@ a{color:var(--primary);text-decoration:none;transition:0.3s;}
 a:hover{color:var(--accent);}
 h1,h2,h3{font-weight:700;margin-bottom:0.7rem;}
 p{color:var(--text-light);line-height:1.6;margin-bottom:1.2rem;}
+input{width:100%;padding:0.8rem;margin-bottom:0.8rem;border:none;border-radius:8px;background:#25283a;color:#fff;font-size:1rem;}
+button{margin-top:0.2rem;}
 
 /* Layout */
 .main{padding:2rem;max-width:1200px;margin:0 auto;}
@@ -46,13 +48,22 @@ p{color:var(--text-light);line-height:1.6;margin-bottom:1.2rem;}
 
 <!-- LOGIN -->
 <div id="login" class="login-container">
-  <div class="login-box">
+  <div class="login-box" id="discordLoginBox">
     <h2>🔑 Team Login</h2>
     <p>Bitte über Discord einloggen:</p>
     <a class="btn btn-primary" 
-      href="https://discord.com/oauth2/authorize?client_id=1391061610445017178&response_type=token&redirect_uri=https%3A%2F%2Flukas1120987.github.io%2FNRW-RP-DE%2Fteam.html&scope=identify">
+      href="https://discord.com/oauth2/authorize?client_id=1391061610445017178&response_type=token&redirect_uri=https%3A%2F%2Flukas1120987.github.io%2FNRW-RP-DE%2Fadmin-sample.html&scope=identify">
       Login mit Discord
     </a>
+  </div>
+
+  <!-- Code-Login -->
+  <div class="login-box" id="codeLoginBox" style="display:none;">
+    <h2>🔑 Zugangscode eingeben</h2>
+    <p>Bitte den Code aus Discord hier eingeben:</p>
+    <input type="text" id="inputCode" placeholder="6-stelliger Code" />
+    <button class="btn btn-primary" onclick="checkCode()">Anmelden</button>
+    <div id="codeError" style="color:#ff5555;margin-top:0.5rem;"></div>
   </div>
 </div>
 
@@ -103,10 +114,10 @@ const WEBHOOK_URL = "https://discord.com/api/webhooks/1426251310348636251/xbz96y
 const DISCORD_API = "https://discord.com/api/users/@me";
 const EXPIRATION_MINUTES = 15;
 
+let pendingLogin = null;
+
 // ===== Helper =====
-function generateCode() {
-  return Math.floor(100000 + Math.random() * 900000);
-}
+function generateCode() { return Math.floor(100000 + Math.random() * 900000); }
 function saveLogin(data){localStorage.setItem("teamLogin", JSON.stringify(data));}
 function loadLogin(){
   const d = localStorage.getItem("teamLogin");
@@ -122,7 +133,10 @@ window.addEventListener("DOMContentLoaded", async () => {
   const stored = loadLogin();
   const hash = window.location.hash;
 
-  if (stored){showDashboard(stored);return;}
+  if (stored && stored.codeVerified){
+    showDashboard(stored);
+    return;
+  }
 
   if (hash.includes("access_token")) {
     const token = new URLSearchParams(hash.substring(1)).get("access_token");
@@ -132,23 +146,41 @@ window.addEventListener("DOMContentLoaded", async () => {
     if(user.id){
       const code = generateCode();
       const expires = Date.now() + EXPIRATION_MINUTES * 60 * 1000;
-      const data = {
+      pendingLogin = {
         username: `${user.username}#${user.discriminator}`,
         id: user.id,
         avatar: user.avatar 
           ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`
           : "https://cdn.discordapp.com/embed/avatars/0.png",
-        code, expires
+        code, expires,
+        codeVerified: false
       };
-      saveLogin(data);
-      await sendWebhook(data);
-      showDashboard(data);
+      await sendWebhook(pendingLogin);
+      document.getElementById("discordLoginBox").style.display = "none";
+      document.getElementById("codeLoginBox").style.display = "block";
       history.replaceState(null,null,'team.html');
     } else {
       alert("Login fehlgeschlagen.");
     }
   }
 });
+
+// ===== Code-Check =====
+function checkCode(){
+  const input = document.getElementById("inputCode").value.trim();
+  const error = document.getElementById("codeError");
+
+  if(!pendingLogin){error.textContent="❌ Kein Login vorhanden!"; return;}
+  if(Date.now() > pendingLogin.expires){error.textContent="⛔ Code abgelaufen!"; return;}
+
+  if(input === pendingLogin.code.toString()){
+    pendingLogin.codeVerified = true;
+    saveLogin(pendingLogin);
+    showDashboard(pendingLogin);
+  } else {
+    error.textContent="❌ Falscher Code!";
+  }
+}
 
 // ===== Webhook mit Ping =====
 async function sendWebhook(data){
