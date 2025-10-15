@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Team Übersicht – NRW RP DE</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:#5865F2; --primary-dark:#4752C4; --background:#0f111a;
+  --sidebar-bg:#151823; --text:#f0f0f0; --text-light:#cccccc;
+  --accent:#7289da; --shadow:rgba(0,0,0,0.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Roboto',sans-serif;background:var(--background);color:var(--text);min-height:100vh;overflow-x:hidden;}
+a{color:var(--primary);text-decoration:none;transition:0.3s;}
+a:hover{color:var(--accent);}
+h1,h2,h3{font-weight:700;margin-bottom:0.7rem;}
+p{color:var(--text-light);line-height:1.6;margin-bottom:1.2rem;}
+
+/* Layout */
+.app{display:flex;min-height:100vh;}
+.sidebar{width:260px;background:var(--sidebar-bg);padding:1.5rem 1rem;display:flex;flex-direction:column;justify-content:space-between;position:fixed;top:0;bottom:0;left:0;transition:transform 0.3s ease;z-index:1000;}
+.sidebar-logo{width:90px;margin:0 auto 1rem;}
+.sidebar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
+.btn-icon{background:none;border:none;color:var(--text);font-size:1.8rem;cursor:pointer;transition:0.2s;}
+.btn-icon:hover{color:var(--accent);}
+.sidebar-nav a{display:block;padding:0.8rem 1rem;color:var(--text-light);font-weight:500;border-radius:6px;transition:0.3s;margin-bottom:0.5rem;}
+.sidebar-nav a:hover{background:var(--primary-dark);color:#fff;}
+.sidebar-nav a.active{background:var(--primary);color:#fff;}
+.discord-cta{background:var(--accent);color:#fff;font-weight:bold;}
+.sidebar-footer{text-align:center;color:#777;font-size:0.85rem;margin-top:auto;}
+
+/* Main */
+.main{margin-left:260px;width:calc(100% - 260px);display:flex;flex-direction:column;transition:margin-left 0.3s ease;}
+.topbar{background:#1c1f2b;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px var(--shadow);}
+.topbar-title{font-size:1.3rem;font-weight:bold;}
+.btn-primary{background:var(--primary);color:#fff;padding:0.6rem 1.3rem;border-radius:8px;font-weight:bold;transition:0.3s;cursor:pointer;}
+.btn-primary:hover{background:var(--primary-dark);}
+
+/* Section */
+.section{padding:4rem 2rem;max-width:1200px;margin:0 auto;}
+table{width:100%;border-collapse:collapse;margin-top:2rem;}
+th, td{padding:0.8rem 1rem;text-align:left;border-bottom:1px solid #25283a;}
+th{background:#1a1d2b;color:var(--accent);}
+tr:hover{background:#202336;}
+.status-optimal{color:#55ff55;font-weight:bold;}
+.status-platzfrei{color:#ffaa00;font-weight:bold;}
+.status-zu-viele{color:#ff5555;font-weight:bold;}
+.footer{text-align:center;padding:1.5rem;background:#151823;color:#777;font-size:0.9rem;}
+
+/* Responsive */
+@media(max-width:900px){.main{margin-left:0;width:100%;}table{font-size:0.9rem;}}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-top">
+      <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
+      <button id="closeSidebar" class="btn-icon" title="Schließen">&times;</button>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html">Start</a>
+      <a href="about.html">Über uns</a>
+      <a href="team.html" class="active">Team</a>
+      <a href="rules.html">Regelwerk</a>
+      <a href="join.html" class="discord-cta">Beitreten</a>
+    </nav>
+    <div class="sidebar-footer"><small>&copy; 2025 NRW RP DE</small></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button id="toggleSidebar" class="btn-icon">&#9776;</button>
+      <div class="topbar-title">Team Übersicht</div>
+    </header>
+
+    <section class="section">
+      <h1>🧑‍🤝‍🧑 Rollen & Aufgaben</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Rollenname</th>
+            <th>Max</th>
+            <th>Aktuell</th>
+            <th>Status</th>
+            <th>Verantwortlich</th>
+            <th>Aufgaben / ToDo‘s</th>
+            <th>Deadline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Haupteigentümer</td><td>1</td><td>1</td><td class="status-optimal">optimal</td><td></td><td>keine</td><td></td></tr>
+          <tr><td>Eigentümer</td><td>3</td><td>8</td><td class="status-zu-viele">zu viele</td><td>King</td><td>keine</td><td></td></tr>
+          <tr><td>Developer</td><td>2</td><td>2</td><td class="status-optimal">optimal</td><td>Lukas</td><td>keine</td><td></td></tr>
+          <tr><td>Stv. Leitung</td><td>1</td><td>1</td><td class="status-optimal">optimal</td><td>King</td><td>keine</td><td></td></tr>
+          <tr><td>Stv. Eigentümer</td><td>5</td><td>8</td><td class="status-zu-viele">zu viele</td><td>Leonie</td><td>keine</td><td></td></tr>
+          <tr><td>Probe Stv. Eigentümer</td><td>2</td><td>0</td><td class="status-platzfrei">Platz frei</td><td>Leonie</td><td>keine</td><td></td></tr>
+          <tr><td>Admin Leitung</td><td>1</td><td>0</td><td class="status-platzfrei">Platz frei</td><td>Stv. Eigentümer</td><td>keine</td><td></td></tr>
+          <tr><td>Leitender Admin Manager</td><td>1</td><td>0</td><td class="status-platzfrei">Platz frei</td><td>Admin Leitung</td><td>keine</td><td></td></tr>
+          <tr><td>Leitender Admin</td><td>2</td><td>0</td><td class="status-platzfrei">Platz frei</td><td>Admin Leitung</td><td>keine</td><td></td></tr>
+          <tr><td>Hamburg Leitung</td><td>1</td><td>1</td><td class="status-optimal">optimal</td><td>Leitender Admin</td><td>keine</td><td></td></tr>
+          <tr><td>Probe Hamburg Leitung</td><td>1</td><td>0</td><td class="status-platzfrei">Platz frei</td><td>Hamburg Leitung</td><td>keine</td><td></td></tr>
+          <tr><td>Chef Admin</td><td>1</td><td>1</td><td class="status-optimal">optimal</td><td>Hamburg Leitung</td><td>keine</td><td></td></tr>
+          <tr><td>Probe Chef Admin</td><td>1</td><td>0</td><td class="status-platzfrei">Platz frei</td><td>Chef Admin</td><td>keine</td><td></td></tr>
+          <tr><td>Mod Leitung</td><td>1</td><td>1</td><td class="status-optimal">optimal</td><td>Chef Admin</td><td>keine</td><td></td></tr>
+          <tr><td>Head Moderator</td><td>3</td><td>0</td><td class="status-platzfrei">Platz frei</td><td>Mod Leitung</td><td>keine</td><td></td></tr>
+          <tr><td>Trial Moderator</td><td>3</td><td>0</td><td class="status-platzfrei">Platz frei</td><td>Mod Leitung</td><td>keine</td><td></td></tr>
+          <tr><td>Probe Moderator</td><td>2</td><td>2</td><td class="status-optimal">optimal</td><td>Mod Leitung</td><td>keine</td><td></td></tr>
+          <tr><td>Hamburg Senior Admin</td><td>5</td><td>0</td><td class="status-platzfrei">Platz frei</td><td>Admin Leitung</td><td>keine</td><td></td></tr>
+          <tr><td>Lead Admin</td><td>4</td><td>2</td><td class="status-platzfrei">Platz frei</td><td>Admin Leitung</td><td>keine</td><td></td></tr>
+          <tr><td>Head Admin</td><td>3</td><td>3</td><td class="status-optimal">optimal</td><td>Admin Leitung</td><td>keine</td><td></td></tr>
+          <tr><td>Hamburg Admin</td><td>10</td><td>4</td><td class="status-platzfrei">Platz frei</td><td>Admin Leitung</td><td>keine</td><td></td></tr>
+          <tr><td>Hamburg Junior Admin</td><td>5</td><td>5</td><td class="status-optimal">optimal</td><td>Admin Leitung</td><td>keine</td><td></td></tr>
+          <tr><td>Probe Admin</td><td>8</td><td>17</td><td class="status-zu-viele">zu viele</td><td>Admin Ausbilder</td><td>keine</td><td></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer class="footer">© Lukas</footer>
+  </main>
+</div>
+
+<script>
+const sidebar=document.getElementById('sidebar');
+document.getElementById('toggleSidebar').addEventListener('click',()=>sidebar.classList.toggle('open'));
+document.getElementById('closeSidebar').addEventListener('click',()=>sidebar.classList.remove('open'));
+</script>
+
+</body>
+</html>
