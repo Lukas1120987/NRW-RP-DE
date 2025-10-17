@@ -220,6 +220,63 @@
     }
 
     /* ================================
+       👥 Stats / Team Overview Section
+    =================================== */
+    .stats {
+      text-align: center;
+      background: radial-gradient(circle at top, #1a1d2b 0%, #0f111a 100%);
+      border-top: 2px solid var(--primary);
+      border-bottom: 2px solid var(--primary-dark);
+      box-shadow: 0 0 20px rgba(88,101,242,0.2);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+
+    .stat-card {
+      background: #1c1f2b;
+      padding: 2rem;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: countUp 1s ease forwards;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 24px rgba(88,101,242,0.3);
+    }
+
+    .stat-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(88,101,242,0.3);
+    }
+
+    .stat-label {
+      margin-top: 0.6rem;
+      font-weight: 500;
+      color: var(--text-light);
+      letter-spacing: 0.3px;
+    }
+
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ================================
        📦 Sections
     =================================== */
     .section {
@@ -294,9 +351,6 @@
       transform: translateY(-3px);
     }
 
-    /* ================================
-       📜 Footer
-    =================================== */
     footer {
       text-align: center;
       padding: 1.5rem;
@@ -306,27 +360,16 @@
       box-shadow: 0 -2px 8px var(--shadow);
     }
 
-    footer a {
-      color: var(--primary);
-    }
-    footer a:hover {
-      color: var(--accent);
-    }
+    footer a { color: var(--primary); }
+    footer a:hover { color: var(--accent); }
 
     /* ================================
        📱 Responsive
     =================================== */
     @media (max-width: 900px) {
-      .sidebar {
-        transform: translateX(-100%);
-        position: fixed;
-        left: 0;
-      }
+      .sidebar { transform: translateX(-100%); position: fixed; left: 0; }
       .sidebar.open { transform: translateX(0); }
-      .main {
-        margin-left: 0;
-        width: 100%;
-      }
+      .main { margin-left: 0; width: 100%; }
       .hero h1 { font-size: 2.2rem; }
       .hero p { font-size: 1.1rem; }
     }
@@ -414,7 +457,6 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
   <div class="app">
-    <!-- Sidebar bleibt unverändert -->
     <aside id="sidebar" class="sidebar">
       <div class="sidebar-top">
         <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
@@ -453,86 +495,157 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
 </section>
 
+<!-- 👥 Team & Rollen Übersicht -->
+<section class="section stats">
+  <h2>Unsere Community auf einen Blick</h2>
+  <p>Ein starkes Team, engagierte Mitglieder und klare Rollen – das macht NRW RP DE aus.</p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon"></div>
+      <div class="stat-number" data-target="1989">0</div>
+      <p class="stat-label">Mitglieder insgesamt</p>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon"></div>
+      <div class="stat-number" data-target="58">0</div>
+      <p class="stat-label">Teammitglieder</p>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">🎭</div>
+      <div class="stat-number" data-target="111">0</div>
+      <p class="stat-label">Rollen</p>
+    </div>
+  </div>
+</section>
+
 <section class="section overview">
   <h2>Was dich erwartet</h2>
   <div class="grid-3">
     <div class="card">
-      <h3>🚓 Polizei & Justiz</h3>
-      <p>Sorge für Ordnung, leite Einsätze und erlebe spannende Ermittlungen. Egal ob Streife, SEK oder Verwaltung – hier zählt Teamarbeit.</p>
+      <h3>Realistisches RP</h3>
+      <p>Erlebe authentische Roleplay-Szenarien mit klaren Strukturen und engagierten Spielern.</p>
     </div>
     <div class="card">
-      <h3>🚑 Rettungsdienst & Feuerwehr</h3>
-      <p>Hilf Menschen in Not, bekämpfe Brände oder rette Leben bei Großlagen – professionell und realistisch inszeniert.</p>
+      <h3>Starkes Team</h3>
+      <p>Unser erfahrenes Leitungsteam sorgt für Fairness, Organisation und Spaß am Spiel.</p>
     </div>
     <div class="card">
-      <h3>🌆 Zivilisten & Events</h3>
-      <p>Erlebe das Stadtleben, nimm an Community-Events teil oder gründe dein eigenes Unternehmen – du gestaltest dein Roleplay selbst.</p>
+      <h3>Community Events</h3>
+      <p>Regelmäßige Aktionen, Großeinsätze und RP-Events – für Spannung und Abwechslung.</p>
     </div>
   </div>
 </section>
 
 <section class="section highlight">
-  <h2>Warum NRW RP DE?</h2>
+  <h2>Unsere Highlights</h2>
   <ul>
-    <li>💎 Strukturiertes & professionelles Roleplay-System</li>
-    <li>🧭 Klare Regeln und ein faires Teamkonzept</li>
-    <li>📘 Detaillierte Einsteiger-Guides und Schulungen</li>
-    <li>🎮 Regelmäßige Missionen, Updates & Community-Events</li>
-    <li>🤝 Aktive & hilfsbereite Community auf Discord</li>
+    <li>🚓 Realistische Einsatzfahrzeuge</li>
+    <li>🔥 Dynamische Einsätze & RP-Events</li>
+    <li>💬 Aktive Community & Support</li>
+    <li>🏙️ Detaillierte Städte & Karten</li>
   </ul>
 </section>
 
-<section class="section community">
-  <h2>Community & Support</h2>
-  <p>Unser Discord ist das Herzstück von NRW RP DE – tausche dich mit anderen Spielern aus, bleibe über Events informiert oder erhalte direkten Support vom Team.</p>
-  <div class="hero-actions">
-    <a href="https://discord.gg/rGXZg3XV5X" class="btn-hero">Zum Discord</a>
-    <a href="support.html" class="btn-ghost">Support anfragen</a>
-  </div>
-</section>
-
 <section class="section small">
-  <h3>Schnelllinks</h3>
+  <h2>Direkt loslegen</h2>
   <div class="links-row">
+    <a href="https://discord.gg/rGXZg3XV5X" class="link-card">🎮 Discord Server</a>
+    <a href="join.html" class="link-card">🚀 Jetzt beitreten</a>
     <a href="rules.html" class="link-card">📜 Regelwerk</a>
-    <a href="factions.html" class="link-card">⚙️ Fraktionen</a>
-    <a href="team.html" class="link-card">👥 Unser Team</a>
-    <a href="events.html" class="link-card">🎉 Events</a>
-    <a href="kontakt.html" class="link-card">✉️ Kontakt</a>
-  </div>
-</section>
-<section class="section news">
-  <h2>Aktuelles & Neuigkeiten</h2>
-  <div class="card">
-    <h3>📢 Neue Hardcore-RP-Saison gestartet!</h3>
-    <p>Erlebe das neue Einsatzsystem mit überarbeiteten Fahrzeugen und erweiterten Rollen. Starte jetzt mit deinem Team in die neue Season!</p>
-    <a href="hardcore/hardcore.html" class="btn-ghost">Mehr erfahren</a>
   </div>
 </section>
 
+<footer>
+  &copy; 2025 NRW RP DE — Alle Rechte vorbehalten.<br>
+  <a href="impressum.html">Impressum</a> · 
+  <a href="datenschutz.html">Datenschutz</a>
+</footer>
 
-      <footer>
-        <p>
-          © NRW RP · 
-          <a href="https://lukas1120987.github.io/SchulSystem/impressum.html" target="_blank">Impressum</a> · 
-          <a href="https://lukas1120987.github.io/SchulSystem/datenschutz.html" target="_blank">Datenschutz</a>
-        </p>
-      </footer>
     </main>
   </div>
 
+  <!-- ⚙️ JavaScript -->
   <script>
+    // 🎨 Background Canvas
+    const canvas = document.getElementById("bgCanvas");
+    const ctx = canvas.getContext("2d");
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = document.querySelector(".hero").offsetHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    const dots = [];
+    for(let i = 0; i < 50; i++) {
+      dots.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2 + 1,
+        dx: Math.random() * 1 - 0.5,
+        dy: Math.random() * 1 - 0.5
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      dots.forEach(dot => {
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(88,101,242,0.6)";
+        ctx.fill();
+
+        dot.x += dot.dx;
+        dot.y += dot.dy;
+
+        if(dot.x < 0 || dot.x > canvas.width) dot.dx *= -1;
+        if(dot.y < 0 || dot.y > canvas.height) dot.dy *= -1;
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // 📱 Sidebar Toggle
+    document.getElementById("toggleSidebar").addEventListener("click", () => {
+      document.getElementById("sidebar").classList.toggle("open");
+    });
+    document.getElementById("closeSidebar").addEventListener("click", () => {
+      document.getElementById("sidebar").classList.remove("open");
+    });
+
+    // 👥 Animated Counters
     document.addEventListener("DOMContentLoaded", () => {
-      const sidebar = document.getElementById("sidebar");
-      const toggleSidebar = document.getElementById("toggleSidebar");
-      const closeSidebar = document.getElementById("closeSidebar");
-
-      toggleSidebar?.addEventListener("click", () => sidebar.classList.toggle("open"));
-      closeSidebar?.addEventListener("click", () => sidebar.classList.remove("open"));
-
-      document.querySelectorAll('.sidebar-nav a').forEach(link =>
-        link.addEventListener('click', () => sidebar.classList.remove('open'))
-      );
+      const counters = document.querySelectorAll(".stat-number");
+      const speed = 50;
+      const animateCounters = () => {
+        counters.forEach(counter => {
+          const updateCount = () => {
+            const target = +counter.getAttribute("data-target");
+            const count = +counter.innerText;
+            const increment = Math.ceil(target / speed);
+            if (count < target) {
+              counter.innerText = count + increment;
+              setTimeout(updateCount, 25);
+            } else {
+              counter.innerText = target;
+            }
+          };
+          updateCount();
+        });
+      };
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateCounters();
+            observer.disconnect();
+          }
+        });
+      });
+      const statsSection = document.querySelector(".stats");
+      if (statsSection) observer.observe(statsSection);
     });
   </script>
 </body>
