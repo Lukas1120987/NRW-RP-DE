@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Offizielle Admin-Bewerbung & Selbsttest – NRW RP DE Hardcore Roleplay Server" />
+  <meta name="keywords" content="NRW RP, Hardcore Roleplay, Bewerbung, Admin, GTA RP, Selbsttest, FiveM, Roleplay Deutschland">
+  <meta name="author" content="NRW RP DE">
+  <title>Admin Bewerbung & Selbsttest | NRW RP DE</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="bilder/logo.png" type="image/png">
+
+  <style>
+    :root {
+      --primary: #5865F2;
+      --primary-dark: #4752C4;
+      --background: #0f111a;
+      --sidebar-bg: #151823;
+      --text: #f0f0f0;
+      --text-light: #d0d0d0;
+      --accent: #7289da;
+      --shadow: rgba(0,0,0,0.4);
+      --success: #8ff58f;
+      --warning: #f5d98f;
+      --error: #f58f8f;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover { color: var(--accent); }
+
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    p, li, label {
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    ul {
+      padding-left: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    /* LAYOUT */
+    .app { display: flex; min-height: 100vh; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: var(--sidebar-bg);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
+      top: 0; bottom: 0; left: 0;
+      z-index: 1000;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .sidebar-logo {
+      width: 100px;
+      margin: 0 auto 1.5rem;
+      display: block;
+      filter: drop-shadow(0 0 4px rgba(0,0,0,0.6));
+    }
+
+    .sidebar-nav a {
+      display: block;
+      padding: 0.8rem 1rem;
+      color: var(--text-light);
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .sidebar-nav a:hover {
+      background: rgba(88,101,242,0.12);
+      color: #fff;
+    }
+
+    .sidebar-nav a.active {
+      color: #fff;
+      border-left: 4px solid var(--primary);
+      background: rgba(88,101,242,0.15);
+      padding-left: calc(1rem - 4px);
+    }
+
+    /* Main */
+    .main {
+      margin-left: 260px;
+      width: calc(100% - 260px);
+    }
+
+    .topbar {
+      background: #1c1f2b;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .topbar-title {
+      font-weight: 700;
+      color: #fff;
+      font-size: 1.1rem;
+    }
+
+    .section {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .info-card {
+      background: #1a1d2b;
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px var(--shadow);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .info-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px var(--shadow);
+    }
+
+    /* Button */
+    .btn-primary {
+      background: var(--primary);
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+      display: inline-block;
+      margin-top: 1.5rem;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: scale(1.03);
+    }
+
+    /* TEST */
+    .question {
+      margin-bottom: 1.5rem;
+    }
+    .question h4 {
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    label:hover { color: #fff; }
+
+    input[type="radio"] {
+      accent-color: var(--primary);
+      margin-right: 0.5rem;
+    }
+
+    .result-box {
+      background: #11131d;
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-top: 2rem;
+      display: none;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .success { color: var(--success); }
+    .warning { color: var(--warning); }
+    .error { color: var(--error); }
+
+    .footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #151823;
+      color: #777;
+      font-size: 0.9rem;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .main { margin-left: 0; width: 100%; }
+      .sidebar {
+        display: none;
+      }
+      .topbar {
+        justify-content: center;
+        text-align: center;
+      }
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --background: #f8f9fa;
+        --sidebar-bg: #fff;
+        --text: #222;
+        --text-light: #444;
+        --shadow: rgba(0,0,0,0.1);
+      }
+      .info-card { background: #fff; }
+      .topbar { background: #eef0fa; }
+      .footer { background: #f1f2f6; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Hauptnavigation">
+      <img src="bilder/logo.png" class="sidebar-logo" alt="NRW RP Logo">
+      <nav class="sidebar-nav">
+        <a href="https://lukas1120987.github.io/NRW-RP-DE/">Start</a>
+        <a href="hardcore.html">Hardcore RP</a>
+        <a href="bewerbung.html" class="active">Bewerbung</a>
+        <a href="status.html">Status</a>
+      </nav>
+      <small style="text-align:center;opacity:0.6;">v2.0</small>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-title">NRW RP DE — Admin Bewerbung</div>
+      </header>
+
+      <section class="section">
+        <div class="info-card">
+          <h1>Admin-Bewerbung – Vorbereitung & Selbsttest</h1>
+          <p>Bevor du dich bewirbst, überprüfe, ob du wirklich für den Posten als <strong>Hardcore-RP Admin</strong> bereit bist.  
+             Dieser Selbsttest hilft dir dabei, deine Eignung realistisch einzuschätzen.  
+             Am Ende erhältst du eine Auswertung und – bei erfolgreicher Einschätzung – den Bewerbungslink.</p>
+        </div>
+
+        <div class="info-card">
+          <h2>🧭 Anforderungen & Kodex</h2>
+          <ul>
+            <li>Du bist mindestens <strong>13 Jahre alt</strong>.</li>
+            <li>Du kannst <strong>ruhig, neutral und lösungsorientiert</strong> handeln.</li>
+            <li>Du bist <strong>regelmäßig online</strong> und zuverlässig.</li>
+            <li>Du beherrschst den <strong>respektvollen Umgang</strong> mit der Community.</li>
+            <li>Du kannst <strong>Kritik annehmen</strong> und dich weiterentwickeln.</li>
+            <li>Du kennst das <strong>Server-Regelwerk</strong> und verstehst die Bedeutung von Hardcore RP.</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h2>📋 Selbsttest – Bist du bereit?</h2>
+          <form id="selftest" aria-label="Selbsttest Formular">
+            <div class="question">
+              <h4>1. Wie reagierst du, wenn Spieler im RP gegen Regeln verstoßen?</h4>
+              <label><input type="radio" name="q1" value="correct"> Ich bleibe ruhig, analysiere die Situation und handle nach Regelwerk.</label>
+              <label><input type="radio" name="q1" value="wrong"> Ich greife sofort ein und weise sie streng zurecht.</label>
+            </div>
+
+            <div class="question">
+              <h4>2. Ein anderer Admin trifft eine Entscheidung, mit der du nicht einverstanden bist. Was tust du?</h4>
+              <label><input type="radio" name="q2" value="correct"> Ich spreche es intern im Team ruhig an.</label>
+              <label><input type="radio" name="q2" value="wrong"> Ich stelle ihn öffentlich zur Rede.</label>
+            </div>
+
+            <div class="question">
+              <h4>3. Wie wichtig ist Neutralität im Admin-Job?</h4>
+              <label><input type="radio" name="q3" value="correct"> Sehr wichtig – persönliche Meinungen bleiben außen vor.</label>
+              <label><input type="radio" name="q3" value="wrong"> Nicht so wichtig – jeder hat ja eine Meinung.</label>
+            </div>
+
+            <div class="question">
+              <h4>4. Wie gehst du mit Kritik um?</h4>
+              <label><input type="radio" name="q4" value="correct"> Ich nehme sie ernst und reflektiere mein Verhalten.</label>
+              <label><input type="radio" name="q4" value="wrong"> Ich lasse mir nichts sagen, ich weiß selbst was richtig ist.</label>
+            </div>
+
+            <div class="question">
+              <h4>5. Wie viel Zeit kannst du pro Woche investieren?</h4>
+              <label><input type="radio" name="q5" value="correct"> Mehrmals pro Woche regelmäßig.</label>
+              <label><input type="radio" name="q5" value="wrong"> Nur ab und zu, wenn ich Lust habe.</label>
+            </div>
+
+            <div class="question">
+              <h4>6. Was bedeutet Hardcore RP für dich?</h4>
+              <label><input type="radio" name="q6" value="correct"> Konsequentes, realistisches und glaubwürdiges Spiel mit echten Folgen.</label>
+              <label><input type="radio" name="q6" value="wrong"> Man darf machen, was man will – Hauptsache Spaß.</label>
+            </div>
+
+            <div class="question">
+              <h4>7. Jemand wird im RP emotional oder laut – was machst du?</h4>
+              <label><input type="radio" name="q7" value="correct"> Ich beruhige die Lage und hole das Gespräch ggf. OOC nach.</label>
+              <label><input type="radio" name="q7" value="wrong"> Ich mute oder kicke sofort alle Beteiligten.</label>
+            </div>
+
+            <div class="question">
+              <h4>8. Warum willst du Admin werden?</h4>
+              <label><input type="radio" name="q8" value="correct"> Um das RP aktiv zu unterstützen und fair zu gestalten.</label>
+              <label><input type="radio" name="q8" value="wrong"> Um mehr Macht und Einfluss im Server zu haben.</label>
+            </div>
+
+            <button type="submit" class="btn-primary">Selbsttest auswerten</button>
+          </form>
+
+          <div class="result-box" id="resultBox" role="alert">
+            <h3>Ergebnis</h3>
+            <p id="resultText"></p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <small>© 2025 NRW RP DE · Admin-Bewerbung · Hardcore Roleplay</small>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const form = document.getElementById("selftest");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const answers = form.querySelectorAll('input[type="radio"]:checked');
+      const score = Array.from(answers).filter(a => a.value === "correct").length;
+      const total = 8;
+      const resultBox = document.getElementById("resultBox");
+      const resultText = document.getElementById("resultText");
+      resultBox.style.display = "block";
+
+      if (score >= 7) {
+        resultText.innerHTML = `
+          <span class="success">✅ Sehr gut!</span><br>
+          Du hast ${score} von ${total} Punkten erreicht.<br>
+          Du scheinst hervorragend für den Admin-Posten vorbereitet zu sein.<br><br>
+          <a href="https://teams.galaxybot.app/application/1396861196384075857" 
+             class="btn-primary" target="_blank" rel="noopener noreferrer">
+             Jetzt Bewerbung starten
+          </a>
+        `;
+      } else if (score >= 5) {
+        resultText.innerHTML = `
+          <span class="warning">⚠️ Gute Ansätze!</span><br>
+          Du hast ${score} von ${total} Punkten erreicht.<br>
+          Du bist auf dem richtigen Weg, solltest aber noch an Ruhe, Neutralität und Regelkenntnis arbeiten.
+        `;
+      } else {
+        resultText.innerHTML = `
+          <span class="error">❌ Noch nicht bereit.</span><br>
+          Du hast nur ${score} von ${total} Punkten erreicht.<br>
+          Bitte informiere dich intensiver über das Regelwerk und den Umgang im Admin-Team.
+        `;
+      }
+      resultBox.scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
