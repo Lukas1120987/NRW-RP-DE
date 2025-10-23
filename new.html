@@ -706,6 +706,26 @@
   opacity: 0;
   transform: translateY(20px);
 }
+.testimonial-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--card-bg) 0%, rgba(19,24,41,0.5) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.testimonial-slide.active {
+  opacity: 1;
+  position: relative; /* Nur aktive Slide nimmt Platz ein */
+}
+
+
 
   </style>
 </head>
@@ -735,8 +755,7 @@
     <a href="https://discord.gg/rGXZg3XV5X" class="btn-primary">Discord beitreten</a>
   </header>
 
-    <button id="backToTop" aria-label="Nach oben" style="display:none;">↑</button>
-
+  <button id="backToTop" aria-label="Nach oben" style="display:none;">↑</button>
 
   <!-- Hero Section -->
   <section class="hero" id="home">
@@ -747,7 +766,7 @@
       <p>Erleben Sie hochrealistisches Roleplay mit klaren Strukturen und dynamischen Einsätzen. Ob Polizei, Feuerwehr, Rettungsdienst oder Zivilist – werden Sie Teil unserer engagierten Community, erfahren Sie Teamgeist und gestalten Sie authentische Szenarien.</p>
       <div class="hero-actions">
         <a href="https://discord.gg/rGXZg3XV5X" class="btn-hero">Jetzt beitreten</a>
-        <a href="#about" class="btn-ghost">Mehr erfahren</a>
+        <a href="#why-nrw" class="btn-ghost">Mehr erfahren</a>
       </div>
     </div>
   </section>
@@ -772,21 +791,21 @@
     </div>
   </section>
 
-  <!-- Overview Section -->
-  <section class="section" id="factions">
-    <h2>Unsere Schwerpunkte</h2>
+  <!-- Why NRW Section -->
+  <section class="section" id="why-nrw">
+    <h2>Warum NRW RP DE?</h2>
     <div class="grid-3">
       <div class="card">
-        <h3>Authentisches Roleplay</h3>
-        <p>Realistische Einsätze, nachvollziehbare Szenarien und strukturierte Abläufe sorgen für ein immersives RP-Erlebnis.</p>
+        <h3>Hochrealistisches RP</h3>
+        <p>Strukturierte Szenarien, authentische Einsätze und nachvollziehbare Storys.</p>
       </div>
       <div class="card">
-        <h3>Professionelles Team</h3>
-        <p>Unser Leitungsteam gewährleistet Fairness, effiziente Organisation und ein motivierendes Spielerlebnis.</p>
+        <h3>Aktive Community</h3>
+        <p>Ein motiviertes Team und engagierte Spieler sorgen für ständigen Austausch.</p>
       </div>
       <div class="card">
-        <h3>Exklusive Community-Events</h3>
-        <p>Regelmäßige Aktionen, Großeinsätze und Sonderevents bieten Abwechslung, Spannung und stärken den Zusammenhalt.</p>
+        <h3>Klare Regeln</h3>
+        <p>Transparente Vorgaben und Fairness stehen bei uns an erster Stelle.</p>
       </div>
     </div>
   </section>
@@ -794,20 +813,8 @@
   <!-- Testimonials Section -->
   <section class="section" id="testimonials">
     <h2>Mitgliederstimmen</h2>
-    <div class="grid-3">
-      <div class="card">
-        <p>„NRW RP DE bietet das realistischste RP-Erlebnis, das ich bisher erlebt habe. Die Einsätze sind spannend und authentisch.“</p>
-        <p><strong>Max – Polizei</strong></p>
-      </div>
-      <div class="card">
-        <p>„Dank der professionellen Organisation machen alle Events großen Spaß. Teamgeist wird hier aktiv gefördert.“</p>
-        <p><strong>Laura – Feuerwehr</strong></p>
-      </div>
-      <div class="card">
-        <p>„Als Zivilist konnte ich dynamische Einsätze hautnah miterleben. Ein einzigartiges RP-Erlebnis.“</p>
-        <p><strong>Simon – Zivilist</strong></p>
-      </div>
-    </div>
+    <div class="testimonial-slider"></div>
+    <div class="testimonial-controls"></div>
   </section>
 
   <!-- Fraktionen Preview Section -->
@@ -829,7 +836,7 @@
     </div>
   </section>
 
-  <!-- Roadmap / Events Section -->
+  <!-- Events Section -->
   <section class="section" id="upcoming">
     <h2>Bevorstehende Highlights</h2>
     <div class="grid-3">
@@ -848,26 +855,51 @@
     </div>
   </section>
 
-  <!-- Highlights Section -->
-  <section class="section" id="rules">
-    <h2>Unsere Highlights</h2>
+  <!-- Team Section -->
+  <section class="section" id="team">
+    <h2>Unser Team</h2>
+    <div class="grid-3">
+      <div class="card">
+        <img src="profilbilder/king.png" alt="KingJP_2019" loading="lazy">
+        <h3>KingJP_2019</h3>
+        <p>Haupteigentümer; Server-Founder</p>
+      </div>
+      <div class="card">
+        <img src="profilbilder/lukas.jpeg" alt="Schiri Lukas" loading="lazy">
+        <h3>Schiri Lukas</h3>
+        <p>Eigentümer</p>
+      </div>
+<a href="team.html" class="btn-ghost">Weitere Teammitglieder</a>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section class="section" id="gallery">
+    <h2>Einblicke ins Spiel</h2>
+    <div class="grid-3">
+      <img src="bilder/scene1.jpg" alt="Polizei Einsatz" loading="lazy">
+      <img src="bilder/scene2.jpg" alt="Feuerwehr Einsatz" loading="lazy">
+      <img src="bilder/scene3.jpg" alt="Community Event" loading="lazy">
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section" id="faq">
+    <h2>Häufige Fragen</h2>
     <ul class="highlight">
-      <li>Realistische Einsatzfahrzeuge und authentische Einsatzgebiete</li>
-      <li>Herausfordernde Einsätze und sorgfältig gestaltete RP-Events</li>
-      <li>Aktive Community und persönliche Unterstützung durch erfahrene Mitglieder</li>
-      <li>Detaillierte Städte und realitätsnahe Karten</li>
-      <li>Transparente Regeln und faire Administration</li>
-      <li>Regelmäßige Trainings und gezielte Weiterbildungen</li>
+      <li>Wie kann ich beitreten? → Über unseren Discord-Link.</li>
+      <li>Welche Fraktionen gibt es? → Polizei, Feuerwehr, Rettungsdienst & Zivilisten.</li>
+      <li>Gibt es Trainings? → Ja, für Neueinsteiger und Fortgeschrittene.</li>
     </ul>
   </section>
 
-  <!-- Quick Links Section -->
-  <section class="section" id="events">
-    <h2>Schnellzugriff</h2>
-    <div class="links-row">
-      <a href="https://discord.gg/rGXZg3XV5X" class="link-card">Discord Server</a>
-      <a href="https://discord.gg/rGXZg3XV5X" class="link-card">Jetzt beitreten</a>
-      <a href="#rules" class="link-card">Regelwerk einsehen</a>
+  <!-- Quick Links / CTA Section -->
+  <section class="section" id="join-cta">
+    <h2>Jetzt beitreten</h2>
+    <p>Sei Teil unserer Community und erlebe echtes Roleplay.</p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="https://discord.gg/rGXZg3XV5X" class="btn-hero">Discord beitreten</a>
+      <a href="#faq" class="btn-ghost">Mehr erfahren</a>
     </div>
   </section>
 
@@ -877,6 +909,7 @@
     <a href="#impressum">Impressum</a> · <a href="#datenschutz">Datenschutz</a>
   </footer>
 </main>
+
 
 
   </div>
@@ -1076,6 +1109,33 @@ const animateCanvasWithLines = () => {
   requestAnimationFrame(animateCanvasWithLines);
 };
 animateCanvasWithLines();
+
+// Testimonials Slider
+const sliderContainer = document.querySelector('.testimonial-slider');
+let currentSlide = 0;
+let slides = [];
+
+// JSON laden
+fetch('feedback.json')
+  .then(res => res.json())
+  .then(data => {
+    slides = data.map(item => {
+      const slide = document.createElement('div');
+      slide.className = 'testimonial-slide';
+      slide.innerHTML = `<p>„${item.text}“</p><p><strong>${item.author}</strong></p>`;
+      sliderContainer.appendChild(slide);
+      return slide;
+    });
+    if (slides.length) slides[0].classList.add('active');
+
+    // Automatisches Durchwechseln alle 5 Sekunden
+    setInterval(() => {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }, 5000);
+  });
+
 
 </script>
 
