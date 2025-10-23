@@ -99,94 +99,100 @@
       min-height: 100vh;
     }
 
-    /* Sidebar */
-    .sidebar {
-      width: 280px;
-      background: var(--background-alt);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 2rem 1.5rem;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      border-right: 1px solid var(--border);
-      z-index: 1000;
-      transition: transform 0.3s ease;
-      overflow-y: auto;
-    }
+/* Sidebar */
+.sidebar {
+  width: 280px;
+  background: var(--background-alt);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* optional: Inhalte oben ausrichten */
+  padding: 2rem 1.5rem;
+  position: fixed; /* bleibt immer am linken Rand */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  border-right: 1px solid var(--border);
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  overflow: visible; /* keine eigene Scrollbar */
+}
 
-    .sidebar-logo {
-      width: 120px;
-      margin: 0 auto 2rem;
-      filter: drop-shadow(0 4px 12px rgba(88, 101, 242, 0.15));
-      transition: var(--transition);
-    }
+/* Optional: falls die Sidebar-Inhalte sehr hoch sind */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 100vh; /* verhindert, dass Inhalte zu weit gehen */
+  overflow: visible;  /* keine Scrollbar innerhalb der Sidebar */
+}
 
-    .sidebar-logo:hover {
-      filter: drop-shadow(0 8px 20px rgba(88, 101, 242, 0.25));
-    }
+/* Logo */
+.sidebar-logo {
+  width: 120px;
+  margin: 0 auto 2rem;
+  filter: drop-shadow(0 4px 12px rgba(88, 101, 242, 0.15));
+  transition: var(--transition);
+}
+.sidebar-logo:hover {
+  filter: drop-shadow(0 8px 20px rgba(88, 101, 242, 0.25));
+}
 
-    .sidebar-nav {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
+/* Navigation Links */
+.sidebar-nav a {
+  display: block;
+  padding: 0.875rem 1rem;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-light);
+  transition: var(--transition);
+  border-left: 2px solid transparent;
+  position: relative;
+}
 
-    .sidebar-nav a {
-      display: block;
-      padding: 0.875rem 1rem;
-      border-radius: 10px;
-      font-weight: 500;
-      font-size: 0.95rem;
-      color: var(--text-light);
-      transition: var(--transition);
-      border-left: 2px solid transparent;
-      position: relative;
-    }
+/* Aktive Links */
+.sidebar-nav a.active,
+.sidebar-nav a:focus {
+  background: rgba(88, 101, 242, 0.1);
+  color: var(--primary);
+  border-left-color: var(--primary);
+  transform: translateX(4px);
+  outline: none;
+}
 
-    /* Aktive Links mit besserer Zugänglichkeit */
-    .sidebar-nav a.active,
-    .sidebar-nav a:focus {
-      background: rgba(88, 101, 242, 0.1);
-      color: var(--primary);
-      border-left-color: var(--primary);
-      transform: translateX(4px);
-      outline: none;
-    }
+.sidebar-nav a:hover {
+  background: rgba(88, 101, 242, 0.1);
+  color: var(--primary);
+  border-left-color: var(--primary);
+  transform: translateX(4px);
+}
 
-    .sidebar-nav a:hover {
-      background: rgba(88, 101, 242, 0.1);
-      color: var(--primary);
-      border-left-color: var(--primary);
-      transform: translateX(4px);
-    }
+.sidebar-nav a.discord-cta {
+  background: linear-gradient(135deg, #5865F2 0%, #7289da 100%);
+  color: #fff;
+  border-left-color: transparent;
+  margin-top: 1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3);
+}
 
-    .sidebar-nav a.discord-cta {
-      background: linear-gradient(135deg, #5865F2 0%, #7289da 100%);
-      color: #fff;
-      border-left-color: transparent;
-      margin-top: 1rem;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3);
-    }
+.sidebar-nav a.discord-cta:hover {
+  background: linear-gradient(135deg, #4752C4 0%, #5865F2 100%);
+  box-shadow: 0 8px 20px rgba(88, 101, 242, 0.4);
+  transform: translateY(-2px);
+  border-left-color: transparent;
+}
 
-    .sidebar-nav a.discord-cta:hover {
-      background: linear-gradient(135deg, #4752C4 0%, #5865F2 100%);
-      box-shadow: 0 8px 20px rgba(88, 101, 242, 0.4);
-      transform: translateY(-2px);
-      border-left-color: transparent;
-    }
+/* Footer */
+.sidebar-footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: auto;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
 
-    .sidebar-footer {
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: auto;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-    }
 
     /* Main Content */
     .main {
@@ -724,6 +730,14 @@
   opacity: 1;
   position: relative; /* Nur aktive Slide nimmt Platz ein */
 }
+#team .card img {
+  border-radius: 50%;  /* rund */
+  object-fit: cover;   /* Bild bleibt proportional */
+  width: 150px;        /* optional Größe anpassen */
+  height: 150px;
+  margin: 0 auto 1rem;
+  display: block;
+}
 
 
 
@@ -879,7 +893,7 @@
     <div class="grid-3">
       <img src="bilder/scene1.jpg" alt="Polizei Einsatz" loading="lazy">
       <img src="bilder/scene2.jpg" alt="Feuerwehr Einsatz" loading="lazy">
-      <img src="bilder/scene3.jpg" alt="Community Event" loading="lazy">
+      <img src="bilder/scene3.jpg" alt="Admin on Action" loading="lazy">
     </div>
   </section>
 
