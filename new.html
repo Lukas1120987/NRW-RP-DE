@@ -771,19 +771,148 @@
 
   <button id="backToTop" aria-label="Nach oben" style="display:none;">↑</button>
 
-  <!-- Hero Section -->
-  <section class="hero" id="home">
-    <canvas id="bgCanvas" aria-hidden="true"></canvas>
-    <div class="hero-inner">
-      <img src="bilder/logo.png" alt="NRW RP DE Logo" class="hero-logo" loading="lazy">
-      <h1>Willkommen bei <span class="accent">NRW RP DE</span></h1>
-      <p>Erleben Sie hochrealistisches Roleplay mit klaren Strukturen und dynamischen Einsätzen. Ob Polizei, Feuerwehr, Rettungsdienst oder Zivilist – werden Sie Teil unserer engagierten Community, erfahren Sie Teamgeist und gestalten Sie authentische Szenarien.</p>
-      <div class="hero-actions">
-        <a href="https://discord.gg/rGXZg3XV5X" class="btn-hero">Jetzt beitreten</a>
-        <a href="#why-nrw" class="btn-ghost">Mehr erfahren</a>
-      </div>
+<!-- Hero Section -->
+<section class="hero" id="home">
+  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <img src="bilder/logo.png" alt="NRW RP DE Logo" class="hero-logo" loading="lazy">
+    <h1>Willkommen bei <span class="accent">NRW RP DE</span></h1>
+    <p id="hero-subtitle"></p>
+    <div class="hero-actions">
+      <a href="https://discord.gg/rGXZg3XV5X" class="btn-hero">Jetzt beitreten</a>
+      <a href="#why-nrw" class="btn-ghost">Mehr erfahren</a>
     </div>
-  </section>
+  </div>
+  <div class="scroll-hint">↓</div>
+</section>
+
+<style>
+/* Hero Anpassungen */
+.hero-logo {
+  width: 160px;
+  margin: 0 auto 2rem;
+  filter: drop-shadow(0 8px 24px rgba(88, 101, 242, 0.2));
+  animation: popFloat 3s ease-out forwards, float 3s ease-in-out infinite;
+}
+
+@keyframes popFloat {
+  0% { opacity: 0; transform: scale(0.6) translateY(-30px);}
+  100% { opacity: 1; transform: scale(1) translateY(0);}
+}
+
+.btn-hero {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100%{ transform: scale(1); }
+  50%{ transform: scale(1.05); }
+}
+
+.scroll-hint {
+  position:absolute;
+  bottom:2rem;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:2rem;
+  color:var(--primary);
+  animation:bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,100%{transform:translateX(-50%) translateY(0);}
+  50%{transform:translateX(-50%) translateY(12px);}
+}
+
+/* Typing effect */
+#hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom:2.5rem;
+  color:var(--text-light);
+  min-height:1.5em; /* verhindert Springen */
+}
+</style>
+
+<script>
+// Typing Animation
+const subtitleText = "Erleben Sie hochrealistisches Roleplay mit klaren Strukturen und dynamischen Einsätzen.";
+const subtitleEl = document.getElementById('hero-subtitle');
+let charIndex = 0;
+function typeWriter() {
+  if(charIndex < subtitleText.length) {
+    subtitleEl.textContent += subtitleText.charAt(charIndex);
+    charIndex++;
+    setTimeout(typeWriter, 30);
+  }
+}
+typeWriter();
+
+// Canvas Setup
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+function resizeCanvas() {
+  const hero = document.querySelector('.hero');
+  canvas.width = window.innerWidth;
+  canvas.height = hero.offsetHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// Particles
+const particles = Array.from({ length: 80 }, () => ({
+  x: Math.random() * canvas.width,
+  y: Math.random() * canvas.height,
+  r: Math.random() * 1.5 + 0.5,
+  dx: (Math.random() - 0.5) * 0.4,
+  dy: (Math.random() - 0.5) * 0.4,
+  opacity: Math.random() * 0.5 + 0.2,
+}));
+
+// Mouse parallax
+let mouseX = 0, mouseY = 0;
+document.addEventListener('mousemove', e => {
+  mouseX = (e.clientX / canvas.width - 0.5) * 2;
+  mouseY = (e.clientY / canvas.height - 0.5) * 2;
+});
+
+function drawLines() {
+  for(let i=0; i<particles.length; i++){
+    for(let j=i+1; j<particles.length; j++){
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < 80){
+        ctx.strokeStyle = `rgba(88,101,242,${1 - dist/80})`;
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animateCanvas() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    ctx.fillStyle = `rgba(88,101,242,${p.opacity})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fill();
+    
+    p.x += p.dx + mouseX*0.3;
+    p.y += p.dy + mouseY*0.3;
+
+    if(p.x < 0 || p.x > canvas.width) p.dx *= -1;
+    if(p.y < 0 || p.y > canvas.height) p.dy *= -1;
+  });
+  drawLines();
+  requestAnimationFrame(animateCanvas);
+}
+animateCanvas();
+</script>
+
 
   <!-- Stats Section -->
   <section class="stats" id="about">
@@ -907,6 +1036,55 @@
     </ul>
   </section>
 
+  <!-- Leaderboards Section -->
+<section class="section" id="leaderboards">
+  <h2>Top Spieler</h2>
+  <div class="grid-3">
+    <div class="card">
+      <h3>PlayerOne</h3>
+      <p>Polizei – 150 Einsätze</p>
+    </div>
+    <div class="card">
+      <h3>FireMaster</h3>
+      <p>Feuerwehr – 120 Einsätze</p>
+    </div>
+    <div class="card">
+      <h3>MedicHero</h3>
+      <p>Rettungsdienst – 95 Einsätze</p>
+    </div>
+  </div>
+</section>
+
+<!-- Partners & Sponsors Section -->
+<section class="section" id="partners">
+  <h2>Unsere Partner & Sponsoren</h2>
+  <div class="grid-3">
+    <div class="card" style="text-align:center;">
+      <img src="bilder/partner1.png" alt="Partner 1 Logo" style="max-width:120px; margin:0 auto 1rem;">
+      <p>Partner 1</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <img src="bilder/partner2.png" alt="Partner 2 Logo" style="max-width:120px; margin:0 auto 1rem;">
+      <p>Partner 2</p>
+    </div>
+    <div class="card" style="text-align:center;">
+      <img src="bilder/partner3.png" alt="Partner 3 Logo" style="max-width:120px; margin:0 auto 1rem;">
+      <p>Partner 3</p>
+    </div>
+  </div>
+</section>
+
+<!-- Map / RP-Area Preview Section -->
+<section class="section" id="map">
+  <h2>Unsere RP-Areas in Hamburg</h2>
+  <div style="text-align:center; margin-top:2rem;">
+    <img src="bilder/hamburg_map.png" alt="RP Map Hamburg" style="max-width:100%; border-radius:16px; border:1px solid var(--border); box-shadow:0 8px 24px rgba(88,101,242,0.2);">
+  </div>
+  <p style="text-align:center; margin-top:1rem; color:var(--text-light); max-width:800px; margin-left:auto; margin-right:auto;">
+    
+  </p>
+</section>
+
   <!-- Quick Links / CTA Section -->
   <section class="section" id="join-cta">
     <h2>Jetzt beitreten</h2>
@@ -975,45 +1153,7 @@
   window.addEventListener('resize', updateActive);
   updateActive();
 
-  // Background Canvas Animation
-  const canvas = document.getElementById('bgCanvas');
-  const ctx = canvas.getContext('2d');
-
-  function resizeCanvas() {
-    const hero = document.querySelector('.hero');
-    canvas.width = window.innerWidth;
-    canvas.height = hero.offsetHeight;
-  }
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-
-  const particles = Array.from({ length: 80 }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 1.5 + 0.5,
-    dx: (Math.random() - 0.5) * 0.4,
-    dy: (Math.random() - 0.5) * 0.4,
-    opacity: Math.random() * 0.5 + 0.2,
-  }));
-
-  function animateCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-      ctx.fillStyle = `rgba(88, 101, 242, ${p.opacity})`;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-
-      p.x += p.dx;
-      p.y += p.dy;
-
-      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-    });
-    requestAnimationFrame(animateCanvas);
-  }
-  animateCanvas();
-
+  
   // Stat Counter Animation
   const statNumbers = document.querySelectorAll('.stat-number');
   const observer = new IntersectionObserver(entries => {
