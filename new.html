@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NRW RP DE – Emergency Hamburg</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #5865F2;
+      --primary-dark: #4752C4;
+      --accent: #7289da;
+      --background: #0a0e1a;
+      --background-alt: #0f1219;
+      --card-bg: #131829;
+      --text: #f0f0f0;
+      --text-light: #b8bcc8;
+      --text-muted: #8a8f9e;
+      --border: #1e2335;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--background);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: 3rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      color: var(--text-light);
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+
+    /* Layout */
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: var(--background-alt);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2rem 1.5rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      border-right: 1px solid var(--border);
+      z-index: 1000;
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      width: 120px;
+      margin: 0 auto 2rem;
+      filter: drop-shadow(0 4px 12px rgba(88, 101, 242, 0.15));
+      transition: var(--transition);
+    }
+
+    .sidebar-logo:hover {
+      filter: drop-shadow(0 8px 20px rgba(88, 101, 242, 0.25));
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sidebar-nav a {
+      display: block;
+      padding: 0.875rem 1rem;
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--text-light);
+      transition: var(--transition);
+      border-left: 2px solid transparent;
+      position: relative;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      background: rgba(88, 101, 242, 0.1);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .sidebar-nav a.discord-cta {
+      background: linear-gradient(135deg, #5865F2 0%, #7289da 100%);
+      color: #fff;
+      border-left-color: transparent;
+      margin-top: 1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3);
+    }
+
+    .sidebar-nav a.discord-cta:hover {
+      background: linear-gradient(135deg, #4752C4 0%, #5865F2 100%);
+      box-shadow: 0 8px 20px rgba(88, 101, 242, 0.4);
+      transform: translateY(-2px);
+      border-left-color: transparent;
+    }
+
+    .sidebar-footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: auto;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Main Content */
+    .main {
+      margin-left: 280px;
+      width: calc(100% - 280px);
+      display: flex;
+      flex-direction: column;
+      transition: 0.3s ease;
+    }
+
+    .topbar {
+      background: rgba(15, 18, 25, 0.8);
+      backdrop-filter: blur(12px);
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
+    }
+
+    .topbar-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #5865F2 0%, #4752C4 100%);
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(88, 101, 242, 0.4);
+    }
+
+    .toggle-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 85vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0a0e1a 0%, #131829 50%, #0f1219 100%);
+    }
+
+    #bgCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(88, 101, 242, 0.1) 0%, transparent 70%);
+      z-index: 0;
+    }
+
+    .hero-inner {
+      z-index: 1;
+      max-width: 760px;
+      padding: 2rem;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .hero-logo {
+      width: 160px;
+      margin: 0 auto 2rem;
+      filter: drop-shadow(0 8px 24px rgba(88, 101, 242, 0.2));
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff 0%, #b8bcc8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2.5rem;
+      color: var(--text-light);
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+
+    .btn-hero {
+      padding: 1rem 2.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: var(--transition);
+      background: linear-gradient(135deg, #5865F2 0%, #4752C4 100%);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(88, 101, 242, 0.3);
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .btn-hero:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(88, 101, 242, 0.4);
+    }
+
+    .btn-ghost {
+      padding: 1rem 2.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: var(--transition);
+      border: 2px solid var(--primary);
+      background: transparent;
+      color: var(--primary);
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(88, 101, 242, 0.1);
+      transform: translateY(-4px);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-16px); }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Stats Section */
+    .stats {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: linear-gradient(180deg, var(--card-bg) 0%, var(--background-alt) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stats h2 {
+      margin-bottom: 0.75rem;
+    }
+
+    .stats > p {
+      margin-bottom: 3rem;
+      font-size: 1.1rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, rgba(88, 101, 242, 0.05) 0%, transparent 100%);
+      border: 1px solid var(--border);
+      padding: 2.5rem 1.5rem;
+      border-radius: 16px;
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary);
+      box-shadow: 0 12px 32px rgba(88, 101, 242, 0.2);
+    }
+
+    .stat-number {
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    /* Sections */
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .section h2 {
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: linear-gradient(135deg, var(--card-bg) 0%, rgba(19, 24, 41, 0.5) 100%);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      border-radius: 16px;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary);
+      box-shadow: 0 12px 32px rgba(88, 101, 242, 0.15);
+      background: linear-gradient(135deg, rgba(88, 101, 242, 0.05) 0%, rgba(19, 24, 41, 0.8) 100%);
+    }
+
+    .card h3 {
+      color: #fff;
+    }
+
+    /* Highlights */
+    .highlight ul {
+      list-style: none;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .highlight li {
+      background: linear-gradient(135deg, var(--card-bg) 0%, rgba(19, 24, 41, 0.5) 100%);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--primary);
+      margin-bottom: 1rem;
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 500;
+      transition: var(--transition);
+      font-size: 1.05rem;
+    }
+
+    .highlight li:hover {
+      background: linear-gradient(135deg, rgba(88, 101, 242, 0.08) 0%, rgba(19, 24, 41, 0.8) 100%);
+      transform: translateX(8px);
+      border-left-color: var(--accent);
+    }
+
+    /* Quick Links */
+    .links-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .link-card {
+      background: linear-gradient(135deg, var(--card-bg) 0%, rgba(19, 24, 41, 0.5) 100%);
+      border: 1px solid var(--border);
+      padding: 1.75rem;
+      border-radius: 14px;
+      font-weight: 600;
+      text-align: center;
+      transition: var(--transition);
+      font-size: 1.05rem;
+    }
+
+    .link-card:hover {
+      background: linear-gradient(135deg, #5865F2 0%, #4752C4 100%);
+      color: #fff;
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(88, 101, 242, 0.3);
+      border-color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      background: var(--background-alt);
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+
+    footer a {
+      color: var(--primary);
+      transition: var(--transition);
+    }
+
+    footer a:hover {
+      color: var(--accent);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 900px) {
+      :root {
+        font-size: 15px;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        transform: translateY(100%);
+        border-right: none;
+        border-top: 1px solid var(--border);
+        z-index: 999;
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar.open {
+        transform: translateY(0);
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+        padding-bottom: 300px;
+      }
+
+      .toggle-btn {
+        display: block;
+      }
+
+      .topbar-title {
+        font-size: 1rem;
+      }
+
+      h1 {
+        font-size: 2.25rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      .hero {
+        height: auto;
+        min-height: 70vh;
+        padding: 2rem 1rem;
+      }
+
+      .hero h1 {
+        font-size: 2.25rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .btn-hero, .btn-ghost {
+        width: 100%;
+        padding: 0.875rem 1.5rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 3rem 1.5rem;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .links-row {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar-logo {
+        width: 80px;
+        margin-bottom: 1rem;
+      }
+
+      .sidebar-nav {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.5rem;
+      }
+
+      .sidebar-footer {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.875rem;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+      }
+
+      .topbar {
+        padding: 1rem;
+      }
+
+      .btn-primary {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside id="sidebar" class="sidebar">
+      <div>
+        <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
+        <nav class="sidebar-nav">
+          <a href="#home" class="active">Startseite</a>
+          <a href="#about">Über uns</a>
+          <a href="#factions">Fraktionen</a>
+          <a href="#rules">Regelwerk</a>
+          <a href="#events">Events</a>
+          <a href="#team">Team</a>
+          <a href="#contact">Kontakt</a>
+          <a href="https://discord.gg/rGXZg3XV5X" class="discord-cta">🚀 Beitreten</a>
+        </nav>
+      </div>
+      <div class="sidebar-footer">&copy; 2025 NRW RP DE</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button id="toggleSidebar" class="toggle-btn">☰</button>
+        <div class="topbar-title">NRW RP DE — Emergency Hamburg</div>
+        <a href="https://discord.gg/rGXZg3XV5X" class="btn-primary">Discord beitreten</a>
+      </header>
+
+      <!-- Hero Section -->
+      <section class="hero" id="home">
+        <canvas id="bgCanvas"></canvas>
+        <div class="hero-inner">
+          <img src="bilder/logo.png" alt="Logo" class="hero-logo">
+          <h1>Willkommen bei NRW RP DE</h1>
+          <p>Deine Allround-Community für realistisches Roleplay. Polizei, Feuerwehr, Rettungsdienst oder Zivilist – hier gestaltest du echtes RP mit Struktur, Teamgeist & Spaß.</p>
+          <div class="hero-actions">
+            <a href="https://discord.gg/rGXZg3XV5X" class="btn-hero">Jetzt beitreten</a>
+            <a href="#about" class="btn-ghost">Mehr erfahren</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats Section -->
+      <section class="stats" id="about">
+        <h2>Unsere Community in Zahlen</h2>
+        <p>Ein starkes Team, engagierte Mitglieder und klare Rollen – das ist NRW RP DE.</p>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number" data-target="2011">0</div>
+            <p class="stat-label">Mitglieder</p>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="58">0</div>
+            <p class="stat-label">Teammitglieder</p>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="111">0</div>
+            <p class="stat-label">Rollen</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Overview Section -->
+      <section class="section" id="factions">
+        <h2>Was dich erwartet</h2>
+        <div class="grid-3">
+          <div class="card">
+            <h3>🚓 Realistisches RP</h3>
+            <p>Erlebe authentische Einsatzszenarien mit klaren Strukturen und echtem Teamgefühl.</p>
+          </div>
+          <div class="card">
+            <h3>👥 Organisiertes Team</h3>
+            <p>Unser erfahrenes Leitungsteam sorgt für Fairness, Organisation und Spaß am Spiel.</p>
+          </div>
+          <div class="card">
+            <h3>🎉 Community-Events</h3>
+            <p>Regelmäßige Aktionen, Großeinsätze & RP-Events – für Spannung & Abwechslung.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Highlights Section -->
+      <section class="section" id="rules">
+        <h2>Unsere Highlights</h2>
+        <ul class="highlight">
+          <li>🚓 Realistische Einsatzfahrzeuge & Einsatzgebiete</li>
+          <li>🔥 Dynamische Einsätze & RP-Events mit hohem Anspruch</li>
+          <li>💬 Aktive Community & persönlicher Support</li>
+          <li>🏙️ Detaillierte Städte & authentische Karten</li>
+          <li>⚖️ Transparente Regeln & faire Administration</li>
+          <li>🌟 Regelmäßige Trainings & Fortbildungen</li>
+        </ul>
+      </section>
+
+      <!-- Quick Links Section -->
+      <section class="section" id="events">
+        <h2>Direkt loslegen</h2>
+        <div class="links-row">
+          <a href="https://discord.gg/rGXZg3XV5X" class="link-card">🎮 Discord Server</a>
+          <a href="https://discord.gg/rGXZg3XV5X" class="link-card">🚀 Jetzt beitreten</a>
+          <a href="#rules" class="link-card">📜 Regelwerk</a>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer>
+        &copy; 2025 NRW RP DE – Alle Rechte vorbehalten.<br>
+        <a href="#impressum">Impressum</a> · <a href="#datenschutz">Datenschutz</a>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Sidebar Toggle
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
+    
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // Close sidebar on link click
+    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+      });
+    });
+
+    // Active link highlighting
+    const links = document.querySelectorAll('.sidebar-nav a:not(.discord-cta)');
+    const updateActive = () => {
+      links.forEach(link => {
+        const targetId = link.getAttribute('href').substring(1);
+        const section = document.getElementById(targetId);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            links.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+          }
+        }
+      });
+    };
+
+    window.addEventListener('scroll', updateActive);
+
+    // Background Canvas Animation
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      const hero = document.querySelector('.hero');
+      canvas.width = window.innerWidth;
+      canvas.height = hero.offsetHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const particles = Array.from({ length: 80 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.5 + 0.5,
+      dx: (Math.random() - 0.5) * 0.4,
+      dy: (Math.random() - 0.5) * 0.4,
+      opacity: Math.random() * 0.5 + 0.2,
+    }));
+
+    function animateCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(particle => {
+        ctx.fillStyle = `rgba(88, 101, 242, ${particle.opacity})`;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        particle.x += particle.dx;
+        particle.y += particle.dy;
+
+        if (particle.x < 0 || particle.x > canvas.width) particle.dx *= -1;
+        if (particle.y < 0 || particle.y > canvas.height) particle.dy *= -1;
+      });
+
+      requestAnimationFrame(animateCanvas);
+    }
+
+    animateCanvas();
+
+    // Stat Counter Animation
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = +el.getAttribute('data-target');
+          let current = 0;
+          const step = Math.ceil(target / 80);
+          const duration = 60;
+
+          const counter = setInterval(() => {
+            current += step;
+            el.textContent = current;
+            if (current >= target) {
+              el.textContent = target.toLocaleString('de-DE');
+              clearInterval(counter);
+            }
+          }, duration / 80);
+
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statNumbers.forEach(stat => observer.observe(stat));
+  </script>
+</body>
+</html>
