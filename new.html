@@ -3,7 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NRW RP DE – Emergency Hamburg</title>
+  <meta name="description" content="NRW RP DE – Hochrealistisches Roleplay in Hamburg. Polizei, Feuerwehr, Rettungsdienst und Zivilisten erleben dynamische Szenarien.">
+<meta property="og:title" content="NRW RP DE – Emergency Hamburg">
+<meta property="og:description" content="Erleben Sie hochrealistisches Roleplay in unserer engagierten Community.">
+<meta property="og:image" content="bilder/logo.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<title>NRW RP DE – Emergency Hamburg</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
@@ -646,6 +652,61 @@
         font-size: 0.85rem;
       }
     }
+    /* Sidebar Overlay für mobile */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 998;
+  display: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Aktivieren bei Sidebar open */
+.sidebar.open + .sidebar-overlay {
+  display: block;
+  opacity: 1;
+}
+
+/* Stat Card Hover Effekt */
+.stat-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.stat-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 16px 32px rgba(88, 101, 242, 0.25);
+  border-color: var(--accent);
+}
+
+/* Back to Top Button Smooth Fade */
+#backToTop {
+  position: fixed;
+  bottom: 3rem;
+  right: 2rem;
+  width: 50px;      /* Breite = Durchmesser */
+  height: 50px;     /* Höhe = Durchmesser */
+  border-radius: 50%; /* Macht es rund */
+  font-size: 1.25rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+  display: flex;             /* Damit der Pfeil zentriert ist */
+  align-items: center;       /* Vertikal zentrieren */
+  justify-content: center;   /* Horizontal zentrieren */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#backToTop.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+#backToTop.hide {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
   </style>
 </head>
 <body>
@@ -667,203 +728,357 @@
       <div class="sidebar-footer">&copy; 2025 NRW RP DE</div>
     </aside>
 
-    <main class="main">
-      <header class="topbar">
-        <button id="toggleSidebar" class="toggle-btn" aria-controls="sidebar" aria-expanded="true" aria-label="Navigation umschalten">☰</button>
-        <div class="topbar-title">NRW RP DE — Emergency Hamburg</div>
-        <a href="https://discord.gg/rGXZg3XV5X" class="btn-primary">Discord beitreten</a>
-      </header>
+<main class="main">
+  <header class="topbar">
+    <button id="toggleSidebar" class="toggle-btn" aria-controls="sidebar" aria-expanded="true" aria-label="Navigation umschalten">☰</button>
+    <div class="topbar-title">NRW RP DE – Emergency Hamburg</div>
+    <a href="https://discord.gg/rGXZg3XV5X" class="btn-primary">Discord beitreten</a>
+  </header>
 
-      <!-- Hero Section -->
-      <section class="hero" id="home">
-        <canvas id="bgCanvas" aria-hidden="true"></canvas>
-        <div class="hero-inner">
-          <img src="bilder/logo.png" alt="Logo" class="hero-logo" loading="lazy">
-          <h1>Willkommen bei NRW RP DE</h1>
-          <p>Deine Allround-Community für realistisches Roleplay. Polizei, Feuerwehr, Rettungsdienst oder Zivilist – hier gestaltest du echtes RP mit Struktur, Teamgeist & Spaß.</p>
-          <div class="hero-actions">
-            <a href="https://discord.gg/rGXZg3XV5X" class="btn-hero">Jetzt beitreten</a>
-            <a href="#about" class="btn-ghost">Mehr erfahren</a>
-          </div>
-        </div>
-      </section>
+    <button id="backToTop" aria-label="Nach oben" style="display:none;">↑</button>
 
-      <!-- Stats Section -->
-      <section class="stats" id="about">
-        <h2>Unsere Community in Zahlen</h2>
-        <p>Ein starkes Team, engagierte Mitglieder und klare Rollen – das ist NRW RP DE.</p>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-number" data-target="2011">0</div>
-            <p class="stat-label">Mitglieder</p>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number" data-target="58">0</div>
-            <p class="stat-label">Teammitglieder</p>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number" data-target="111">0</div>
-            <p class="stat-label">Rollen</p>
-          </div>
-        </div>
-      </section>
 
-      <!-- Overview Section -->
-      <section class="section" id="factions">
-        <h2>Was dich erwartet</h2>
-        <div class="grid-3">
-          <div class="card">
-            <h3>🚓 Realistisches RP</h3>
-            <p>Erlebe authentische Einsatzszenarien mit klaren Strukturen und echtem Teamgefühl.</p>
-          </div>
-          <div class="card">
-            <h3>👥 Organisiertes Team</h3>
-            <p>Unser erfahrenes Leitungsteam sorgt für Fairness, Organisation und Spaß am Spiel.</p>
-          </div>
-          <div class="card">
-            <h3>🎉 Community-Events</h3>
-            <p>Regelmäßige Aktionen, Großeinsätze & RP-Events – für Spannung & Abwechslung.</p>
-          </div>
-        </div>
-      </section>
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <canvas id="bgCanvas" aria-hidden="true"></canvas>
+    <div class="hero-inner">
+      <img src="bilder/logo.png" alt="NRW RP DE Logo" class="hero-logo" loading="lazy">
+      <h1>Willkommen bei <span class="accent">NRW RP DE</span></h1>
+      <p>Erleben Sie hochrealistisches Roleplay mit klaren Strukturen und dynamischen Einsätzen. Ob Polizei, Feuerwehr, Rettungsdienst oder Zivilist – werden Sie Teil unserer engagierten Community, erfahren Sie Teamgeist und gestalten Sie authentische Szenarien.</p>
+      <div class="hero-actions">
+        <a href="https://discord.gg/rGXZg3XV5X" class="btn-hero">Jetzt beitreten</a>
+        <a href="#about" class="btn-ghost">Mehr erfahren</a>
+      </div>
+    </div>
+  </section>
 
-      <!-- Highlights Section -->
-      <section class="section" id="rules">
-        <h2>Unsere Highlights</h2>
-        <ul class="highlight">
-          <li>🚓 Realistische Einsatzfahrzeuge & Einsatzgebiete</li>
-          <li>🔥 Dynamische Einsätze & RP-Events mit hohem Anspruch</li>
-          <li>💬 Aktive Community & persönlicher Support</li>
-          <li>🏙️ Detaillierte Städte & authentische Karten</li>
-          <li>⚖️ Transparente Regeln & faire Administration</li>
-          <li>🌟 Regelmäßige Trainings & Fortbildungen</li>
-        </ul>
-      </section>
+  <!-- Stats Section -->
+  <section class="stats" id="about">
+    <h2>Unsere Community in Zahlen</h2>
+    <p>Ein starkes Team, aktive Mitglieder und klar definierte Rollen bilden das Fundament von NRW RP DE.</p>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" data-target="2011">0</div>
+        <p class="stat-label">Aktive Mitglieder</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-target="58">0</div>
+        <p class="stat-label">Teammitglieder</p>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" data-target="111">0</div>
+        <p class="stat-label">Rollen & Funktionen</p>
+      </div>
+    </div>
+  </section>
 
-      <!-- Quick Links Section -->
-      <section class="section" id="events">
-        <h2>Direkt loslegen</h2>
-        <div class="links-row">
-          <a href="https://discord.gg/rGXZg3XV5X" class="link-card">🎮 Discord Server</a>
-          <a href="https://discord.gg/rGXZg3XV5X" class="link-card">🚀 Jetzt beitreten</a>
-          <a href="#rules" class="link-card">📜 Regelwerk</a>
-        </div>
-      </section>
+  <!-- Overview Section -->
+  <section class="section" id="factions">
+    <h2>Unsere Schwerpunkte</h2>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Authentisches Roleplay</h3>
+        <p>Realistische Einsätze, nachvollziehbare Szenarien und strukturierte Abläufe sorgen für ein immersives RP-Erlebnis.</p>
+      </div>
+      <div class="card">
+        <h3>Professionelles Team</h3>
+        <p>Unser Leitungsteam gewährleistet Fairness, effiziente Organisation und ein motivierendes Spielerlebnis.</p>
+      </div>
+      <div class="card">
+        <h3>Exklusive Community-Events</h3>
+        <p>Regelmäßige Aktionen, Großeinsätze und Sonderevents bieten Abwechslung, Spannung und stärken den Zusammenhalt.</p>
+      </div>
+    </div>
+  </section>
 
-      <!-- Footer -->
-      <footer>
-        &copy; 2025 NRW RP DE – Alle Rechte vorbehalten.<br>
-        <a href="#impressum">Impressum</a> · <a href="#datenschutz">Datenschutz</a>
-      </footer>
-    </main>
+  <!-- Testimonials Section -->
+  <section class="section" id="testimonials">
+    <h2>Mitgliederstimmen</h2>
+    <div class="grid-3">
+      <div class="card">
+        <p>„NRW RP DE bietet das realistischste RP-Erlebnis, das ich bisher erlebt habe. Die Einsätze sind spannend und authentisch.“</p>
+        <p><strong>Max – Polizei</strong></p>
+      </div>
+      <div class="card">
+        <p>„Dank der professionellen Organisation machen alle Events großen Spaß. Teamgeist wird hier aktiv gefördert.“</p>
+        <p><strong>Laura – Feuerwehr</strong></p>
+      </div>
+      <div class="card">
+        <p>„Als Zivilist konnte ich dynamische Einsätze hautnah miterleben. Ein einzigartiges RP-Erlebnis.“</p>
+        <p><strong>Simon – Zivilist</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fraktionen Preview Section -->
+  <section class="section" id="roles">
+    <h2>Unsere Fraktionen</h2>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Polizei</h3>
+        <p>Überwachen Sie das Geschehen, führen Sie Einsätze durch und sorgen Sie für Ordnung in unserer Community.</p>
+      </div>
+      <div class="card">
+        <h3>Feuerwehr</h3>
+        <p>Retten Sie Menschenleben, löschen Sie Brände und erleben Sie dynamische Einsatzszenarien hautnah.</p>
+      </div>
+      <div class="card">
+        <h3>Rettungsdienst</h3>
+        <p>Versorgen Sie Verletzte, unterstützen Sie Einsätze und tragen Sie aktiv zur Sicherheit der Community bei.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap / Events Section -->
+  <section class="section" id="upcoming">
+    <h2>Bevorstehende Highlights</h2>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Großeinsatz 10.11.2025</h3>
+        <p>Polizei und Feuerwehr im gemeinsamen Einsatz – spannende Szenarien und Teamwork garantiert.</p>
+      </div>
+      <div class="card">
+        <h3>Community Event 20.11.2025</h3>
+        <p>Special-Event für alle Fraktionen – Herausforderungen und Unterhaltung exklusiv für Mitglieder.</p>
+      </div>
+      <div class="card">
+        <h3>Training & Fortbildung 30.11.2025</h3>
+        <p>Intensives Training für neue Mitglieder sowie Fortbildung für erfahrene Spieler.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlights Section -->
+  <section class="section" id="rules">
+    <h2>Unsere Highlights</h2>
+    <ul class="highlight">
+      <li>Realistische Einsatzfahrzeuge und authentische Einsatzgebiete</li>
+      <li>Herausfordernde Einsätze und sorgfältig gestaltete RP-Events</li>
+      <li>Aktive Community und persönliche Unterstützung durch erfahrene Mitglieder</li>
+      <li>Detaillierte Städte und realitätsnahe Karten</li>
+      <li>Transparente Regeln und faire Administration</li>
+      <li>Regelmäßige Trainings und gezielte Weiterbildungen</li>
+    </ul>
+  </section>
+
+  <!-- Quick Links Section -->
+  <section class="section" id="events">
+    <h2>Schnellzugriff</h2>
+    <div class="links-row">
+      <a href="https://discord.gg/rGXZg3XV5X" class="link-card">Discord Server</a>
+      <a href="https://discord.gg/rGXZg3XV5X" class="link-card">Jetzt beitreten</a>
+      <a href="#rules" class="link-card">Regelwerk einsehen</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 NRW RP DE – Alle Rechte vorbehalten.<br>
+    <a href="#impressum">Impressum</a> · <a href="#datenschutz">Datenschutz</a>
+  </footer>
+</main>
+
+
   </div>
 
-  <script>
-    // Sidebar Toggle
-    const sidebar = document.getElementById('sidebar');
-    const toggleBtn = document.getElementById('toggleSidebar');
-    
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-      // Toggle aria-expanded
-      toggleBtn.setAttribute('aria-expanded', sidebar.classList.contains('open'));
-    });
+<script>
+  // Sidebar Toggle
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('toggleSidebar');
 
-    // Close sidebar on link click
-    document.querySelectorAll('.sidebar-nav a').forEach(link => {
-      link.addEventListener('click', () => {
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    toggleBtn.setAttribute('aria-expanded', sidebar.classList.contains('open'));
+  });
+
+  // Close sidebar on link click
+  document.querySelectorAll('.sidebar-nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Close sidebar when clicking outside (mobile)
+  document.addEventListener('click', e => {
+    if (window.innerWidth <= 900) {
+      if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
         sidebar.classList.remove('open');
         toggleBtn.setAttribute('aria-expanded', 'false');
-      });
+      }
+    }
+  });
+
+  // Active link highlighting on scroll
+  const links = document.querySelectorAll('.sidebar-nav a:not(.discord-cta)');
+  const updateActive = () => {
+    const scrollPos = window.scrollY + 120; // offset for sticky topbar
+    links.forEach(link => {
+      const targetId = link.getAttribute('href').substring(1);
+      const section = document.getElementById(targetId);
+      if (section) {
+        if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+          links.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+        }
+      }
     });
+  };
+  window.addEventListener('scroll', updateActive);
+  window.addEventListener('resize', updateActive);
+  updateActive();
 
-    // Active link highlighting
-    const links = document.querySelectorAll('.sidebar-nav a:not(.discord-cta)');
-    const updateActive = () => {
-      links.forEach(link => {
-        const targetId = link.getAttribute('href').substring(1);
-        const section = document.getElementById(targetId);
-        if (section) {
-          const rect = section.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
-            links.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-          }
-        }
-      });
-    };
+  // Background Canvas Animation
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
 
-    window.addEventListener('scroll', updateActive);
+  function resizeCanvas() {
+    const hero = document.querySelector('.hero');
+    canvas.width = window.innerWidth;
+    canvas.height = hero.offsetHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
 
-    // Background Canvas Animation
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
+  const particles = Array.from({ length: 80 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + 0.5,
+    dx: (Math.random() - 0.5) * 0.4,
+    dy: (Math.random() - 0.5) * 0.4,
+    opacity: Math.random() * 0.5 + 0.2,
+  }));
 
-    function resizeCanvas() {
-      const hero = document.querySelector('.hero');
-      canvas.width = window.innerWidth;
-      canvas.height = hero.offsetHeight;
-    }
+  function animateCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.fillStyle = `rgba(88, 101, 242, ${p.opacity})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
 
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+      p.x += p.dx;
+      p.y += p.dy;
 
-    const particles = Array.from({ length: 80 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      r: Math.random() * 1.5 + 0.5,
-      dx: (Math.random() - 0.5) * 0.4,
-      dy: (Math.random() - 0.5) * 0.4,
-      opacity: Math.random() * 0.5 + 0.2,
-    }));
+      if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+    requestAnimationFrame(animateCanvas);
+  }
+  animateCanvas();
 
-    function animateCanvas() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(particle => {
-        ctx.fillStyle = `rgba(88, 101, 242, ${particle.opacity})`;
+  // Stat Counter Animation
+  const statNumbers = document.querySelectorAll('.stat-number');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = +el.getAttribute('data-target');
+        let current = 0;
+        const step = Math.ceil(target / 80);
+        const duration = 60;
+
+        const counter = setInterval(() => {
+          current += step;
+          el.textContent = current > target ? target.toLocaleString('de-DE') : current.toLocaleString('de-DE');
+          if (current >= target) clearInterval(counter);
+        }, duration / 80);
+
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  statNumbers.forEach(stat => observer.observe(stat));
+
+  // Back to Top Button
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    backToTop.style.display = window.scrollY > 500 ? 'block' : 'none';
+  });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Smooth Scroll for Anchors
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const targetEl = document.querySelector(this.getAttribute('href'));
+      if (targetEl) {
+        e.preventDefault();
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+  // Overlay Element erzeugen
+const overlay = document.createElement('div');
+overlay.className = 'sidebar-overlay';
+document.body.appendChild(overlay);
+
+// Öffnen / Schließen Sidebar mit Overlay
+const toggleSidebar = () => {
+  sidebar.classList.toggle('open');
+  toggleBtn.setAttribute('aria-expanded', sidebar.classList.contains('open'));
+  overlay.style.display = sidebar.classList.contains('open') ? 'block' : 'none';
+};
+toggleBtn.addEventListener('click', toggleSidebar);
+
+// Klick auf Overlay schließt Sidebar
+overlay.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  toggleBtn.setAttribute('aria-expanded', 'false');
+  overlay.style.display = 'none';
+});
+
+// Back to Top Smooth Fade
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 500) {
+    backToTop.classList.add('show');
+    backToTop.classList.remove('hide');
+  } else {
+    backToTop.classList.add('hide');
+    backToTop.classList.remove('show');
+  }
+});
+
+// Canvas Partikel Linien-Effekt
+function drawLines() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 80) {
+        ctx.strokeStyle = `rgba(88, 101, 242, ${1 - dist/80})`;
+        ctx.lineWidth = 0.5;
         ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2);
-        ctx.fill();
-
-        particle.x += particle.dx;
-        particle.y += particle.dy;
-
-        if (particle.x < 0 || particle.x > canvas.width) particle.dx *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.dy *= -1;
-      });
-
-      requestAnimationFrame(animateCanvas);
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.stroke();
+      }
     }
+  }
+}
 
-    animateCanvas();
+const animateCanvasWithLines = () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    ctx.fillStyle = `rgba(88, 101, 242, ${p.opacity})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+    p.x += p.dx;
+    p.y += p.dy;
+    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+  });
+  drawLines();
+  requestAnimationFrame(animateCanvasWithLines);
+};
+animateCanvasWithLines();
 
-    // Stat Counter Animation
-    const statNumbers = document.querySelectorAll('.stat-number');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const target = +el.getAttribute('data-target');
-          let current = 0;
-          const step = Math.ceil(target / 80);
-          const duration = 60;
+</script>
 
-          const counter = setInterval(() => {
-            current += step;
-            el.textContent = current.toLocaleString('de-DE');
-            if (current >= target) {
-              el.textContent = target.toLocaleString('de-DE');
-              clearInterval(counter);
-            }
-          }, duration / 80);
-
-          observer.unobserve(el);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    statNumbers.forEach(stat => observer.observe(stat));
-  </script>
+  
 </body>
 </html>
