@@ -49,8 +49,11 @@
       transition: var(--transition);
     }
 
-    a:hover {
+    a:hover,
+    a:focus {
       color: var(--accent);
+      outline: none;
+      text-decoration: underline;
     }
 
     img {
@@ -137,8 +140,17 @@
       position: relative;
     }
 
-    .sidebar-nav a:hover,
-    .sidebar-nav a.active {
+    /* Aktive Links mit besserer Zugänglichkeit */
+    .sidebar-nav a.active,
+    .sidebar-nav a:focus {
+      background: rgba(88, 101, 242, 0.1);
+      color: var(--primary);
+      border-left-color: var(--primary);
+      transform: translateX(4px);
+      outline: none;
+    }
+
+    .sidebar-nav a:hover {
       background: rgba(88, 101, 242, 0.1);
       color: var(--primary);
       border-left-color: var(--primary);
@@ -236,6 +248,7 @@
       text-align: center;
       overflow: hidden;
       background: linear-gradient(135deg, #0a0e1a 0%, #131829 50%, #0f1219 100%);
+      padding: 2rem 1rem; /* Added padding for mobile responsiveness */
     }
 
     #bgCanvas {
@@ -245,6 +258,7 @@
       height: 100%;
       z-index: 0;
       opacity: 0.6;
+      display: block; /* ensure rendering */
     }
 
     .hero::before {
@@ -636,18 +650,18 @@
 </head>
 <body>
   <div class="app">
-    <aside id="sidebar" class="sidebar">
+    <aside id="sidebar" class="sidebar" aria-hidden="false">
       <div>
-        <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
-        <nav class="sidebar-nav">
-          <a href="#home" class="active">Startseite</a>
-          <a href="#about">Über uns</a>
-          <a href="#factions">Fraktionen</a>
-          <a href="#rules">Regelwerk</a>
-          <a href="#events">Events</a>
-          <a href="#team">Team</a>
-          <a href="#contact">Kontakt</a>
-          <a href="https://discord.gg/rGXZg3XV5X" class="discord-cta">🚀 Beitreten</a>
+        <img src="bilder/logo.png" alt="Logo" class="sidebar-logo" loading="lazy">
+        <nav class="sidebar-nav" aria-label="Navigation">
+          <a href="#home" class="active" aria-current="page">Startseite</a>
+          <a href="about.html">Über uns</a>
+          <a href="factions.html">Fraktionen</a>
+          <a href="rules">Regelwerk</a>
+          <a href="events.html">Events</a>
+          <a href="team.html">Team</a>
+          <a href="join.html">Andere Server</a>
+          <a href="https://discord.gg/rGXZg3XV5X" class="discord-cta">Beitreten</a>
         </nav>
       </div>
       <div class="sidebar-footer">&copy; 2025 NRW RP DE</div>
@@ -655,16 +669,16 @@
 
     <main class="main">
       <header class="topbar">
-        <button id="toggleSidebar" class="toggle-btn">☰</button>
+        <button id="toggleSidebar" class="toggle-btn" aria-controls="sidebar" aria-expanded="true" aria-label="Navigation umschalten">☰</button>
         <div class="topbar-title">NRW RP DE — Emergency Hamburg</div>
         <a href="https://discord.gg/rGXZg3XV5X" class="btn-primary">Discord beitreten</a>
       </header>
 
       <!-- Hero Section -->
       <section class="hero" id="home">
-        <canvas id="bgCanvas"></canvas>
+        <canvas id="bgCanvas" aria-hidden="true"></canvas>
         <div class="hero-inner">
-          <img src="bilder/logo.png" alt="Logo" class="hero-logo">
+          <img src="bilder/logo.png" alt="Logo" class="hero-logo" loading="lazy">
           <h1>Willkommen bei NRW RP DE</h1>
           <p>Deine Allround-Community für realistisches Roleplay. Polizei, Feuerwehr, Rettungsdienst oder Zivilist – hier gestaltest du echtes RP mit Struktur, Teamgeist & Spaß.</p>
           <div class="hero-actions">
@@ -751,12 +765,15 @@
     
     toggleBtn.addEventListener('click', () => {
       sidebar.classList.toggle('open');
+      // Toggle aria-expanded
+      toggleBtn.setAttribute('aria-expanded', sidebar.classList.contains('open'));
     });
 
     // Close sidebar on link click
     document.querySelectorAll('.sidebar-nav a').forEach(link => {
       link.addEventListener('click', () => {
         sidebar.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
       });
     });
 
@@ -834,7 +851,7 @@
 
           const counter = setInterval(() => {
             current += step;
-            el.textContent = current;
+            el.textContent = current.toLocaleString('de-DE');
             if (current >= target) {
               el.textContent = target.toLocaleString('de-DE');
               clearInterval(counter);
