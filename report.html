@@ -327,7 +327,7 @@ setupDrop("dropRoblox", "robloxFiles", "previewRoblox");
 
 // --- Validation & Rate Limiting ---
 function validDiscordTag(name) {
-  return /^.+#\d{4}$/.test(name);
+  return test(name);
 }
 
 function tooSoon() {
