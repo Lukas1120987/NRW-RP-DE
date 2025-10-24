@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Unsere Server - Wähle deinen bevorzugten Server und starte dein Roleplay-Abenteuer." />
+  <title>Server – NRW RP DE</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========== RESET & GRUNDSTIL ========== */
+    :root{
+      --primary: #5865f2;
+      --primary-dark: #4752c4;
+      --bg: #0e0e12;
+      --surface: #1c1d22;
+      --muted: #888;
+      --text: #e0e0e0;
+      --text-muted: #cfcfcf;
+      --card-shadow: rgba(0,0,0,0.35);
+      --success: #3ba55d;
+      --success-bg: rgba(59, 165, 93, 0.2);
+      --warning: #faa81a;
+      --warning-bg: rgba(250, 168, 26, 0.2);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    html,body { height:100%; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ========== APP LAYOUT ========== */
+    .app { display: flex; width: 100%; }
+
+    /* ===================== Sidebar ===================== */
+    .sidebar {
+      width: 260px;
+      background: #1a1b20;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      padding: 1rem;
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+    .sidebar.hidden { transform: translateX(-100%); }
+    .sidebar-top {
+      display:flex;
+      align-items:center;
+      gap:0.75rem;
+    }
+    .sidebar-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      object-fit:cover;
+      background: linear-gradient(135deg,#16161a,#26282f);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .btn-icon {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.6rem;
+      cursor: pointer;
+      padding: 0.25rem 0.4rem;
+      border-radius: 6px;
+    }
+    .btn-icon:hover { color: #fff; background: rgba(255,255,255,0.02); }
+
+    .sidebar-nav {
+      margin-top: 1.75rem;
+      display:flex;
+      flex-direction:column;
+      gap:0.6rem;
+    }
+    .sidebar-nav a {
+      padding: 0.72rem 0.9rem;
+      border-radius: 8px;
+      transition: background 0.18s, transform 0.18s;
+      font-weight: 500;
+      color: var(--text-muted);
+      display:block;
+    }
+    .sidebar-nav a:hover { background: #222328; transform: translateX(4px); color: #fff; text-decoration: none; }
+    .sidebar-nav a.active {
+      background: rgba(88,101,242,0.12);
+      color: #fff;
+      border-left: 4px solid var(--primary);
+      padding-left: calc(0.9rem - 4px);
+    }
+    .sidebar-footer {
+      margin-top: auto;
+      text-align:center;
+      font-size:0.85rem;
+      color: var(--muted);
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.02);
+    }
+
+    /* ========== MAIN ========== */
+    .main {
+      margin-left: 260px;
+      width: calc(100% - 260px);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      transition: margin-left 0.3s ease;
+    }
+    .main.fullwidth { margin-left: 0; width: 100%; }
+
+    /* ========== TOPBAR ========== */
+    .topbar {
+      background: #18191c;
+      padding: 1rem 1.5rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      border-bottom: 1px solid #2c2d33;
+    }
+    .topbar-left { display:flex; align-items:center; gap:0.75rem; }
+    .topbar-title { font-size: 1.15rem; font-weight:700; }
+
+    /* ========== CONTENT SECTION ========== */
+    .content {
+      padding: 6rem 1.5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* ========== HEADER ========== */
+    .page-header {
+      text-align: center;
+      margin-bottom: 4rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .page-header h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      max-width: 42rem;
+      margin: 0 auto;
+    }
+
+    /* ========== SERVER GRID ========== */
+    .servers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.2s forwards;
+    }
+
+    .server-card {
+      background: linear-gradient(180deg, #1c1d22, #17181d);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 24px var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .server-card:nth-child(1) { animation-delay: 0.1s; }
+    .server-card:nth-child(2) { animation-delay: 0.2s; }
+    .server-card:nth-child(3) { animation-delay: 0.3s; }
+    .server-card:nth-child(4) { animation-delay: 0.4s; }
+
+    .server-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    }
+
+    .server-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .server-header h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .status-badge {
+      padding: 0.375rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .status-online {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .status-maintenance {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+
+    .server-info {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-muted);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2;
+    }
+
+    .btn-join {
+      width: 100%;
+      background: var(--primary);
+      color: #fff;
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .btn-join:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(88, 101, 242, 0.3);
+    }
+
+    .btn-join:active {
+      transform: translateY(0);
+    }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; width: 100%; }
+      
+      .content {
+        padding: 4rem 1rem 2rem;
+      }
+
+      .servers-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-header {
+        margin-bottom: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-top">
+        <img src="bilder/logo.png" alt="Logo" class="sidebar-logo" />
+        <button id="closeSidebar" class="btn-icon" aria-label="Schließen">×</button>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Hauptnavigation">
+        <a href="index.html">Start</a>
+        <a href="about.html">Über uns</a>
+        <a href="factions.html">Fraktionen</a>
+        <a href="rules.html">Regelwerk</a>
+        <a href="events.html">Events</a>
+        <a href="team.html">Team</a>
+        <a href="servers.html" class="active">Server</a>
+        <a href="join.html">Beitreten</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <small>© 2025 NRW RP DE</small>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main id="main" class="main">
+      <header class="topbar" role="banner">
+        <div class="topbar-left">
+          <button id="toggleSidebar" class="btn-icon" aria-label="Menü öffnen">☰</button>
+          <div class="topbar-title">Unsere Server</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <!-- Page Header -->
+        <div class="page-header">
+          <h1>Unsere Server</h1>
+          <p>Wähle deinen bevorzugten Server und starte dein Roleplay-Abenteuer</p>
+        </div>
+
+        <!-- Servers Grid -->
+        <div class="servers-grid">
+          <!-- Server Alpha -->
+          <article class="server-card">
+            <div class="server-header">
+              <h3>Server Alpha</h3>
+              <span class="status-badge status-online">Online</span>
+            </div>
+            <div class="server-info">
+              <div class="info-item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>245 Spieler</span>
+              </div>
+              <div class="info-item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                <span>EU</span>
+              </div>
+            </div>
+            <button class="btn-join">Server beitreten</button>
+          </article>
+
+          <!-- Server Beta -->
+          <article class="server-card">
+            <div class="server-header">
+              <h3>Server Beta</h3>
+              <span class="status-badge status-online">Online</span>
+            </div>
+            <div class="server-info">
+              <div class="info-item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>189 Spieler</span>
+              </div>
+              <div class="info-item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                <span>EU</span>
+              </div>
+            </div>
+            <button class="btn-join">Server beitreten</button>
+          </article>
+
+          <!-- Server Gamma -->
+          <article class="server-card">
+            <div class="server-header">
+              <h3>Server Gamma</h3>
+              <span class="status-badge status-online">Online</span>
+            </div>
+            <div class="server-info">
+              <div class="info-item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>312 Spieler</span>
+              </div>
+              <div class="info-item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                <span>EU</span>
+              </div>
+            </div>
+            <button class="btn-join">Server beitreten</button>
+          </article>
+
+          <!-- Server Delta -->
+          <article class="server-card">
+            <div class="server-header">
+              <h3>Server Delta</h3>
+              <span class="status-badge status-maintenance">Wartung</span>
+            </div>
+            <div class="server-info">
+              <div class="info-item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>156 Spieler</span>
+              </div>
+              <div class="info-item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                <span>EU</span>
+              </div>
+            </div>
+            <button class="btn-join">Server beitreten</button>
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    (function(){
+      document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar');
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const main = document.getElementById('main');
+
+        // Sidebar toggle
+        toggleSidebar.addEventListener('click', () => {
+          sidebar.classList.toggle('hidden');
+          main.classList.toggle('fullwidth');
+        });
+
+        closeSidebar.addEventListener('click', () => {
+          sidebar.classList.add('hidden');
+          main.classList.remove('fullwidth');
+        });
+
+        // Auto close sidebar on navigation (mobile)
+        document.querySelectorAll('.sidebar-nav a').forEach(a => {
+          a.addEventListener('click', () => {
+            if (window.innerWidth <= 900) {
+              sidebar.classList.add('hidden');
+              main.classList.remove('fullwidth');
+            }
+          });
+        });
+
+        // Join server buttons
+        document.querySelectorAll('.btn-join').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const serverCard = this.closest('.server-card');
+            const serverName = serverCard.querySelector('h3').textContent;
+            const status = serverCard.querySelector('.status-badge').textContent;
+            
+            if (status === 'Wartung') {
+              alert(`${serverName} befindet sich derzeit in Wartung. Bitte versuche es später erneut.`);
+            } else {
+              alert(`Verbinde zu ${serverName}...`);
+              // Hier kannst du die Verbindungslogik hinzufügen
+            }
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
