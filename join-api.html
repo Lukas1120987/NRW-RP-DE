@@ -275,6 +275,22 @@
       stroke-width: 2;
     }
 
+    .owner-info {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .owner-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
     .btn-join {
       width: 100%;
       background: var(--primary);
@@ -408,18 +424,19 @@
 
   <script>
     (function(){
-      // Server-Namen-Mapping (du kannst hier weitere hinzufügen)
-      const serverMapping = {
-        'NRW RP DE  🇩🇪': 'Server Alpha',
-        // Falls du weitere spezifische Namen hast:
-        // 'anderer API Name': 'Server Beta',
+      // ========== FILTER-KONFIGURATION ==========
+      // Filter nach Owner-Name UND Servernamen-Teil
+      const serverFilters = {
+        ownerName: 'Nueburgringcool',  // Exakter Owner-Name
+        serverNameContains: 'NRW RP'   // Teil des Servernamens (case-insensitive)
       };
 
-      // Interessierende Server (nur diese werden angezeigt)
-      const targetServers = [
-        'NRW RP DE  🇩🇪',
-        // Füge hier weitere Server-Namen aus der API hinzu
-      ];
+      // Optionale individuelle Display-Namen für Server
+      const serverDisplayNames = {
+        'NRW RP DE  🇩🇪': 'Server Alpha',
+        // Weitere Mappings hier hinzufügen:
+        // 'Voller Server Name': 'Anzeigename',
+      };
 
       document.addEventListener('DOMContentLoaded', () => {
         const sidebar = document.getElementById('sidebar');
@@ -460,19 +477,31 @@
 
             const servers = await response.json();
             
-            // Filtere nur die gewünschten Server
-            const filteredServers = servers.filter(server => 
-              targetServers.includes(server.serverName)
-            );
+            // Filtere Server nach Owner-Name UND Servernamen-Teil
+            const filteredServers = servers.filter(server => {
+              const matchesOwner = server.ownerName === serverFilters.ownerName;
+              const matchesServerName = server.serverName.toLowerCase().includes(
+                serverFilters.serverNameContains.toLowerCase()
+              );
+              return matchesOwner && matchesServerName;
+            });
 
             if (filteredServers.length === 0) {
-              serversGrid.innerHTML = '<div class="error">Keine Server gefunden</div>';
+              serversGrid.innerHTML = `
+                <div class="error">
+                  Keine Server von "${serverFilters.ownerName}" gefunden,<br>
+                  die "${serverFilters.serverNameContains}" im Namen haben.
+                </div>
+              `;
               return;
             }
 
+            // Sortiere Server nach Spieleranzahl (höchste zuerst)
+            filteredServers.sort((a, b) => (b.currentPlayers || 0) - (a.currentPlayers || 0));
+
             // Erstelle Server-Karten
             serversGrid.innerHTML = filteredServers.map((server, index) => {
-              const displayName = serverMapping[server.serverName] || server.serverName;
+              const displayName = serverDisplayNames[server.serverName] || server.serverName;
               const isOnline = server.currentPlayers !== undefined;
               const playerCount = server.currentPlayers || 0;
               const maxPlayers = server.maxPlayers || 42;
@@ -485,6 +514,12 @@
                       ${isOnline ? 'Online' : 'Offline'}
                     </span>
                   </div>
+                  
+                  <div class="owner-info">
+                    <img src="${server.ownerProfileUrl}" alt="${server.ownerName}" class="owner-avatar" onerror="this.style.display='none'">
+                    <span>Owner: ${server.ownerName}</span>
+                  </div>
+
                   <div class="server-info">
                     <div class="info-item">
                       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -504,7 +539,10 @@
                       <span>EU</span>
                     </div>
                   </div>
-                  <button class="btn-join" ${!isOnline ? 'disabled' : ''} data-discord="${server.socialLinks?.Discord || ''}">
+                  <button class="btn-join" ${!isOnline ? 'disabled' : ''} 
+                          data-discord="${server.socialLinks?.Discord || ''}"
+                          data-youtube="${server.socialLinks?.YouTube || ''}"
+                          data-twitter="${server.socialLinks?.X || ''}">
                     ${isOnline ? 'Server beitreten' : 'Offline'}
                   </button>
                 </article>
