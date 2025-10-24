@@ -454,7 +454,7 @@
       serversGrid.innerHTML = `<div class="loading">🔄 Lade Server-Daten...</div>`;
 
       try {
-        const response = await fetch('https://api.emergency-hamburg.com/public/servers');
+        const response = await fetch('https://corsproxy.io/?https://api.emergency-hamburg.com/public/servers');
 
         // Prüfe HTTP-Antwort
         if (!response.ok) {
