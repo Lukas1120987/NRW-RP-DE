@@ -201,35 +201,39 @@
     preview.innerHTML = html;
   }
 
-  // PDF Export
-  document.getElementById('export-pdf').addEventListener('click', () => {
-    const title = document.getElementById('title').value || '';
-    const subtitle = document.getElementById('subtitle').value || '';
-    const cover = document.getElementById('cover').value || '';
-    const content = quill.root.innerHTML;
+// PDF Export
+document.getElementById('export-pdf').addEventListener('click', () => {
+  const title = document.getElementById('title').value || '';
+  const subtitle = document.getElementById('subtitle').value || '';
+  const cover = document.getElementById('cover').value || '';
+  const content = quill.root.innerHTML;
 
-    const container = document.createElement('div');
-    container.style.padding = '2rem';
-    container.style.fontFamily = 'Arial, sans-serif';
-    container.style.background = '#fff';
-    container.style.color = '#000';
+  const container = document.createElement('div');
+  container.style.padding = '2rem';
+  container.style.fontFamily = 'Inter, Arial, sans-serif';
+  container.style.background = '#0a0e1a'; // Dark Mode Hintergrund
+  container.style.color = '#f0f0f0'; // Hellgrauer Text
+  container.style.borderRadius = '12px';
+  container.style.lineHeight = '1.5';
 
-    let html = `<div style="text-align:center; margin-bottom:1rem;">
-                  <img src="bilder/logo.png" style="height:60px; margin-bottom:1rem;">
-                </div>`;
-    if(cover) html += `<img src="${cover}" style="width:100%; border-radius:8px; margin-bottom:1rem;">`;
-    if(title) html += `<h1 style="text-align:center; margin-bottom:0.5rem;">${title}</h1>`;
-    if(subtitle) html += `<h3 style="text-align:center; margin-bottom:1rem; color:#555;">${subtitle}</h3>`;
-    html += content;
+  let html = `<div style="text-align:center; margin-bottom:1rem;">
+                <img src="bilder/logo.png" style="height:60px; margin-bottom:1rem; border-radius:8px;">
+              </div>`;
+  if (cover) html += `<img src="${cover}" style="width:100%; border-radius:12px; margin-bottom:1rem;">`;
+  if (title) html += `<h1 style="text-align:center; margin-bottom:0.5rem; color:#fff;">${title}</h1>`;
+  if (subtitle) html += `<h3 style="text-align:center; margin-bottom:1rem; color:#b8bcc8;">${subtitle}</h3>`;
+  html += content;
 
-    container.innerHTML = html;
+  container.innerHTML = html;
 
-    html2pdf().set({
-      margin: 10,
-      filename: `${title || 'Leitfaden'}.pdf`,
-      html2canvas: { scale:2 }
-    }).from(container).save();
-  });
+  html2pdf().set({
+    margin: 10,
+    filename: `${title || 'Leitfaden'}.pdf`,
+    html2canvas: { scale: 2, backgroundColor: null }, // transparent für Dark Mode
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  }).from(container).save();
+});
+
 
   // Editor leeren
   document.getElementById('clear-editor').addEventListener('click', () => {
