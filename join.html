@@ -29,118 +29,42 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+    body { font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; overflow-x: hidden; }
 
-    /* Sidebar */
     .app { display: flex; width: 100%; }
-    .sidebar {
-      width: 260px;
-      background: #1a1b20;
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 0; left: 0; bottom: 0;
-      padding: 1rem;
-      transition: transform 0.3s ease;
-      z-index: 1000;
-    }
+    .sidebar { width: 260px; background: #1a1b20; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; padding: 1rem; transition: transform 0.3s ease; z-index: 1000; }
     .sidebar.hidden { transform: translateX(-100%); }
     .sidebar-top { display: flex; align-items: center; justify-content: space-between; }
     .sidebar-logo { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; }
-    .btn-icon {
-      background: none; border: none; color: var(--text-muted);
-      font-size: 1.6rem; cursor: pointer; border-radius: 6px;
-    }
+    .btn-icon { background: none; border: none; color: var(--text-muted); font-size: 1.6rem; cursor: pointer; border-radius: 6px; }
     .btn-icon:hover { color: #fff; background: rgba(255,255,255,0.05); }
-    .sidebar-nav {
-      margin-top: 2rem; display: flex; flex-direction: column; gap: 0.6rem;
-    }
-    .sidebar-nav a {
-      color: var(--text-muted); text-decoration: none; padding: 0.8rem 1rem;
-      border-radius: 8px; transition: all 0.2s; font-weight: 500;
-    }
+    .sidebar-nav { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .sidebar-nav a { color: var(--text-muted); text-decoration: none; padding: 0.8rem 1rem; border-radius: 8px; transition: all 0.2s; font-weight: 500; }
     .sidebar-nav a:hover { background: #222328; color: #fff; transform: translateX(4px); }
-    .sidebar-nav a.active {
-      background: rgba(88,101,242,0.12); color: #fff;
-      border-left: 4px solid var(--primary);
-      padding-left: calc(1rem - 4px);
-    }
-    .sidebar-footer {
-      margin-top: auto; font-size: 0.85rem; text-align: center; color: var(--muted);
-      border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;
-    }
+    .sidebar-nav a.active { background: rgba(88,101,242,0.12); color: #fff; border-left: 4px solid var(--primary); padding-left: calc(1rem - 4px); }
+    .sidebar-footer { margin-top: auto; font-size: 0.85rem; text-align: center; color: var(--muted); border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem; }
 
-    /* Main Layout */
-    .main {
-      margin-left: 260px; width: calc(100% - 260px);
-      display: flex; flex-direction: column; min-height: 100vh;
-    }
-    .topbar {
-      background: #18191c; display: flex; align-items: center;
-      justify-content: space-between; padding: 1rem 1.5rem;
-      border-bottom: 1px solid #2c2d33;
-      position: sticky; top: 0; z-index: 900;
-    }
+    .main { margin-left: 260px; width: calc(100% - 260px); display: flex; flex-direction: column; min-height: 100vh; }
+    .topbar { background: #18191c; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; border-bottom: 1px solid #2c2d33; position: sticky; top: 0; z-index: 900; }
     .topbar-title { font-size: 1.15rem; font-weight: 700; }
-    .info-btn {
-      background: none; border: none; color: var(--text-muted);
-      font-size: 1.8rem; cursor: pointer; transition: color 0.2s;
-    }
+    .info-btn { background: none; border: none; color: var(--text-muted); font-size: 1.8rem; cursor: pointer; transition: color 0.2s; }
     .info-btn:hover { color: var(--warning); }
 
-    /* Info Box */
-    .info-box {
-      position: fixed; top: 70px; right: 20px;
-      background: var(--surface); color: var(--text-muted);
-      padding: 1rem 1.2rem; border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-      font-size: 0.95rem; max-width: 280px;
-      display: none; z-index: 1000;
-      animation: fadeIn 0.3s ease forwards;
-    }
+    .info-box { position: fixed; top: 70px; right: 20px; background: var(--surface); color: var(--text-muted); padding: 1rem 1.2rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 20px rgba(0,0,0,0.4); font-size: 0.95rem; max-width: 280px; display: none; z-index: 1000; animation: fadeIn 0.3s ease forwards; }
 
-    /* Content */
-    .content {
-      padding: 6rem 1.5rem 2rem; max-width: 1200px; margin: 0 auto; flex: 1;
-    }
+    .content { padding: 6rem 1.5rem 2rem; max-width: 1200px; margin: 0 auto; flex: 1; }
     .page-header { text-align: center; margin-bottom: 3rem; }
     .servers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
 
-    /* Server Cards */
-    .server-card {
-      background: linear-gradient(180deg, #1c1d22, #17181d);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 12px; padding: 1.5rem;
-      box-shadow: 0 8px 24px var(--card-shadow);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+    .server-card { background: linear-gradient(180deg, #1c1d22, #17181d); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 1.5rem; box-shadow: 0 8px 24px var(--card-shadow); transition: transform 0.3s ease, box-shadow 0.3s ease; }
     .server-card:hover { transform: translateY(-5px); box-shadow: 0 12px 24px rgba(0,0,0,0.5); }
     .server-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
     .server-header h3 { font-size: 1.25rem; font-weight: 700; }
-    .status-badge {
-      padding: 0.375rem 0.75rem; border-radius: 9999px;
-      font-size: 0.875rem; font-weight: 600;
-    }
+    .status-badge { padding: 0.375rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; }
     .status-online { background: var(--success-bg); color: var(--success); }
     .status-offline { background: var(--offline-bg); color: var(--offline); }
 
-    /* Join Button */
-    .btn-join {
-      width: 100%; background: var(--primary);
-      color: #fff; padding: 0.9rem 1rem;
-      border: none; border-radius: 10px;
-      font-weight: 700; font-size: 1rem;
-      cursor: pointer; margin-top: 1rem;
-      transition: all 0.2s ease;
-    }
+    .btn-join { width: 100%; background: var(--primary); color: #fff; padding: 0.9rem 1rem; border: none; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 1rem; transition: all 0.2s ease; }
     .btn-join:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(88,101,242,0.3); }
 
     @keyframes fadeIn { from {opacity:0; transform: translateY(-10px);} to {opacity:1; transform: translateY(0);} }
@@ -148,13 +72,11 @@
 </head>
 <body>
   <div class="app">
-    <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
       <div class="sidebar-top">
         <img src="bilder/logo.png" alt="Logo" class="sidebar-logo" />
         <button id="closeSidebar" class="btn-icon" aria-label="Schließen">×</button>
       </div>
-
       <nav class="sidebar-nav">
         <a href="index.html">Start</a>
         <a href="about.html">Über uns</a>
@@ -165,13 +87,11 @@
         <a href="servers.html" class="active">Server</a>
         <a href="join.html">Beitreten</a>
       </nav>
-
       <div class="sidebar-footer">
         <small>© 2025 NRW RP DE</small>
       </div>
     </aside>
 
-    <!-- Main -->
     <main id="main" class="main">
       <header class="topbar">
         <div class="topbar-left">
@@ -190,29 +110,20 @@
         </div>
 
         <div class="servers-grid">
-          <article class="server-card" data-name="NRW RP DE  🇩🇪">
-            <div class="server-header">
-              <h3>Server Alpha</h3>
-              <span class="status-badge status-offline">Offline</span>
-            </div>
+          <article class="server-card" data-server-key="alpha">
+            <div class="server-header"><h3>Server Alpha</h3><span class="status-badge status-offline">Offline</span></div>
             <div class="server-info"><span class="player-count">0 Spieler</span></div>
             <button class="btn-join" onclick="window.open('#', '_blank')">Server beitreten</button>
           </article>
 
-          <article class="server-card" data-name="NRW RP DE 2 🇩🇪">
-            <div class="server-header">
-              <h3>Server Beta</h3>
-              <span class="status-badge status-offline">Offline</span>
-            </div>
+          <article class="server-card" data-server-key="beta">
+            <div class="server-header"><h3>Server Beta</h3><span class="status-badge status-offline">Offline</span></div>
             <div class="server-info"><span class="player-count">0 Spieler</span></div>
             <button class="btn-join" onclick="window.open('#', '_blank')">Server beitreten</button>
           </article>
 
-          <article class="server-card" data-name="NRW RP DE 3 🇩🇪">
-            <div class="server-header">
-              <h3>Server Gamma</h3>
-              <span class="status-badge status-offline">Offline</span>
-            </div>
+          <article class="server-card" data-server-key="gamma">
+            <div class="server-header"><h3>Server Gamma</h3><span class="status-badge status-offline">Offline</span></div>
             <div class="server-info"><span class="player-count">0 Spieler</span></div>
             <button class="btn-join" onclick="window.open('#', '_blank')">Server beitreten</button>
           </article>
@@ -222,79 +133,76 @@
   </div>
 
   <script>
-(function(){
-  // Konfiguration für jeden Server
-  const serversConfig = [
-    {
-      cardSelector: '[data-name="NRW RP DE  🇩🇪"]',
-      ownerName: "Nueburgringcool",
-      nameContains: "Alpha"
-    },
-    {
-      cardSelector: '[data-name="NRW RP DE 2 🇩🇪"]',
-      ownerName: "Nueburgringcool",
-      nameContains: "Beta"
-    },
-    {
-      cardSelector: '[data-name="NRW RP DE 3 🇩🇪"]',
-      ownerName: "Nueburgringcool",
-      nameContains: "Gamma"
-    }
-  ];
+  (function(){
+    const serversConfig = [
+      { key: "alpha", ownerName: "Nueburgringcool", nameContains: "Alpha" },
+      { key: "beta", ownerName: "Nueburgringcool", nameContains: "Beta" },
+      { key: "gamma", ownerName: "Nueburgringcool", nameContains: "Gamma" }
+    ];
 
-  async function updateServer(server) {
-    const card = document.querySelector(server.cardSelector);
-    if (!card) return;
+    async function updateServer(server) {
+      const card = document.querySelector(`[data-server-key="${server.key}"]`);
+      if (!card) return;
 
-    const playerCountElem = card.querySelector(".player-count");
-    const badge = card.querySelector(".status-badge");
+      const playerCountElem = card.querySelector(".player-count");
+      const badge = card.querySelector(".status-badge");
 
-    try {
-      const response = await fetch("https://corsproxy.io/?https://api.emergency-hamburg.com/public/servers");
-      if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      const servers = await response.json();
+      try {
+        const response = await fetch("https://corsproxy.io/?https://api.emergency-hamburg.com/public/servers");
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        const servers = await response.json();
 
-      // Suche nach Server mit ownerName und Namensbestandteil
-      const matchingServer = servers.find(s =>
-        s.ownerName === server.ownerName &&
-        s.serverName.toLowerCase().includes(server.nameContains.toLowerCase())
-      );
+        const matchingServer = servers.find(s =>
+          s.ownerName === server.ownerName &&
+          s.serverName.toLowerCase().includes(server.nameContains.toLowerCase())
+        );
 
-      if (matchingServer) {
-        const isOnline = typeof matchingServer.currentPlayers === "number";
-        const currentPlayers = matchingServer.currentPlayers ?? 0;
-        const maxPlayers = matchingServer.maxPlayers ?? 42;
+        if (matchingServer) {
+          const isOnline = typeof matchingServer.currentPlayers === "number";
+          const currentPlayers = matchingServer.currentPlayers ?? 0;
+          const maxPlayers = matchingServer.maxPlayers ?? 42;
 
-        playerCountElem.textContent = `${currentPlayers}/${maxPlayers} Spieler`;
-        badge.textContent = isOnline ? "Online" : "Offline";
-        badge.className = `status-badge ${isOnline ? "status-online" : "status-offline"}`;
-      } else {
+          playerCountElem.textContent = `${currentPlayers}/${maxPlayers} Spieler`;
+          badge.textContent = isOnline ? "Online" : "Offline";
+          badge.className = `status-badge ${isOnline ? "status-online" : "status-offline"}`;
+        } else {
+          playerCountElem.textContent = `0/0 Spieler`;
+          badge.textContent = "Offline";
+          badge.className = "status-badge status-offline";
+        }
+      } catch (err) {
         playerCountElem.textContent = `0/0 Spieler`;
         badge.textContent = "Offline";
         badge.className = "status-badge status-offline";
+        console.error(`Fehler beim Laden von ${server.nameContains}:`, err);
       }
-    } catch (err) {
-      playerCountElem.textContent = `0/0 Spieler`;
-      badge.textContent = "Offline";
-      badge.className = "status-badge status-offline";
-      console.error(`Fehler beim Laden von ${server.nameContains}:`, err);
     }
-  }
 
-  async function updateAllServers() {
-    await Promise.all(serversConfig.map(updateServer));
-    const now = new Date().toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
-    const infoBox = document.getElementById("infoBox");
-    infoBox.innerHTML = `<b>Zuletzt aktualisiert:</b> ${now}`;
-    infoBox.style.display = "block";
-  }
+    async function updateAllServers() {
+      await Promise.all(serversConfig.map(updateServer));
+      const now = new Date().toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+      const infoBox = document.getElementById("infoBox");
+      infoBox.innerHTML = `<b>🕓 Zuletzt aktualisiert:</b> ${now}`;
+      infoBox.style.display = "block";
+    }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    updateAllServers();
-    setInterval(updateAllServers, 30000);
-  });
-})();
-</script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sidebar = document.getElementById("sidebar");
+      const toggleSidebar = document.getElementById("toggleSidebar");
+      const closeSidebar = document.getElementById("closeSidebar");
+      const infoButton = document.getElementById("infoButton");
 
+      toggleSidebar.addEventListener("click", () => sidebar.classList.toggle("hidden"));
+      closeSidebar.addEventListener("click", () => sidebar.classList.add("hidden"));
+      infoButton.addEventListener("click", () => {
+        const infoBox = document.getElementById("infoBox");
+        infoBox.style.display = infoBox.style.display === "block" ? "none" : "block";
+      });
+
+      updateAllServers();
+      setInterval(updateAllServers, 30000);
+    });
+  })();
+  </script>
 </body>
 </html>
