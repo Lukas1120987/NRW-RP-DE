@@ -421,176 +421,161 @@
       </div>
     </main>
   </div>
-
   <script>
-    (function(){
-      // ========== FILTER-KONFIGURATION ==========
-      // Filter nach Owner-Name UND Servernamen-Teil
-      const serverFilters = {
-        ownerName: 'Nueburgringcool',  // Exakter Owner-Name
-        serverNameContains: 'NRW RP'   // Teil des Servernamens (case-insensitive)
-      };
+(function(){
+  const serverFilters = {
+    ownerName: 'Nueburgringcool',
+    serverNameContains: 'NRW RP'
+  };
 
-      // Optionale individuelle Display-Namen für Server
-      const serverDisplayNames = {
-        'NRW RP DE  🇩🇪': 'Server Alpha',
-        // Weitere Mappings hier hinzufügen:
-        // 'Voller Server Name': 'Anzeigename',
-      };
+  const serverDisplayNames = {
+    'NRW RP DE  🇩🇪': 'Server Alpha',
+  };
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const sidebar = document.getElementById('sidebar');
-        const toggleSidebar = document.getElementById('toggleSidebar');
-        const closeSidebar = document.getElementById('closeSidebar');
-        const main = document.getElementById('main');
-        const serversGrid = document.getElementById('serversGrid');
+  document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.getElementById('sidebar');
+    const toggleSidebar = document.getElementById('toggleSidebar');
+    const closeSidebar = document.getElementById('closeSidebar');
+    const main = document.getElementById('main');
+    const serversGrid = document.getElementById('serversGrid');
 
-        // Sidebar toggle
-        toggleSidebar.addEventListener('click', () => {
-          sidebar.classList.toggle('hidden');
-          main.classList.toggle('fullwidth');
+    // Sidebar toggles
+    toggleSidebar.addEventListener('click', () => {
+      sidebar.classList.toggle('hidden');
+      main.classList.toggle('fullwidth');
+    });
+    closeSidebar.addEventListener('click', () => {
+      sidebar.classList.add('hidden');
+      main.classList.remove('fullwidth');
+    });
+
+    // ========== SERVERDATEN LADEN ==========
+    async function loadServers() {
+      serversGrid.innerHTML = `<div class="loading">🔄 Lade Server-Daten...</div>`;
+
+      try {
+        const response = await fetch('https://api.emergency-hamburg.com/public/servers');
+
+        // Prüfe HTTP-Antwort
+        if (!response.ok) {
+          throw new Error(`HTTP-Fehler ${response.status}: ${response.statusText}`);
+        }
+
+        // Versuche JSON zu lesen
+        let servers;
+        try {
+          servers = await response.json();
+        } catch (jsonErr) {
+          throw new Error("Antwort konnte nicht als JSON gelesen werden: " + jsonErr.message);
+        }
+
+        // Filter anwenden
+        const filteredServers = servers.filter(server => {
+          const matchesOwner = server.ownerName === serverFilters.ownerName;
+          const matchesServerName = server.serverName.toLowerCase().includes(
+            serverFilters.serverNameContains.toLowerCase()
+          );
+          return matchesOwner && matchesServerName;
         });
 
-        closeSidebar.addEventListener('click', () => {
-          sidebar.classList.add('hidden');
-          main.classList.remove('fullwidth');
-        });
+        if (filteredServers.length === 0) {
+          serversGrid.innerHTML = `
+            <div class="error">
+              ❗ Keine passenden Server gefunden.<br>
+              Owner: <b>${serverFilters.ownerName}</b><br>
+              Suchbegriff: <b>${serverFilters.serverNameContains}</b>
+            </div>
+          `;
+          return;
+        }
 
-        // Auto close sidebar on navigation (mobile)
-        document.querySelectorAll('.sidebar-nav a').forEach(a => {
-          a.addEventListener('click', () => {
-            if (window.innerWidth <= 900) {
-              sidebar.classList.add('hidden');
-              main.classList.remove('fullwidth');
+        // Karten generieren
+        serversGrid.innerHTML = filteredServers.map((server, index) => {
+          const displayName = serverDisplayNames[server.serverName] || server.serverName;
+          const isOnline = typeof server.currentPlayers === "number";
+          const playerCount = server.currentPlayers ?? 0;
+          const maxPlayers = server.maxPlayers ?? 42;
+
+          return `
+            <article class="server-card" data-server-id="${server.privateServerId}" style="animation-delay: ${index * 0.1}s;">
+              <div class="server-header">
+                <h3 title="${server.serverName}">${displayName}</h3>
+                <span class="status-badge ${isOnline ? 'status-online' : 'status-offline'}">
+                  ${isOnline ? 'Online' : 'Offline'}
+                </span>
+              </div>
+              <div class="owner-info">
+                <img src="${server.ownerProfileUrl}" alt="${server.ownerName}" class="owner-avatar" onerror="this.style.display='none'">
+                <span>Owner: ${server.ownerName}</span>
+              </div>
+              <div class="server-info">
+                <div class="info-item">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                  <span>${playerCount}/${maxPlayers} Spieler</span>
+                </div>
+                <div class="info-item">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                  </svg>
+                  <span>EU</span>
+                </div>
+              </div>
+              <button class="btn-join" ${!isOnline ? 'disabled' : ''} 
+                      data-discord="${server.socialLinks?.Discord || ''}">
+                ${isOnline ? 'Server beitreten' : 'Offline'}
+              </button>
+            </article>
+          `;
+        }).join('');
+
+        // Join-Button Logik
+        document.querySelectorAll('.btn-join').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const serverCard = this.closest('.server-card');
+            const serverName = serverCard.querySelector('h3').textContent;
+            const discord = this.getAttribute('data-discord');
+            if (this.disabled) {
+              alert(`${serverName} ist derzeit offline.`);
+              return;
+            }
+            if (discord) {
+              const confirmJoin = confirm(`Möchtest du ${serverName} beitreten?\n\nDu wirst zu unserem Discord weitergeleitet.`);
+              if (confirmJoin) window.open(`https://discord.gg/${discord}`, '_blank');
+            } else {
+              alert(`Verbinde zu ${serverName}...`);
             }
           });
         });
 
-        // Fetch server data from API
-        async function loadServers() {
-          try {
-            const response = await fetch('https://api.emergency-hamburg.com/public/servers');
-            
-            if (!response.ok) {
-              throw new Error('API-Anfrage fehlgeschlagen');
-            }
+      } catch (error) {
+        // Falls etwas schiefgeht: detaillierte Fehlermeldung anzeigen
+        serversGrid.innerHTML = `
+          <div class="error">
+            ⚠️ <b>Fehler beim Laden der Server-Daten!</b><br>
+            <small>${error.message}</small><br>
+            <br>
+            <details style="margin-top:0.5rem;">
+              <summary>Fehlerdetails anzeigen</summary>
+              <pre style="text-align:left; color:#ccc; font-size:0.85rem; overflow-x:auto;">${error.stack}</pre>
+            </details>
+          </div>
+        `;
+      }
+    }
 
-            const servers = await response.json();
-            
-            // Filtere Server nach Owner-Name UND Servernamen-Teil
-            const filteredServers = servers.filter(server => {
-              const matchesOwner = server.ownerName === serverFilters.ownerName;
-              const matchesServerName = server.serverName.toLowerCase().includes(
-                serverFilters.serverNameContains.toLowerCase()
-              );
-              return matchesOwner && matchesServerName;
-            });
+    // Start + Auto-Reload
+    loadServers();
+    setInterval(loadServers, 30000);
+  });
+})();
+</script>
 
-            if (filteredServers.length === 0) {
-              serversGrid.innerHTML = `
-                <div class="error">
-                  Keine Server von "${serverFilters.ownerName}" gefunden,<br>
-                  die "${serverFilters.serverNameContains}" im Namen haben.
-                </div>
-              `;
-              return;
-            }
-
-            // Sortiere Server nach Spieleranzahl (höchste zuerst)
-            filteredServers.sort((a, b) => (b.currentPlayers || 0) - (a.currentPlayers || 0));
-
-            // Erstelle Server-Karten
-            serversGrid.innerHTML = filteredServers.map((server, index) => {
-              const displayName = serverDisplayNames[server.serverName] || server.serverName;
-              const isOnline = server.currentPlayers !== undefined;
-              const playerCount = server.currentPlayers || 0;
-              const maxPlayers = server.maxPlayers || 42;
-              
-              return `
-                <article class="server-card" data-server-id="${server.privateServerId}" style="animation-delay: ${index * 0.1}s;">
-                  <div class="server-header">
-                    <h3 title="${server.serverName}">${displayName}</h3>
-                    <span class="status-badge ${isOnline ? 'status-online' : 'status-offline'}">
-                      ${isOnline ? 'Online' : 'Offline'}
-                    </span>
-                  </div>
-                  
-                  <div class="owner-info">
-                    <img src="${server.ownerProfileUrl}" alt="${server.ownerName}" class="owner-avatar" onerror="this.style.display='none'">
-                    <span>Owner: ${server.ownerName}</span>
-                  </div>
-
-                  <div class="server-info">
-                    <div class="info-item">
-                      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="9" cy="7" r="4"></circle>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                      </svg>
-                      <span>$${playerCount}/$$ {maxPlayers} Spieler</span>
-                    </div>
-                    <div class="info-item">
-                      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="2" y1="12" x2="22" y2="12"></line>
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                      </svg>
-                      <span>EU</span>
-                    </div>
-                  </div>
-                  <button class="btn-join" ${!isOnline ? 'disabled' : ''} 
-                          data-discord="${server.socialLinks?.Discord || ''}"
-                          data-youtube="${server.socialLinks?.YouTube || ''}"
-                          data-twitter="${server.socialLinks?.X || ''}">
-                    ${isOnline ? 'Server beitreten' : 'Offline'}
-                  </button>
-                </article>
-              `;
-            }).join('');
-
-            // Event Listener für Join-Buttons hinzufügen
-            document.querySelectorAll('.btn-join').forEach(btn => {
-              btn.addEventListener('click', function() {
-                const serverCard = this.closest('.server-card');
-                const serverName = serverCard.querySelector('h3').textContent;
-                const discord = this.getAttribute('data-discord');
-                
-                if (this.disabled) {
-                  alert(`${serverName} ist derzeit offline.`);
-                  return;
-                }
-
-                if (discord) {
-                  const confirmJoin = confirm(`Möchtest du ${serverName} beitreten?\n\nDu wirst zu unserem Discord-Server weitergeleitet.`);
-                  if (confirmJoin) {
-                    window.open(`https://discord.gg/${discord}`, '_blank');
-                  }
-                } else {
-                  alert(`Verbinde zu ${serverName}...`);
-                  // Hier kannst du weitere Verbindungslogik hinzufügen
-                }
-              });
-            });
-
-          } catch (error) {
-            console.error('Fehler beim Laden der Server:', error);
-            serversGrid.innerHTML = `
-              <div class="error">
-                ⚠️ Fehler beim Laden der Server-Daten.<br>
-                Bitte versuche es später erneut.
-              </div>
-            `;
-          }
-        }
-
-        // Server-Daten laden
-        loadServers();
-
-        // Auto-Refresh alle 30 Sekunden
-        setInterval(loadServers, 30000);
-      });
-    })();
-  </script>
 </body>
 </html>
