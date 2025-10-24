@@ -222,63 +222,79 @@
   </div>
 
   <script>
-  (function(){
-    const serverFilters = {
+(function(){
+  // Konfiguration für jeden Server
+  const serversConfig = [
+    {
+      cardSelector: '[data-name="NRW RP DE  🇩🇪"]',
       ownerName: "Nueburgringcool",
-      serverNameContains: "NRW RP"
-    };
-
-    async function updateServerCards() {
-      const infoBox = document.getElementById("infoBox");
-      try {
-        const response = await fetch("https://corsproxy.io/?https://api.emergency-hamburg.com/public/servers");
-        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        const servers = await response.json();
-
-        const filtered = servers.filter(s =>
-          s.ownerName === serverFilters.ownerName &&
-          s.serverName.toLowerCase().includes(serverFilters.serverNameContains.toLowerCase())
-        );
-
-        filtered.forEach(server => {
-          const card = document.querySelector(`[data-name="${server.serverName}"]`);
-          if (!card) return;
-          const playerCount = card.querySelector(".player-count");
-          const badge = card.querySelector(".status-badge");
-
-          const isOnline = typeof server.currentPlayers === "number";
-          playerCount.textContent = `${server.currentPlayers ?? 0}/${server.maxPlayers ?? 42} Spieler`;
-          badge.textContent = isOnline ? "Online" : "Offline";
-          badge.className = `status-badge ${isOnline ? "status-online" : "status-offline"}`;
-        });
-
-        const now = new Date().toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
-        infoBox.innerHTML = `<b>🕓 Zuletzt aktualisiert:</b> ${now}`;
-        infoBox.style.display = "block";
-      } catch (err) {
-        infoBox.style.display = "block";
-        infoBox.innerHTML = `<b>⚠️ Fehler beim Laden:</b><br>${err.message}`;
-      }
+      nameContains: "Alpha"
+    },
+    {
+      cardSelector: '[data-name="NRW RP DE 2 🇩🇪"]',
+      ownerName: "Nueburgringcool",
+      nameContains: "Beta"
+    },
+    {
+      cardSelector: '[data-name="NRW RP DE 3 🇩🇪"]',
+      ownerName: "Nueburgringcool",
+      nameContains: "Gamma"
     }
+  ];
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const sidebar = document.getElementById("sidebar");
-      const toggleSidebar = document.getElementById("toggleSidebar");
-      const closeSidebar = document.getElementById("closeSidebar");
-      const infoButton = document.getElementById("infoButton");
-      const infoBox = document.getElementById("infoBox");
+  async function updateServer(server) {
+    const card = document.querySelector(server.cardSelector);
+    if (!card) return;
 
-      toggleSidebar.addEventListener("click", () => sidebar.classList.toggle("hidden"));
-      closeSidebar.addEventListener("click", () => sidebar.classList.add("hidden"));
+    const playerCountElem = card.querySelector(".player-count");
+    const badge = card.querySelector(".status-badge");
 
-      infoButton.addEventListener("click", () => {
-        infoBox.style.display = infoBox.style.display === "block" ? "none" : "block";
-      });
+    try {
+      const response = await fetch("https://corsproxy.io/?https://api.emergency-hamburg.com/public/servers");
+      if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      const servers = await response.json();
 
-      updateServerCards();
-      setInterval(updateServerCards, 30000);
-    });
-  })();
-  </script>
+      // Suche nach Server mit ownerName und Namensbestandteil
+      const matchingServer = servers.find(s =>
+        s.ownerName === server.ownerName &&
+        s.serverName.toLowerCase().includes(server.nameContains.toLowerCase())
+      );
+
+      if (matchingServer) {
+        const isOnline = typeof matchingServer.currentPlayers === "number";
+        const currentPlayers = matchingServer.currentPlayers ?? 0;
+        const maxPlayers = matchingServer.maxPlayers ?? 42;
+
+        playerCountElem.textContent = `${currentPlayers}/${maxPlayers} Spieler`;
+        badge.textContent = isOnline ? "Online" : "Offline";
+        badge.className = `status-badge ${isOnline ? "status-online" : "status-offline"}`;
+      } else {
+        playerCountElem.textContent = `0/0 Spieler`;
+        badge.textContent = "Offline";
+        badge.className = "status-badge status-offline";
+      }
+    } catch (err) {
+      playerCountElem.textContent = `0/0 Spieler`;
+      badge.textContent = "Offline";
+      badge.className = "status-badge status-offline";
+      console.error(`Fehler beim Laden von ${server.nameContains}:`, err);
+    }
+  }
+
+  async function updateAllServers() {
+    await Promise.all(serversConfig.map(updateServer));
+    const now = new Date().toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+    const infoBox = document.getElementById("infoBox");
+    infoBox.innerHTML = `<b>Zuletzt aktualisiert:</b> ${now}`;
+    infoBox.style.display = "block";
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    updateAllServers();
+    setInterval(updateAllServers, 30000);
+  });
+})();
+</script>
+
 </body>
 </html>
