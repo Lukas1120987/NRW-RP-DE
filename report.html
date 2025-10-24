@@ -229,6 +229,49 @@ document.getElementById("robloxForm").addEventListener("submit", e=>{
   }, robloxFiles.files, successRoblox, btnRoblox);
   e.target.reset();
 });
+  
+// --- Discord Login ---
+const loginBtn = document.getElementById("loginBtn");
+const userInfo = document.getElementById("userInfo");
+const DISCORD_CLIENT_ID = "1426800191591415848";
+const REDIRECT_URI = window.location.href;
+
+// Prüfen, ob Access Token in URL vorhanden
+const urlParams = new URLSearchParams(window.location.hash.substring(1));
+const accessToken = urlParams.get("access_token");
+
+// Wenn Token vorhanden, Discord User abrufen
+if (accessToken) {
+  fetch("https://discord.com/api/users/@me", {
+    headers: { Authorization: `Bearer ${accessToken}` }
+  })
+  .then(r => r.json())
+  .then(user => {
+    localStorage.setItem("discordUser", JSON.stringify(user));
+    showUser(user);
+    history.replaceState(null, null, ""); // Hash entfernen
+  });
+} else {
+  // Wenn gespeichert, direkt laden
+  const saved = localStorage.getItem("discordUser");
+  if (saved) showUser(JSON.parse(saved));
+}
+
+// Login Button
+loginBtn.addEventListener("click", () => {
+  window.location.href =
+    `https://discord.com/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=identify`;
+});
+
+function showUser(user) {
+  userInfo.innerHTML = `
+    <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64" alt="Profilbild">
+    <span>${user.username}#${user.discriminator}</span>
+  `;
+  // Discord Reporter Feld automatisch ausfüllen
+  const discordReporterInput = document.getElementById("discordReporter");
+  if(discordReporterInput) discordReporterInput.value = `${user.username}#${user.discriminator}`;
+}
 </script>
 </body>
 </html>
