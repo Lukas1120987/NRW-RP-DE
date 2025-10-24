@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="NRW RP DE – Hochrealistisches Roleplay in Hamburg. Polizei, Feuerwehr, Rettungsdienst und Zivilisten erleben dynamische Szenarien.">
 <meta property="og:title" content="NRW RP DE – Emergency Hamburg">
-<meta property="og:description" content="Erleben Sie hochrealistisches Roleplay in unserer engagierten Community.">
+<meta property="og:description" content="Erleben hochrealistisches Roleplay in unserer engagierten Community.">
 <meta property="og:image" content="bilder/logo.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
@@ -782,7 +782,10 @@
       <a href="https://discord.gg/rGXZg3XV5X" class="btn-hero">Jetzt beitreten</a>
       <a href="#why-nrw" class="btn-ghost">Mehr erfahren</a>
     </div>
+  
   </div>
+
+
   <div class="scroll-hint">↓</div>
 </section>
 
@@ -835,7 +838,7 @@
 
 <script>
 // Typing Animation
-const subtitleText = "Erleben Sie hochrealistisches Roleplay mit klaren Strukturen und dynamischen Einsätzen.";
+const subtitleText = "Erleben hochrealistisches Roleplay mit klaren Strukturen und Regeln.";
 const subtitleEl = document.getElementById('hero-subtitle');
 let charIndex = 0;
 function typeWriter() {
@@ -1095,10 +1098,85 @@ animateCanvas();
     </div>
   </section>
 
+
+<!-- Font Awesome einfügen im <head> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Social Media Section -->
+  <section class="section" id="social">
+    <h2>Folge uns auf Social Media</h2>
+    <p>Bleibe immer up-to-date mit den neuesten Updates, Videos und Projekten unserer Community.</p>
+    <div class="links-row">
+      <div class="link-card">
+        <i class="fab fa-youtube fa-2x" style="margin-bottom:0.75rem; color:#FF0000;"></i>
+        <h3>YouTube</h3>
+        <p>Gameplay-Clips, Tutorials und Event-Aufzeichnungen.</p>
+        <a href="https://youtube.com/@turbinenking" target="_blank" class="btn-ghost">Kanal besuchen</a>
+      </div>
+      <div class="link-card">
+        <i class="fab fa-discord fa-2x" style="margin-bottom:0.75rem; color:#5865F2;"></i>
+        <h3>Discord</h3>
+        <p>Tritt unserer Community bei, chatte mit Spielern und erhalte Updates.</p>
+        <a href="https://discord.gg/rGXZg3XV5X" target="_blank" class="btn-ghost">Server beitreten</a>
+      </div>
+      <div class="link-card">
+        <i class="fab fa-github fa-2x" style="margin-bottom:0.75rem; color:#fff;"></i>
+        <h3>GitHub</h3>
+        <p>Unsere Internetseite weiterempfehlen.</p>
+        <a href="https://lukas1120987.github.io/NRW-RP-DE" target="_blank" class="btn-ghost">Repository ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Downloads / Ressourcen Section -->
+  <section class="section" id="resources">
+    <h2>Downloads & Ressourcen</h2>
+    <div class="links-row">
+      <div class="link-card">
+        <h3>Handbuch für Spieler</h3>
+        <p>Leitfaden für Einsteiger, Rollen und Fraktionen.</p>
+        <a href="downloads/handbuch.pdf" class="btn-ghost">Herunterladen</a>
+      </div>
+      <div class="link-card">
+        <h3>Fraktionsrichtlinien</h3>
+        <p>Detaillierte Informationen zu Polizei, Feuerwehr und Rettungsdienst.</p>
+        <a href="downloads/fraktionen.pdf" class="btn-ghost">Herunterladen</a>
+      </div>
+      <div class="link-card">
+        <h3>Vorlagen & Formulare</h3>
+        <p>Formulare für Bewerbungen, Einsätze und Trainingsberichte.</p>
+        <a href="downloads/formulare.zip" class="btn-ghost">Herunterladen</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Impressum & Datenschutz Section -->
+  <section class="section" id="impressum-datenschutz">
+    <h2>Impressum & Datenschutz</h2>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Impressum</h3>
+        <p>NRW RP DE<br>
+          Verantworlich für den Inhalt: Schiri Lukas</p>
+        <a href="https://lukas1120987.github.io/SchulSystem/impressum" class="btn-ghost">Mehr erfahren</a>
+      </div>
+      <div class="card">
+        <h3>Datenschutz</h3>
+        <p>Informationen zur Datenverarbeitung, Cookies und Rechte der Nutzer.</p>
+        <a href="https://lukas1120987.github.io/SchulSystem/datenschutz.html" class="btn-ghost">Mehr erfahren</a>
+      </div>
+      <div class="card">
+        <h3>Kontakt</h3>
+        <p>Bei Fragen oder Anregungen wende dich an uns über Discord oder E-Mail.</p>
+        <a href="mailto:support@nrw-rp.de" class="btn-ghost">E-Mail senden</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer>
     &copy; 2025 NRW RP DE – Alle Rechte vorbehalten.<br>
-    <a href="#impressum">Impressum</a> · <a href="#datenschutz">Datenschutz</a>
   </footer>
 </main>
 
@@ -1107,107 +1185,23 @@ animateCanvas();
   </div>
 
 <script>
-  // Sidebar Toggle
-  const sidebar = document.getElementById('sidebar');
-  const toggleBtn = document.getElementById('toggleSidebar');
+// ================= Sidebar =================
+const sidebar = document.getElementById('sidebar');
+const toggleBtn = document.getElementById('toggleSidebar');
 
-  toggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('open');
-    toggleBtn.setAttribute('aria-expanded', sidebar.classList.contains('open'));
-  });
-
-  // Close sidebar on link click
-  document.querySelectorAll('.sidebar-nav a').forEach(link => {
-    link.addEventListener('click', () => {
-      sidebar.classList.remove('open');
-      toggleBtn.setAttribute('aria-expanded', 'false');
-    });
-  });
-
-  // Close sidebar when clicking outside (mobile)
-  document.addEventListener('click', e => {
-    if (window.innerWidth <= 900) {
-      if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
-        sidebar.classList.remove('open');
-        toggleBtn.setAttribute('aria-expanded', 'false');
-      }
-    }
-  });
-
-  // Active link highlighting on scroll
-  const links = document.querySelectorAll('.sidebar-nav a:not(.discord-cta)');
-  const updateActive = () => {
-    const scrollPos = window.scrollY + 120; // offset for sticky topbar
-    links.forEach(link => {
-      const targetId = link.getAttribute('href').substring(1);
-      const section = document.getElementById(targetId);
-      if (section) {
-        if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
-          links.forEach(l => l.classList.remove('active'));
-          link.classList.add('active');
-        }
-      }
-    });
-  };
-  window.addEventListener('scroll', updateActive);
-  window.addEventListener('resize', updateActive);
-  updateActive();
-
-  
-  // Stat Counter Animation
-  const statNumbers = document.querySelectorAll('.stat-number');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const target = +el.getAttribute('data-target');
-        let current = 0;
-        const step = Math.ceil(target / 80);
-        const duration = 60;
-
-        const counter = setInterval(() => {
-          current += step;
-          el.textContent = current > target ? target.toLocaleString('de-DE') : current.toLocaleString('de-DE');
-          if (current >= target) clearInterval(counter);
-        }, duration / 80);
-
-        observer.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  statNumbers.forEach(stat => observer.observe(stat));
-
-  // Back to Top Button
-  const backToTop = document.getElementById('backToTop');
-  window.addEventListener('scroll', () => {
-    backToTop.style.display = window.scrollY > 500 ? 'block' : 'none';
-  });
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // Smooth Scroll for Anchors
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const targetEl = document.querySelector(this.getAttribute('href'));
-      if (targetEl) {
-        e.preventDefault();
-        targetEl.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-  // Overlay Element erzeugen
+// Overlay Element erzeugen
 const overlay = document.createElement('div');
 overlay.className = 'sidebar-overlay';
 document.body.appendChild(overlay);
 
-// Öffnen / Schließen Sidebar mit Overlay
+// Funktion zum Öffnen/Schließen der Sidebar
 const toggleSidebar = () => {
   sidebar.classList.toggle('open');
   toggleBtn.setAttribute('aria-expanded', sidebar.classList.contains('open'));
   overlay.style.display = sidebar.classList.contains('open') ? 'block' : 'none';
 };
+
+// Klick auf Toggle Button
 toggleBtn.addEventListener('click', toggleSidebar);
 
 // Klick auf Overlay schließt Sidebar
@@ -1217,18 +1211,99 @@ overlay.addEventListener('click', () => {
   overlay.style.display = 'none';
 });
 
-// Back to Top Smooth Fade
+// Klick auf Links schließt Sidebar (mobile)
+document.querySelectorAll('.sidebar-nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth <= 900) {
+      sidebar.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      overlay.style.display = 'none';
+    }
+  });
+});
+
+// Klick außerhalb der Sidebar schließt diese (nur mobile)
+document.addEventListener('click', e => {
+  if (window.innerWidth <= 900 && sidebar.classList.contains('open')) {
+    if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+      sidebar.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      overlay.style.display = 'none';
+    }
+  }
+});
+
+// ================= Active Link Highlighting =================
+const links = document.querySelectorAll('.sidebar-nav a:not(.discord-cta)');
+const updateActive = () => {
+  const scrollPos = window.scrollY + 120; // offset für sticky topbar
+  links.forEach(link => {
+    const targetId = link.getAttribute('href').substring(1);
+    const section = document.getElementById(targetId);
+    if (section) {
+      if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    }
+  });
+};
+window.addEventListener('scroll', updateActive);
+window.addEventListener('resize', updateActive);
+updateActive();
+
+// ================= Stat Counter Animation =================
+const statNumbers = document.querySelectorAll('.stat-number');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = +el.getAttribute('data-target');
+      let current = 0;
+      const step = Math.ceil(target / 80);
+      const duration = 60;
+
+      const counter = setInterval(() => {
+        current += step;
+        el.textContent = current > target ? target.toLocaleString('de-DE') : current.toLocaleString('de-DE');
+        if (current >= target) clearInterval(counter);
+      }, duration / 80);
+
+      observer.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+statNumbers.forEach(stat => observer.observe(stat));
+
+// ================= Back to Top Button =================
+const backToTop = document.getElementById('backToTop');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 500) {
+    backToTop.style.display = 'block';
     backToTop.classList.add('show');
     backToTop.classList.remove('hide');
   } else {
+    backToTop.style.display = 'none';
     backToTop.classList.add('hide');
     backToTop.classList.remove('show');
   }
 });
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
-// Canvas Partikel Linien-Effekt
+// ================= Smooth Scroll für Anchors =================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const targetEl = document.querySelector(this.getAttribute('href'));
+    if (targetEl) {
+      e.preventDefault();
+      targetEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+
+// ================= Canvas Partikel Lines =================
 function drawLines() {
   for (let i = 0; i < particles.length; i++) {
     for (let j = i + 1; j < particles.length; j++) {
@@ -1254,8 +1329,8 @@ const animateCanvasWithLines = () => {
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
     ctx.fill();
-    p.x += p.dx;
-    p.y += p.dy;
+    p.x += p.dx + (mouseX || 0) * 0.3;
+    p.y += p.dy + (mouseY || 0) * 0.3;
     if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
     if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
   });
@@ -1264,7 +1339,7 @@ const animateCanvasWithLines = () => {
 };
 animateCanvasWithLines();
 
-// Testimonials Slider
+// ================= Testimonials Slider =================
 const sliderContainer = document.querySelector('.testimonial-slider');
 let currentSlide = 0;
 let slides = [];
@@ -1289,8 +1364,6 @@ fetch('feedback.json')
       slides[currentSlide].classList.add('active');
     }, 5000);
   });
-
-
 </script>
 
   
