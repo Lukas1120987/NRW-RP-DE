@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Regelwerk – NRW RP DE</title>
+  <style>
+    /* ========== RESET & GRUNDSTIL ========== */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family:'Roboto', sans-serif;
+      background:#0e0e12;
+      color:#e0e0e0;
+      display:flex;
+      min-height:100vh;
+    }
+    a { color:#7289da; text-decoration:none; }
+    a:hover { text-decoration:underline; }
+
+    /* ========== APP LAYOUT ========== */
+    .app { display:flex; width:100%; }
+    .sidebar {
+      width:260px;
+      background:#1a1b20;
+      display:flex;
+      flex-direction:column;
+      position:fixed;
+      top:0; left:0; bottom:0;
+      padding:1rem;
+      transition: transform 0.3s ease;
+      z-index:1000;
+    }
+    .sidebar.open { transform:translateX(0); }
+    .sidebar-top {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .sidebar-logo { width:50px; height:50px; border-radius:8px; }
+    .btn-icon { background:none; border:none; color:#aaa; font-size:2rem; cursor:pointer; }
+    .btn-icon:hover { color:#fff; }
+
+    .sidebar-nav { margin-top:2rem; display:flex; flex-direction:column; gap:0.8rem; }
+    .sidebar-nav a {
+      padding:0.8rem 1rem;
+      border-radius:6px;
+      transition: background 0.2s;
+      font-weight:500;
+      color:#cfcfcf;
+    }
+    .sidebar-nav a:hover { background:#2a2b30; }
+    .sidebar-nav a.active { background:#7289da; color:#fff; }
+    .discord-cta { background:#5865f2; color:#fff !important; text-align:center; }
+    .discord-cta:hover { background:#4752c4; }
+    .sidebar-footer { margin-top:auto; text-align:center; font-size:0.8rem; color:#888; }
+
+    /* ========== MAIN CONTENT ========== */
+    .main { margin-left:260px; width:100%; display:flex; flex-direction:column; min-height:100vh; }
+
+    /* ========== TOPBAR ========== */
+    .topbar {
+      background:#18191c;
+      padding:1rem 2rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:sticky;
+      top:0;
+      z-index:900;
+      border-bottom:1px solid #2c2d33;
+    }
+    .topbar-title { font-size:1.4rem; font-weight:bold; }
+    .btn-primary {
+      background:#5865f2;
+      padding:0.7rem 1.4rem;
+      color:#fff;
+      border-radius:6px;
+      font-weight:bold;
+      transition:background 0.2s;
+    }
+    .btn-primary:hover { background:#4752c4; }
+
+    /* ========== SECTION ========== */
+    .section { padding:2rem 3rem; max-width:900px; margin:0 auto; }
+    .section h1 { font-size:2rem; margin-bottom:1rem; }
+    .section h2 { font-size:1.5rem; margin-top:2rem; margin-bottom:1rem; }
+    .section h3 { font-size:1.1rem; margin-top:1rem; margin-bottom:0.6rem; color:#cfcfcf; }
+    .section p { margin-bottom:1rem; line-height:1.45; }
+    .rules-list { list-style:decimal inside; margin-top:1rem; margin-bottom:2rem; }
+    .rules-list li { margin-bottom:0.7rem; padding-left:0.3rem; }
+
+    /* ========== TOC & BOXES ========== */
+    .toc { background:#0f1114; padding:1rem; border-radius:8px; margin-bottom:1rem; border:1px solid #222; }
+    .toc ul { list-style:none; display:grid; gap:0.4rem; }
+    .toc a { color:#cfcfcf; }
+    .definition { background:#101217; padding:1rem; border-left:4px solid #7289da; margin-bottom:1rem; border-radius:6px; }
+    .example { background:#0f1418; padding:0.8rem; border-left:4px solid #2ecc71; margin-bottom:1rem; border-radius:6px; }
+    .warning { background:#2a120f; padding:0.8rem; border-left:4px solid #e74c3c; color:#ffdede; border-radius:6px; margin-bottom:1rem; }
+    .small { font-size:0.9rem; color:#bdbdbd; }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      text-align:center;
+      padding:1rem;
+      font-size:0.9rem;
+      color:#888;
+      border-top:1px solid #2c2d33;
+      margin-top:auto;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width:900px) {
+      .sidebar { transform:translateX(-100%); position:fixed; }
+      .sidebar.open { transform:translateX(0); }
+      .main { margin-left:0; }
+      .topbar { padding:1rem; }
+      .section { padding:1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-top">
+        <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
+        <button id="closeSidebar" class="btn-icon" title="Schließen">&times;</button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html">Start</a>
+        <a href="about.html">Über uns</a>
+        <a href="factions.html">Fraktionen</a>
+        <a href="rules.html" class="active">Regelwerk</a>
+        <a href="events.html">Events</a>
+        <a href="team.html">Team</a>
+        <a href="join.html" class="discord-cta">Beitreten</a>
+      </nav>
+      <div class="sidebar-footer"><small>&copy; 2025 NRW RP DE</small></div>
+    </aside>
+
+    <main class="main" id="top">
+      <header class="topbar">
+        <button id="toggleSidebar" class="btn-icon">&#9776;</button>
+        <div class="topbar-title">Regelwerk</div>
+        <a href="rules.pdf" class="btn-primary">PDF herunterladen</a>
+      </header>
+
+      <section class="section">
+        <h1>📜 Ausführliches Regelwerk — NRW RP DE</h1>
+        <p class="small">Diese Seite enthält die vollständigen Serverregeln, ergänzt um Begriffsdefinitionen, Beispiele, und ein klares Sanktionenschema. Änderungen werden im Discord bekannt gegeben. Mit dem Betreten des Servers akzeptierst du diese Regeln.</p>
+
+        <div class="toc" aria-label="Inhaltsverzeichnis">
+          <strong>Inhaltsverzeichnis</strong>
+          <ul>
+            <li><a href="#definitions">1. Begriffsdefinitionen</a></li>
+            <li><a href="#general">2. Allgemeines</a></li>
+            <li><a href="#ooc">3. OOC & Kommunikation</a></li>
+            <li><a href="#rp-behavior">4. RP-Verhalten</a></li>
+            <li><a href="#weapons">5. Waffen & Eskalation</a></li>
+            <li><a href="#vehicles">6. Fahrzeuge & Verkehr</a></li>
+            <li><a href="#fractions">7. Fraktionen & Dienstregeln</a></li>
+            <li><a href="#admins">8. Admins & Moderation</a></li>
+            <li><a href="#skins">9. Skins, Mods & Technik</a></li>
+            <li><a href="#sanctions">10. Sanktionen & Meldungen</a></li>
+            <li><a href="#appeals">11. Berufungen & Beweise</a></li>
+            <li><a href="#changes">12. Änderungen / Inkrafttreten</a></li>
+          </ul>
+        </div>
+
+        <!-- 1 -->
+        <h2 id="definitions">1. Begriffsdefinitionen</h2>
+        <div class="definition">
+          <p><strong>RP (Roleplay)</strong>: Das Ausspielen einer Figur mit nachvollziehbaren Handlungen und Konsequenzen.</p>
+          <p><strong>IC (In Character):</strong> Alles, was die Figur/Spielwelt betrifft.</p>
+          <p><strong>OOC (Out of Character):</strong> Alles außerhalb der Spielfigur (z. B. Meta-Informationen, Discord-Chat).</p>
+          <p><strong>FailRP</strong>: Unrealistisches Verhalten im RP (z. B. bei zwei platten Reifen weiterfahren ohne Folgen).</p>
+          <p><strong>Powergaming</strong>: Erzwingen von Handlungen ohne anderen Spielern Reaktionsmöglichkeiten zu geben.</p>
+          <p><strong>Meta-gaming</strong>: Nutzung von Informationen, die die Figur nicht kennen kann.</p>
+          <p><strong>RDM / VDM:</strong> Random Deathmatch (töten ohne RP-Grund) / Vehicle Deathmatch (Töten mit Fahrzeug).</p>
+        </div>
+
+        <!-- 2 -->
+        <h2 id="general">2. Allgemeines</h2>
+        <ol class="rules-list">
+          <li>Alle Spieler verhalten sich <strong>realitätsnah</strong> und vermeiden offenkundig unrealistische Handlungen.</li>
+          <li>Respekt und höflicher Umgang sind Pflicht. Beleidigungen, Diskriminierung oder Belästigung werden streng geahndet.</li>
+          <li>Jeder ist verantwortlich, sich regelmäßig über Regeländerungen zu informieren (Ankündigungen im Discord gelten als verbindlich).</li>
+          <li>Störungen, Exploits, Hacker oder Serverfehler sind dem Team unverzüglich zu melden.</li>
+        </ol>
+
+        <!-- 3 -->
+        <h2 id="ooc">3. OOC & Kommunikation</h2>
+        <ol class="rules-list">
+          <li>OOC-Kommentare gehören nicht in IC-Chats. OOC-Themen dürfen nur in den dafür vorgesehenen Kanälen behandelt werden.</li>
+          <li>Ausnahme: <code>!Admin</code> für dringende Notfälle ist im RP-Chat erlaubt.</li>
+          <li>Voice-Chat, Streams oder Aufnahmen: Mitschnitte dürfen nicht ohne Zustimmung beteiligter Spieler veröffentlicht werden. Doxing ist verboten.</li>
+          <li>OOC-Beleidigungen, Belästigung oder gezieltes Trolling werden wie IC-Verstöße behandelt und sanktioniert.</li>
+        </ol>
+
+        <div class="example">
+          <strong>Beispiel (erlaubt):</strong> "Ich habe ein OOC-Problem mit Verbindung — !Admin" — kurz, sachlich und nur zur Problemlösung.  
+          <strong>Beispiel (verboten):</strong> OOC-Informationen im RP nutzen ("Ich habe im Stream gesehen, dass...").
+        </div>
+
+        <!-- 4 -->
+        <h2 id="rp-behavior">4. RP-Verhalten</h2>
+        <ol class="rules-list">
+          <li><strong>FailRP</strong>: Verhalten, das die Immersion zerstört (z. B. unsinnige Bewegungen, physikalisch unmögliche Aktionen) ist zu unterlassen.</li>
+          <li><strong>Random Deathmatch (RDM)</strong>: Töten oder Schießen ohne RP-Grund ist verboten.</li>
+          <li><strong>Vehicle Deathmatch (VDM)</strong>: Absichtliches Rammen oder Töten mit Fahrzeugen ohne RP-Grund ist verboten.</li>
+          <li><strong>Angst RP</strong>: Spieler müssen realistisch auf Bedrohungen reagieren (z. B. bei Waffenbedrohung Angst zeigen).</li>
+          <li><strong>Hosentaschen RP:</strong> Große Gegenstände dürfen nicht direkt aus der Tasche genommen werden; realistische Entnahme aus Fahrzeugen erforderlich.</li>
+          <li>Bei Geiselnamen: Pro Geisel, eine Forderung. Maximal 5.000 € Lösegeld (pro Geisel) bestimmte Berufe (Unangreifbare Fraktionen) dürfen nicht als Geisel genommen werden.</li>
+          <li>Combat LoggingLTAP): Server verlassen zur Umgehung von Strafen führt zu Bann.</li>
+          <li>Crashes: Unfälle über 40 km/h müssen realistisch gespielt werden.</li>
+          <li>Realistische Avatare: Tier- oder unrealistische RP-Charaktere verboten.</li>
+          <li>Safed Jobs: Unangreifbare Fraktionen dürfen nicht als Geisel genommen werden.</li>
+        </ol>
+
+        <!-- 5 -->
+        <h2 id="weapons">5. Waffen & Eskalation</h2>
+        <ol class="rules-list">
+          <li>Androhung und Eskalationsstufen korrekt umsetzen: verbal → Warnschuss → tödlicher Einsatz nur, wenn keine andere Option bleibt.</li>
+        </ol>
+
+        <div class="example">
+          <strong>Erlaubt:</strong> Kontrolle mit klarer Eskalationskette.  
+          <strong>Verboten:</strong> Plötzliche Schüsse ohne Warnung oder Begründung.
+        </div>
+
+        <!-- 6 -->
+        <h2 id="vehicles">6. Fahrzeuge & Verkehr</h2>
+        <ol class="rules-list">
+          <li>Realistisches Fahren erforderlich (keine unnötigen Geschwindigkeiten, Offroad in normalen Fahrzeugen, kein Swerving ohne Grund).</li>
+        </ol>
+
+        <!-- 7 -->
+        <h2 id="fractions">7. Fraktionen & Dienstregeln</h2>
+        <ol class="rules-list">
+          <li>Unangreifbare Fraktionen: Feuerwehr, Rettungsdienst/Notarzt, ADAC, LKW/Busfahrer.</li>
+          <li>Staatliche Fahrzeuge dürfen nur dienstlich genutzt werden. Uniformen korrekt tragen.</li>
+          <li>Eine "Grenze" darf nicht aufgebaut werden. Erlaubt ist eine Polizeikontrolle, die angemeldet werden muss.</li>
+        </ol>
+
+        <!-- 8 -->
+        <h2 id="admins">8. Admins & Moderation</h2>
+        <ol class="rules-list">
+          <li>Admins können Szenen unterbrechen (RP-Stop) zur Moderation/Sicherheit.</li>
+          <li>Admin-Entscheidungen sind IC bindend.</li>
+          <li>Dokumentation aller Maßnahmen Pflicht.</li>
+          <li>Adminrechte nur im Dienst korrekt nutzen.</li>
+        </ol>
+
+        <!-- 9 -->
+        <h2 id="skins">9. Skins, Mods & Technik</h2>
+        <ol class="rules-list">
+          <li>Skins dürfen RP nicht stören; keine Hitbox-Manipulationen oder Vorteile.</li>
+          <li>Mods/Client-Tools mit Vorteil (Aimbot, Wallhack etc.) führen zu Permaban.</li>
+        </ol>
+
+        <!-- 10 -->
+        <h2 id="sanctions">10. Sanktionen & Meldungen</h2>
+        <ol class="rules-list">
+          <li>schriftliche Verwarnung (max. 3)</li>
+          <li>temporärer Kick / kurzzeitiger Bann (24–72 h)</li>
+          <li>längerer temporärer Bann (7–30 Tage)</li>
+          <li>permanenter Bann</li>
+        </ol>
+
+        <!-- 11 -->
+        <h2 id="appeals">11. Berufungen & Beweise</h2>
+        <ol class="rules-list">
+          <li>Appeals im Discord-Support innerhalb von 14 Tagen nach Sanktion.</li>
+          <li>Teamentscheidung nach Prüfung der Beweise.</li>
+          <li>Erlaubte Beweismittel: zeitgestempelte Videos, Screenshots, Logs.</li>
+        </ol>
+
+        <!-- 12 -->
+        <h2 id="changes">12. Änderungen / Inkrafttreten</h2>
+        <p>Regelwerk wird durch Serverteam angepasst. Änderungen nach Discord-Ankündigung gültig.</p>
+
+        <hr style="border:1px solid #222; margin:1.5rem 0;">
+
+        <p class="small">Anmerkungen oder Vorschläge? Ticket im <a href="https://discord.gg/" target="_blank" rel="noopener">Discord</a> (Channel: <code>#regeln-feedback</code>).</p>
+        <p style="margin-top:1rem;"><a href="#top">Zurück nach oben ↑</a></p>
+      </section>
+
+      <footer class="footer"><small>&copy; 2025 NRW RP DE</small></footer>
+    </main>
+  </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sidebar = document.getElementById("sidebar");
+    const toggleSidebar = document.getElementById("toggleSidebar");
+    const closeSidebar = document.getElementById("closeSidebar");
+
+    if(toggleSidebar) {
+      toggleSidebar.addEventListener("click", () => {
+        sidebar.classList.toggle("open");
+      });
+    }
+
+    if(closeSidebar) {
+      closeSidebar.addEventListener("click", () => {
+        sidebar.classList.remove("open");
+      });
+    }
+
+    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+      });
+    });
+  });
+  </script>
+
+</body>
+</html>
