@@ -200,7 +200,13 @@
       });
 
       updateAllServers();
-      setInterval(updateAllServers, 30000);
+setInterval(updateAllServers, 30000);
+
+// 🔽 Automatische Weiterleitung, falls #direct im Link steht
+if (window.location.hash === "#direct") {
+  window.location.href = "https://discord.gg/8EQdeswP67";
+}
+
     });
   })();
   </script>
