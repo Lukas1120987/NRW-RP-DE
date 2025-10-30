@@ -4,39 +4,41 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Über uns – NRW RP DE</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --primary: #5865F2;
       --primary-dark: #4752C4;
-      --background: #0f111a;
-      --sidebar-bg: #151823;
-      --text: #f0f0f0;
-      --text-light: #cccccc;
       --accent: #7289da;
+      --background: #0e101a;
+      --card-bg: rgba(25, 28, 39, 0.7);
+      --text: #f4f4f4;
+      --text-light: #cfcfcf;
       --shadow: rgba(0,0,0,0.4);
+      --blur: 12px;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Poppins', sans-serif;
       background: var(--background);
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
+      line-height: 1.6;
     }
 
     a {
-      color: var(--primary);
+      color: var(--accent);
       text-decoration: none;
-      transition: 0.3s;
+      transition: 0.3s ease;
     }
-    a:hover { color: var(--accent); }
+    a:hover { color: #fff; }
 
-    h1, h2, h3 { font-weight: 700; margin-bottom: 0.7rem; }
-    p { color: var(--text-light); line-height: 1.6; margin-bottom: 1.2rem; }
+    h1, h2, h3 { font-weight: 700; margin-bottom: 0.6rem; }
+    p { color: var(--text-light); margin-bottom: 1.3rem; }
     ul { margin: 1rem 0; padding-left: 1.5rem; }
     li { margin-bottom: 0.6rem; }
 
@@ -45,25 +47,27 @@
 
     .sidebar {
       width: 260px;
-      background: var(--sidebar-bg);
-      padding: 1.5rem 1rem;
+      background: var(--card-bg);
+      backdrop-filter: blur(var(--blur));
+      border-right: 1px solid rgba(255,255,255,0.05);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      padding: 1.5rem 1rem;
       position: fixed;
       top: 0; bottom: 0; left: 0;
       transition: transform 0.3s ease;
       z-index: 1000;
     }
 
-    .sidebar-logo { width: 90px; margin: 0 auto 1rem; }
-
-    .sidebar-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 2rem;
+    .sidebar-logo {
+      width: 100px;
+      margin: 0 auto 1.5rem;
+      display: block;
+      filter: drop-shadow(0 0 8px rgba(88,101,242,0.4));
+      transition: 0.3s;
     }
+    .sidebar-logo:hover { transform: scale(1.05); }
 
     .btn-icon {
       background: none;
@@ -79,15 +83,24 @@
       display: block;
       padding: 0.8rem 1rem;
       color: var(--text-light);
-      font-weight: 500;
       border-radius: 6px;
       transition: 0.3s;
       margin-bottom: 0.5rem;
+      font-weight: 500;
     }
 
     .sidebar-nav a:hover { background: var(--primary-dark); color: #fff; }
     .sidebar-nav a.active { background: var(--primary); color: #fff; }
-    .discord-cta { background: var(--accent); color: #fff; font-weight: bold; }
+    .discord-cta {
+      background: linear-gradient(135deg, #5865F2, #4752C4);
+      color: #fff;
+      font-weight: 600;
+      text-align: center;
+    }
+    .discord-cta:hover {
+      filter: brightness(1.1);
+      transform: scale(1.03);
+    }
 
     .sidebar-footer {
       text-align: center;
@@ -96,7 +109,7 @@
       margin-top: auto;
     }
 
-    /* Main Content */
+    /* Main */
     .main {
       margin-left: 260px;
       width: calc(100% - 260px);
@@ -106,7 +119,8 @@
     }
 
     .topbar {
-      background: #1c1f2b;
+      background: rgba(28, 31, 43, 0.8);
+      backdrop-filter: blur(var(--blur));
       padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
@@ -117,7 +131,11 @@
       box-shadow: 0 2px 8px var(--shadow);
     }
 
-    .topbar-title { font-size: 1.3rem; font-weight: bold; }
+    .topbar-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
 
     .btn-primary {
       background: var(--primary);
@@ -126,19 +144,24 @@
       border-radius: 8px;
       font-weight: bold;
       transition: 0.3s;
+      box-shadow: 0 0 8px rgba(88,101,242,0.5);
     }
-    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
 
     /* Section */
     .section {
       padding: 4rem 2rem;
       max-width: 900px;
       margin: 0 auto;
+      animation: fadeIn 0.6s ease forwards;
     }
 
     .section h1 {
       font-size: 2.4rem;
       margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #5865F2, #7289da);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .section h2 {
@@ -148,15 +171,29 @@
       color: var(--accent);
     }
 
-    .section strong { color: #fff; }
+    .highlight-box {
+      background: rgba(88,101,242,0.08);
+      border-left: 3px solid var(--primary);
+      padding: 1rem 1.2rem;
+      border-radius: 6px;
+      margin: 1.5rem 0;
+      color: var(--text-light);
+    }
 
     /* Footer */
     .footer {
       text-align: center;
       padding: 1.5rem;
-      background: #151823;
-      color: #777;
+      background: rgba(21,24,35,0.8);
+      color: #888;
       font-size: 0.9rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Responsive */
@@ -176,6 +213,7 @@
     @media (max-width: 600px) {
       .section { padding: 2.5rem 1rem; }
       .section h1 { font-size: 2rem; }
+      .btn-primary { padding: 0.5rem 1rem; font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -183,58 +221,160 @@
   <div class="app">
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
-      <div class="sidebar-top">
+      <div>
         <img src="bilder/logo.png" alt="Logo" class="sidebar-logo">
-        <button id="closeSidebar" class="btn-icon" title="Schließen">&times;</button>
+        <nav class="sidebar-nav">
+          <a href="index.html">Start</a>
+          <a href="about.html" class="active">Über uns</a>
+          <a href="factions.html">Fraktionen</a>
+          <a href="rules.html">Regelwerk</a>
+          <a href="events.html">Events</a>
+          <a href="team.html">Team</a>
+          <a href="join.html" class="discord-cta">Discord beitreten</a>
+        </nav>
       </div>
-      <nav class="sidebar-nav">
-        <a href="index.html">Start</a>
-        <a href="about.html" class="active">Über uns</a>
-        <a href="factions.html">Fraktionen</a>
-        <a href="rules.html">Regelwerk</a>
-        <a href="events.html">Events</a>
-        <a href="team.html">Team</a>
-        <a href="join.html" class="discord-cta">Beitreten</a>
-      </nav>
       <div class="sidebar-footer">
         <small>&copy; 2025 NRW RP DE</small>
       </div>
     </aside>
 
+    <!-- Main -->
     <main class="main">
       <header class="topbar">
         <button id="toggleSidebar" class="btn-icon">&#9776;</button>
         <div class="topbar-title">Über uns</div>
-        <a href="https://discord.gg/rGXZg3XV5X" class="btn-primary">Discord</a>
+        <a href="https://discord.gg/rGXZg3XV5X" class="btn-primary" target="_blank">Zum Discord</a>
       </header>
 
       <section class="section">
         <h1>Über NRW RP DE</h1>
-        <p><strong>NRW RP DE</strong> ist eine Community, die sich dem <strong>Emergency Hamburg</strong> Roleplay auf Roblox widmet. Wir legen großen Wert auf realistisches RP, klare Regeln und eine freundliche, unterstützende Community. Egal ob Anfänger oder Erfahrener – bei uns findest du Mitspieler, spannende Einsätze und ein strukturiertes Spielerlebnis.</p>
+        <p><strong>NRW RP DE</strong> ist eine engagierte Community, die sich dem <strong>Emergency Hamburg Roleplay</strong> auf Roblox widmet. Wir legen großen Wert auf realistisches RP, faire Regeln und ein respektvolles Miteinander. Egal ob Einsteiger oder erfahrener Spieler – bei uns findest du spannende Einsätze, aktive Teams und echten Spielspaß.</p>
+
+        <div class="highlight-box">
+          🚨 <strong>Unser Motto:</strong> Realistisches RP, Teamgeist und Leidenschaft für das, was wir tun.
+        </div>
 
         <h2>Unsere Mission</h2>
-        <p>Wir wollen ein authentisches, faires und unterhaltsames Roleplay-Erlebnis schaffen, bei dem Zusammenarbeit, Professionalität und Spaß im Vordergrund stehen. Unser Ziel ist es, eine langfristige, aktive Community aufzubauen, die gemeinsam wächst.</p>
+        <p>Wir möchten ein authentisches, faires und unterhaltsames Roleplay-Erlebnis schaffen. Dabei stehen Zusammenarbeit, Professionalität und Spaß im Vordergrund. Unser Ziel ist eine starke Community, die gemeinsam wächst und sich weiterentwickelt.</p>
 
         <h2>Was wir bieten</h2>
         <ul>
-          <li>✅ Strukturierte Fraktionen (Polizei, Rettungsdienst, Feuerwehr, Zivil)</li>
-          <li>🏆 Regelmäßige Events & spannende RP-Szenarien</li>
-          <li>📘 Einsteiger-Guides für Roblox & Roleplay</li>
-          <li>🤝 Aktive Unterstützung durch erfahrene Spieler und Moderatoren</li>
+          <li>✅ Strukturierte Fraktionen (Polizei, Feuerwehr, Rettungsdienst, Zivilisten)</li>
+          <li>🏆 Regelmäßige Events und dynamische RP-Szenarien</li>
+          <li>📘 Einsteigerfreundliche Guides & Tutorials</li>
+          <li>🤝 Aktive Unterstützung durch erfahrene Spieler & Moderatoren</li>
         </ul>
       </section>
 
+<!-- Bereich fürs Diagramm -->
+<section class="section">
+  <h2>Serverwachstum</h2>
+  <p>Hier siehst du, wie unsere Community im Laufe der Zeit gewachsen ist:</p>
+
+  <div class="chart-container">
+    <canvas id="growthChart"></canvas>
+  </div>
+</section>
+
+<!-- Chart.js & PapaParse (für CSV-Import) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+<script>
+  // CSV-Datei einlesen und Diagramm erstellen
+  Papa.parse("growth_data.csv", {
+    download: true,
+    header: true,
+    complete: function(results) {
+      const rows = results.data.filter(r => r.day_pt && r.total_membership);
+
+      // CSV-Daten verarbeiten
+      const labels = rows.map(r => new Date(r.day_pt).toLocaleDateString('de-DE', {
+        day: '2-digit', month: 'short'
+      }));
+      const dataPoints = rows.map(r => Number(r.total_membership));
+
+      // Chart.js-Konfiguration
+      const ctx = document.getElementById("growthChart").getContext("2d");
+      new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: "Mitgliederanzahl",
+            data: dataPoints,
+            borderColor: "#5865F2",
+            backgroundColor: "rgba(88,101,242,0.25)",
+            fill: true,
+            tension: 0.3,
+            pointRadius: 3,
+            pointBackgroundColor: "#fff",
+            pointBorderColor: "#5865F2"
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: "Mitgliederentwicklung (NRW RP DE)",
+              color: "#fff",
+              font: { size: 18 }
+            },
+            legend: {
+              labels: { color: "#ccc" }
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.formattedValue} Mitglieder`
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: "#bbb" },
+              grid: { color: "rgba(255,255,255,0.05)" }
+            },
+            y: {
+              beginAtZero: false,
+              ticks: { color: "#bbb" },
+              grid: { color: "rgba(255,255,255,0.05)" }
+            }
+          }
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .chart-container {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    background: rgba(25, 28, 39, 0.6);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 2rem;
+    box-shadow: 0 0 12px rgba(0,0,0,0.3);
+  }
+
+  @media (max-width: 600px) {
+    .chart-container { height: 300px; }
+  }
+</style>
+
+
       <footer class="footer">
-        <small>&copy; 2025 NRW RP DE</small>
+        <small>&copy; 2025 NRW RP DE – Mit Leidenschaft fürs Roleplay</small>
       </footer>
     </main>
   </div>
 
   <script>
-    // Sidebar Script
     const sidebar = document.getElementById('sidebar');
     document.getElementById('toggleSidebar').addEventListener('click', () => sidebar.classList.toggle('open'));
-    document.getElementById('closeSidebar').addEventListener('click', () => sidebar.classList.remove('open'));
   </script>
 </body>
 </html>
