@@ -1,7 +1,7 @@
 (function() {
     const cfg = window.bannerConfig || {};
-    const text = cfg.text || "Willkommen auf unserer Seite!";
-    const link = cfg.link || "#";
+    const text = cfg.text || "Wir sind umgezogen. Ihr findet uns nun ganz einfach im Web.";
+    const link = cfg.link || "https://nrw-roleplay.de";
     const color1 = cfg.color1 || getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || "#5865F2";
     const color2 = cfg.color2 || getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || "#7289da";
 
@@ -10,7 +10,7 @@
     banner.className = "app-banner";
     banner.innerHTML = `
         <span class="banner-text">${text}</span>
-        <a href="${link}" class="banner-link">Mehr erfahren</a>
+        <a href="${link}" class="banner-link">Zur neuen Seite</a>
         <button id="closeBanner" class="banner-close" aria-label="Banner schließen">✖</button>
     `;
 
