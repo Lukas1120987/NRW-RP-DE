@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>404 – Seite nicht gefunden | NRW RP DE</title>
+  <title>Seite umgezogen | NRW Roleplay</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <style>
     :root {
       --primary: #5865F2;
@@ -31,13 +32,23 @@
       position: relative;
     }
 
-    /* Canvas Hintergrund */
-    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+    canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+    }
 
     .container {
-      max-width: 500px;
+      max-width: 550px;
       z-index: 1;
       position: relative;
+      background: rgba(255,255,255,0.05);
+      padding: 3rem 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 25px var(--shadow);
+      backdrop-filter: blur(8px);
+      animation: fadeIn 1s ease;
     }
 
     .logo {
@@ -52,39 +63,71 @@
       100% { transform: translateY(-10px); }
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     h1 {
-      font-size: 4rem;
+      font-size: 2.6rem;
       color: var(--primary);
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     p {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: var(--text-light);
       margin-bottom: 2rem;
+      line-height: 1.5;
     }
 
-    .btn-primary {
+    .btn {
       display: inline-block;
       background: var(--primary);
       color: #fff;
-      padding: 0.8rem 2rem;
+      padding: 0.8rem 1.8rem;
       border-radius: 8px;
       font-weight: bold;
       font-size: 1rem;
       text-decoration: none;
       transition: 0.3s;
       box-shadow: 0 4px 12px var(--shadow);
+      margin: 0.5rem;
     }
 
-    .btn-primary:hover {
+    .btn:hover {
       background: var(--primary-dark);
       transform: translateY(-2px);
       box-shadow: 0 6px 16px var(--shadow);
     }
 
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      background: transparent;
+      color: var(--text-light);
+      border: 1px solid var(--accent);
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: 0.3s;
+      margin-top: 1.5rem;
+      font-weight: 500;
+    }
+
+    .contact-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .contact-btn .material-icons-outlined {
+      margin-right: 8px;
+      font-size: 20px;
+    }
+
     @media(max-width: 600px){
-      h1 { font-size: 3rem; }
+      h1 { font-size: 2.2rem; }
       p { font-size: 1rem; }
       .logo { width: 100px; }
     }
@@ -94,13 +137,19 @@
   <canvas id="bgCanvas"></canvas>
   <div class="container">
     <img src="bilder/logo.png" alt="Logo NRW RP DE" class="logo">
-    <h1>404</h1>
-    <p>Hoppla! Die Seite existiert leider nicht.<br>Vielleicht wurde sie verschoben oder existiert gar nicht.</p>
-    <a href="index.html" class="btn-primary">Zur Startseite</a>
+    <h1>Seite umgezogen</h1>
+    <p>Diese Seite ist jetzt unter einer neuen Adresse erreichbar.<br><br>
+    Möchtest du zur neuen Hauptseite oder zu einer Unterseite weitergeleitet werden?</p>
+    <a href="https://nrw-roleplay.de" class="btn">Zur neuen Hauptseite</a>
+    <a href="#" class="btn" id="subpageBtn">Unterseite wählen</a><br>
+    <a href="mailto:lukas@nrw-roleplay.de" class="contact-btn">
+      <span class="material-icons-outlined">mail_outline</span>
+      Kontakt aufnehmen
+    </a>
   </div>
 
   <script>
-    // Canvas Partikel Hintergrund
+    // Canvas Hintergrund (Partikel)
     const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
     let width = canvas.width = window.innerWidth;
@@ -110,15 +159,13 @@
     const particleCount = 80;
 
     class Particle {
-      constructor() {
-        this.reset();
-      }
+      constructor() { this.reset(); }
       reset() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
         this.size = Math.random() * 3 + 1;
-        this.speedX = (Math.random() - 0.5) * 0.5;
-        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.speedY = (Math.random() - 0.5) * 0.4;
       }
       update() {
         this.x += this.speedX;
@@ -126,16 +173,14 @@
         if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
       }
       draw() {
-        ctx.fillStyle = 'rgba(114,137,218,0.7)';
+        ctx.fillStyle = 'rgba(88,101,242,0.6)';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
         ctx.fill();
       }
     }
 
-    for(let i=0;i<particleCount;i++) {
-      particles.push(new Particle());
-    }
+    for(let i=0;i<particleCount;i++) particles.push(new Particle());
 
     function animate() {
       ctx.clearRect(0,0,width,height);
@@ -148,16 +193,14 @@
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     });
-  </script>
-  <script>
-window.bannerConfig = {
-    text: "Jetzt am Gewinnspiel teilnehmen!",
-    link: "/gewinnspiel.html",
-    color1: "#FF6600",
-    color2: "#FF9900"
-};
-</script>
-<script src="banner.js" defer></script>
 
+    // Unterseiten-Auswahl
+    document.getElementById('subpageBtn').addEventListener('click', () => {
+      const subpage = prompt("Bitte gib den Namen der Unterseite ein (z. B. /forum oder /team):");
+      if(subpage && subpage.trim() !== ""){
+        window.location.href = "https://nrw-roleplay.de" + subpage;
+      }
+    });
+  </script>
 </body>
 </html>
