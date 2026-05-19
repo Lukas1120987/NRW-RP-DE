@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexGen Systems | Enterprise Solutions & Cyber Wealth</title>
+    <style>
+        /* --- DESIGN SYSTEM & VARIABLEN --- */
+        :root {
+            --primary: #0ea5e9;
+            --primary-dark: #0284c7;
+            --primary-glow: rgba(14, 165, 233, 0.2);
+            --bg-dark: #090d16;
+            --bg-surface: #111827;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(51, 65, 85, 0.8);
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-gold: #f59e0b;
+            --accent-purple: #a855f7;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono: 'Fira Code', 'Courier New', monospace;
+        }
+
+        /* --- GLOBAL RESET & SCROLLBAR --- */
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: var(--font-main); 
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        body { 
+            background-color: var(--bg-dark); 
+            color: var(--text-light); 
+            line-height: 1.6; 
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* --- GLOBAL TICKER --- */
+        .scam-ticker {
+            background: linear-gradient(90deg, #d97706, var(--accent-gold), #d97706);
+            color: #000;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 8px 0;
+            font-weight: 900;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 35s linear infinite;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background: rgba(9, 13, 22, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            font-weight: 800; 
+            font-size: 1.5rem; 
+            letter-spacing: -1px; 
+            text-decoration: none;
+            color: var(--text-light);
+        }
+        .brand span { 
+            color: var(--primary); 
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .nav-links { 
+            display: flex; 
+            gap: 25px; 
+            align-items: center; 
+        }
+        .nav-links a { 
+            color: var(--text-muted); 
+            text-decoration: none; 
+            font-size: 0.95rem; 
+            font-weight: 500;
+            transition: color 0.3s ease; 
+        }
+        .nav-links a:hover, .nav-links a.active { 
+            color: var(--primary); 
+        }
+
+        .btn-cart {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(14, 165, 233, 0.4);
+            color: var(--text-light);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-cart:hover {
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+            border-color: var(--primary);
+        }
+        #cart-counter {
+            background: var(--danger);
+            color: white;
+            font-size: 0.75rem;
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 80px 5% 60px 5%;
+            text-align: center;
+            position: relative;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff 30%, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0auto;
+            font-size: 1.1rem;
+        }
+
+        /* --- CONTROL BAR (SEARCH & FILTER) --- */
+        .control-bar {
+            max-width: 1400px;
+            margin: 0 auto px;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 280px;
+            max-width: 400px;
+        }
+        .search-input {
+            width: 100%;
+            background: var(--bg-surface);
+            border: 1px solid var(--card-border);
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        .filter-btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover {
+            color: var(--text-light);
+            border-color: #475569;
+        }
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        /* --- MAIN GRID LAYOUT --- */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            padding: 20px 20px 60px 20px;
+        }
+
+        /* --- PRODUCT SYSTEM --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            align-content: start;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 25px;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent-purple));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .card:hover { 
+            transform: translateY(-5px); 
+            border-color: rgba(14, 165, 233, 0.5); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: rgba(168, 85, 247, 0.2);
+            color: #c084fc;
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .card-icon { font-size: 2.8rem; margin-bottom: 20px; display: inline-block; }
+        .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; color: #fff; }
+        .card-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px; flex-grow: 1; line-height: 1.5; }
+        
+        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .price-tag { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+
+        .btn-buy {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .btn-buy:hover { background: var(--primary-dark); transform: scale(1.02); }
+        .btn-buy:active { transform: scale(0.98); }
+
+        /* --- SIDEBAR COMPONENTS --- */
+        .sidebar { display: flex; flex-direction: column; gap: 25px; }
+        
+        .ad-box {
+            background: #fff;
+            color: #090d16;
+            padding: 25px;
+            border-radius: 14px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        .ad-box.dark { 
+            background: radial-gradient(circle at top left, #1a1005, #090d16); 
+            color: #fff; 
+            border: 1px solid var(--accent-gold); 
+        }
+        .ad-box h4 { margin-bottom: 12px; text-transform: uppercase; font-size: 1rem; font-weight: 800; letter-spacing: 0.5px;}
+        .ad-box p { font-size: 0.85rem; margin-bottom: 20px; color: #475569; }
+        .ad-box.dark p { color: var(--text-muted); }
+
+        .btn-scam {
+            display: block;
+            background: var(--accent-gold);
+            color: #000;
+            text-align: center;
+            padding: 12px;
+            text-decoration: none;
+            font-weight: 800;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+            animation: pulse 2s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+            50% { transform: scale(1.03); box-shadow: 0 4px 25px rgba(245, 158, 11, 0.5); }
+            100% { transform: scale(1); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+        }
+
+        /* INTERACTIVE TERMINAL EMULATOR */
+        .admin-panel {
+            background: #05070f;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: var(--font-mono);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(34, 197, 94, 0.2);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            font-size: 0.75rem;
+            color: var(--success);
+        }
+        .terminal-body {
+            height: 180px;
+            overflow-y: auto;
+            font-size: 0.8rem;
+            color: #a7f3d0;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .terminal-row { margin-bottom: 6px; }
+        .terminal-input-wrapper {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(34, 197, 94, 0.15);
+            border-radius: 6px;
+            padding: 6px 10px;
+        }
+        .terminal-prefix { color: var(--success); font-weight: bold; margin-right: 8px; font-size: 0.85rem;}
+        .terminal-input-wrapper input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            width: 100%;
+        }
+
+        /* LIVE ACTIVITY FEED */
+        .live-feed {
+            background: var(--bg-surface);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .feed-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .feed-pulse {
+            width: 8px; height: 8px; background: var(--success); border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        .feed-items { display: flex; flex-direction: column; gap: 12px; }
+        .feed-item {
+            font-size: 0.8rem;
+            border-left: 2px solid var(--primary);
+            padding-left: 10px;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(5px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* --- CART DRAWER SYSTEM --- */
+        .cart-overlay {
+            position: fixed;
+            top: 0; right: -420px;
+            width: 400px; height: 100%;
+            background: #0f172a;
+            border-left: 1px solid var(--card-border);
+            box-shadow: -15px 0 40px rgba(0,0,0,0.6);
+            transition: cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+            z-index: 2000;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        .cart-overlay.active { right: 0; }
+
+        .cart-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--card-border); padding-bottom: 15px; margin-bottom: 20px;
+        }
+        .cart-close {
+            background: transparent; border: none; color: var(--text-muted);
+            font-size: 1.8rem; cursor: pointer; transition: color 0.2s;
+        }
+        .cart-close:hover { color: #fff; }
+
+        .cart-list { flex-grow: 1; overflow-y: auto; padding-right: 5px; }
+        .cart-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .cart-item-info h5 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+        .cart-item-info p { color: var(--primary); font-size: 0.85rem; font-weight: 700; }
+        .cart-item-ctrl { display: flex; align-items: center; gap: 12px; }
+        .cart-qty-btn {
+            background: #1e293b; border: 1px solid var(--card-border); color: #fff;
+            width: 24px; height: 24px; border-radius: 4px; cursor: pointer; font-weight: bold;
+        }
+        .btn-remove {
+            background: transparent; border: none; color: var(--danger);
+            font-size: 0.8rem; cursor: pointer; margin-left: 10px;
+        }
+        .btn-remove:hover { text-decoration: underline; }
+
+        .cart-summary {
+            padding-top: 20px; border-top: 1px solid var(--card-border); margin-top: 15px;
+        }
+        .coupon-box {
+            display: flex; gap: 8px; margin-bottom: 15px;
+        }
+        .coupon-box input {
+            background: var(--bg-dark); border: 1px solid var(--card-border);
+            border-radius: 6px; padding: 8px 12px; color: white; font-size: 0.85rem; flex-grow: 1;
+        }
+        .coupon-box button {
+            background: #334155; border: none; color: white; padding: 0 12px;
+            border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600;
+        }
+        .coupon-box button:hover { background: #475569; }
+
+        /* --- MODAL DIALOGS --- */
+        .modal-mask {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 7, 15, 0.8); backdrop-filter: blur(8px);
+            z-index: 3000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .modal-mask.active { opacity: 1; pointer-events: auto; }
+        .modal-wrapper {
+            background: var(--bg-surface); border: 1px solid var(--card-border);
+            width: 100%; max-width: 500px; border-radius: 16px; padding: 35px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); transform: translateY(-20px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .modal-mask.active .modal-wrapper { transform: translateY(0); }
+        .modal-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 15px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+        .form-control {
+            width: 100%; background: var(--bg-dark); border: 1px solid var(--card-border);
+            border-radius: 8px; padding: 12px; color: white; font-size: 0.95rem;
+        }
+        .form-control:focus { outline: none; border-color: var(--primary); }
+
+        /* --- TOAST POPUPS --- */
+        .toast-container {
+            position: fixed; bottom: 25px; left: 25px;
+            display: flex; flex-direction: column; gap: 10px; z-index: 4000;
+        }
+        .toast-card {
+            background: rgba(17, 24, 39, 0.95); border-left: 4px solid var(--primary);
+            border-top: 1px solid var(--card-border); border-right: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);
+            padding: 16px 20px; border-radius: 0 10px 10px 0; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            min-width: 300px; backdrop-filter: blur(8px);
+            animation: slideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .toast-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; }
+        .toast-card p { font-size: 0.8rem; color: var(--text-muted); }
+
+        footer { 
+            border-top: 1px solid var(--card-border); padding: 50px 20px; 
+            text-align: center; color: var(--text-muted); font-size: 0.85rem; 
+            background: #0b0f19;
+        }
+
+        /* RESPONSIVENESS */
+        @media(max-width: 1024px) {
+            .main-container { grid-template-columns: 1fr; }
+            .sidebar { order: 2; }
+            main { order: 1; }
+        }
+        @media(max-width: 640px) {
+            header { padding: 1rem 4%; flex-direction: column; gap: 15px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            .hero h1 { font-size: 2.2rem; }
+            .cart-overlay { width: 100%; right: -100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP MOTIVATION ANNOUNCEMENT TICKER -->
+    <div class="scam-ticker">
+        <div class="ticker-content">
+            +++ LIVE PROFIT: User "CryptoKing88" hat gerade 42.500€ mit dem NexGen-Algorithmus generiert! +++ DEFI-GUTSCHEIN: "FREE-MONEY" eingeben für 10.000€ Einstiegsguthaben +++ Keine Vorerfahrung erforderlich! +++ SYSTEM-UPDATE V8.4 AKTIV +++ JETZT VERIFIZIEREN UND STARTEN +++
+        </div>
+    </div>
+
+    <!-- MAIN INTERACTIVE HEADER -->
+    <header>
+        <a href="#" class="brand">NEX<span>GEN</span>.SYSTEMS</a>
+        <nav class="nav-links">
+            <a href="#" class="active" onclick="filterCategory('all', this)">Ecosystem</a>
+            <a href="#" onclick="filterCategory('neural', this)">Neural Tech</a>
+            <a href="#" onclick="filterCategory('hardware', this)">Hardware</a>
+            <a href="#" onclick="filterCategory('wealth', this)">Wealth</a>
+            <button class="btn-cart" onclick="toggleCart(true)">
+                🛒 <span id="cart-counter">0</span> Node-Items
+            </button>
+        </nav>
+    </header>
+
+    <!-- INTRO HERO BLOCK -->
+    <div class="hero">
+        <h1>Infrastruktur für die <span>digitale Evolution</span>.</h1>
+        <p>Autonome Enterprise-Lösungen, kognitive Hardware und algorithmische Skalierungsprogramme der nächsten Generation.</p>
+    </div>
+
+    <!-- UTILITY CONTROL BAR -->
+    <div class="control-bar">
+        <div class="search-wrapper">
+            <input type="text" id="product-search" class="search-input" placeholder="Core-Module durchsuchen..." oninput="handleSearch(this.value)">
+        </div>
+        <div class="filter-tabs">
+            <button class="filter-btn active" onclick="filterCategory('all', this)">Alle Systeme</button>
+            <button class="filter-btn" onclick="filterCategory('neural', this)">Neural-Net</button>
+            <button class="filter-btn" onclick="filterCategory('hardware', this)">Quanten-HW</button>
+            <button class="filter-btn" onclick="filterCategory('software', this)">Automatisierung</button>
+            <button class="filter-btn" onclick="filterCategory('wealth', this)">Asset Wealth</button>
+        </div>
+    </div>
+
+    <!-- MAIN SITE STRUCTURE GRID -->
+    <div class="main-container">
+        <!-- PRODUCT SECTION -->
+        <main>
+            <div class="product-grid" id="main-grid">
+                <!-- Dynamically generated through Javascript -->
+            </div>
+        </main>
+
+        <!-- APP SIDEBAR CONTROLS -->
+        <aside class="sidebar">
+            <!-- MARKETING PROMOTION CARD -->
+            <div class="ad-box">
+                <h4>Absolute Freiheit?</h4>
+                <p>Ich transformiere dein Setup innerhalb von 24 Stunden. Vollautomatisch, ohne operativen Aufwand.</p>
+                <a href="javascript:void(0)" class="btn-scam" onclick="triggerVisualExploit()">MATRIX AKTIVIEREN</a>
+            </div>
+
+            <!-- HARDWARE EMULATED SHELL (TERMINAL) -->
+            <div class="admin-panel">
+                <div class="terminal-header">
+                    <span>NEXGEN_SHELL v2.06_STABLE</span>
+                    <span style="color: var(--accent-gold)">● ONLINE</span>
+                </div>
+                <div class="terminal-body" id="term-body">
+                    <div class="terminal-row">// Initialisiere Terminal-Verbindung...</div>
+                    <div class="terminal-row">// Tippe 'help' für eine Liste der Gateway-Befehle.</div>
+                </div>
+                <div class="terminal-input-wrapper">
+                    <span class="terminal-prefix">guest@nexgen:~$&nbsp;</span>
+                    <input type="text" id="term-input" placeholder="Befehl eingeben..." onkeydown="handleTerminal(event)">
+                </div>
+            </div>
+
+            <!-- EXCLUSIVE VIP HIGH-YIELD BADGE -->
+            <div class="ad-box dark">
+                <h4 style="color: var(--accent-gold);">🏆 SECURE ACCOUNT GATEWAY</h4>
+                <p>Ihre IP-Adresse wurde für den Zugang zu unbegrenztem Liquiditäts-Mining autorisiert.</p>
+                <small style="color: var(--text-muted); font-size: 0.75rem;">Zertifiziert via NexGen Ledger Protection Audit 2026.</small>
+            </div>
+
+            <!-- LIVE ACTIVITY NOTIFICATION FEED -->
+            <div class="live-feed">
+                <div class="feed-title">
+                    <div class="feed-pulse"></div> LIVE TRANSACTION FLOW
+                </div>
+                <div class="feed-items" id="live-feed-box">
+                    <!-- Dynamic feed entries injected here -->
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- SLIDE-OUT WARREANKORB DRAWER -->
+    <div class="cart-overlay" id="cart-drawer">
+        <div class="cart-header">
+            <h2>Warenkorb-Matrix</h2>
+            <button class="cart-close" onclick="toggleCart(false)">×</button>
+        </div>
+        <div id="cart-list" class="cart-list">
+            <!-- Items via JavaScript logic -->
+        </div>
+        <div class="cart-summary">
+            <div class="coupon-box">
+                <input type="text" id="coupon-field" placeholder="Gutscheincode eingeben">
+                <button onclick="applyCoupon()">Anwenden</button>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
+                <span style="color: var(--text-muted)">Zwischensumme:</span>
+                <span id="subtotal-price">0.00€</span>
+            </div>
+            <div id="discount-row" style="display: none; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; color: var(--success);">
+                <span>Rabatt (-20%):</span>
+                <span id="discount-value">-0.00€</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 25px; font-size: 1.1rem; font-weight: bold;">
+                <span>Gesamtsumme:</span>
+                <span id="total-price" style="color: var(--primary);">0.00€</span>
+            </div>
+            <button class="btn-buy" style="width: 100%; padding: 16px; font-size: 1rem; letter-spacing: 0.5px;" onclick="openCheckout()">
+                PROZESS FINALISIEREN
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL POPUP FOR THE CHECKOUT PROCESS -->
+    <div class="modal-mask" id="checkout-modal">
+        <div class="modal-wrapper">
+            <div class="modal-title">Sicheres Krypto-Terminal</div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
+                Ihre Transaktion wird über ein dezentrales NexGen-Gateway verschlüsselt verarbeitet.
+            </p>
+            <div class="form-group">
+                <label for="c_name">Inhaber / ID-Kennung</label>
+                <input type="text" id="c_name" class="form-control" placeholder="z.B. CyberAgent-09">
+            </div>
+            <div class="form-group">
+                <label for="c_mail">Sichere E-Mail-Adresse</label>
+                <input type="email" id="c_mail" class="form-control" placeholder="name@domain.com">
+            </div>
+            <div class="form-group">
+                <label for="c_wallet">Krypto-Zieladresse (BTC/ETH/Solana)</label>
+                <input type="text" id="c_wallet" class="form-control" placeholder="0x71C... oder Validierungs-Key">
+            </div>
+            <div style="display: flex; gap: 12px; margin-top: 25px;">
+                <button class="btn-buy" style="background: #334155; flex: 1;" onclick="closeCheckout()">Abbrechen</button>
+                <button class="btn-buy" style="flex: 2;" onclick="submitCheckout()">Kauf abschließen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION SYSTEM ELEMENT CONTAINER -->
+    <div class="toast-container" id="toast-wrapper"></div>
+
+    <!-- APP OVERALL FOOTER -->
+    <footer>
+        <p>&copy; 2026 NexGen Global Distribution & Decentralized Wealth Architecture. Alle Rechte vorbehalten.</p>
+        <p style="font-size: 0.7rem; margin-top: 15px; color: #475569; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Disclaimer: Hochtechnologische Investitionen und neuronale Schnittstellen-Upgrades bergen fundamentale Risiken. Renditeprognosen von bis zu 5000% stellen mathematische Maximal-Szenarien des autonomen Algorithmus dar. Keine direkte Finanzberatung.
+        </p>
+    </footer>
+
+    <!-- LOGIC APPLICATION CLIENT ARCHITECTURE -->
+    <script>
+        // EXPANDED PRODUCT DATA DATASET
+        const products = [
+            { id: 201, category: "neural", tag: "Hot", name: "Neural-Link Core v8", desc: "Direkte cerebrale Schnittstelle für ultra-schnellen, bi-direktionalen Datenverkehr.", price: 1299.00, icon: "🧠" },
+            { id: 202, category: "hardware", tag: "Popular", name: "Quantum Node Unit", desc: "Dezentrale Qubit-Rechenleistung für autarkes Krypto-Mining & AI Model Training.", price: 4500.00, icon: "🧬" },
+            { id: 203, category: "software", tag: "Enterprise", name: "SaaS Full-Suite Key", desc: "Lebenslanger Vollzugriff auf alle globalen NexGen Cloud & Compute-Kapazitäten.", price: 899.99, icon: "🔑" },
+            { id: 204, category: "hardware", tag: "Secure", name: "Titanium Wallet Box", desc: "Quanten-resistenter physischer Kalt-Speicher für digitale Assets inklusive Multi-Sig Alpha.", price: 249.00, icon: "💎" },
+            { id: 205, category: "software", tag: "Automated", name: "Algo-Trade Bot Pro", desc: "HFT-Handelsalgorithmus mit einer historisch verifizierten Erfolgsquote von 99.8%.", price: 149.00, icon: "🤖" },
+            { id: 206, category: "hardware", tag: "Satellite", name: "Satellite Link Modul", desc: "Orbitaler Peer-to-Peer Internetzugriff außerhalb regulierter staatlicher Kontrollinstanzen.", price: 670.00, icon: "🛰️" },
+            { id: 207, category: "neural", tag: "Experimental", name: "Cortex Booster Matrix", desc: "Temporäre synaptische Frequenz-Optimierung für kognitive Höchstleistungen.", price: 399.00, icon: "⚡" },
+            { id: 208, category: "wealth", tag: "Exclusive", name: "Venture Liquidity Pool", desc: "Direkte Partizipation an automatisierten Ertrags-Aggregatoren mit hohem Hebel.", price: 2500.00, icon: "📈" },
+            { id: 209, category: "software", tag: "Privacy", name: "Ghost Network Proxy", desc: "Militärisch verschlüsseltes Routing-Protokoll zur absoluten digitalen Anonymisierung.", price: 79.99, icon: "🥷" },
+            { id: 210, category: "wealth", tag: "VIP Asset", name: "Infinite Yield Certificate", desc: "Dezentralisiertes Schuldverschreibungs-Modul mit kontinuierlicher Ausschüttung.", price: 9999.00, icon: "👑" },
+            { id: 211, category: "neural", tag: "Cybernetics", name: "Optic Overlay Synapse", desc: "Neuronales Treiber-Kit zur Echtzeit-Datenvisualisierung direkt im Sehnerv.", price: 1850.00, icon: "👁️" },
+            { id: 212, category: "hardware", tag: "Storage", name: "Holonet Data Crystal", desc: "Molekularer Speicherkristall mit unbegrenzter Haltbarkeit und 500 TB/s Leserate.", price: 850.00, icon: "🔮" }
+        ];
+
+        // CENTRAL RUNTIME APPLICATION STATE
+        let cart = [];
+        let activeCategory = 'all';
+        let activeSearch = '';
+        let discountApplied = false;
+        const discountRate = 0.20; // 20% Rabatt
+
+        // WEB APPLICATION INTIALIZATION
+        window.onload = () => {
+            renderProducts();
+            generateLiveFeedItem();
+            // Trigger initial welcome system toasts
+            setTimeout(() => createToast("System-Status", "Verbindung zu NexGen Cloud-Mainframe erfolgreich etabliert.", "var(--primary)"), 1000);
+            setTimeout(() => createToast("Exklusiv-Zuweisung", "Gutscheincode 'FREE-MONEY' ist temporär aktiv!", "var(--accent-gold)"), 3500);
+            
+            // Loop for dynamic background simulation
+            setInterval(generateLiveFeedItem, 5000);
+        };
+
+        // RENDERING PIPELINE FOR CARDS
+        function renderProducts() {
+            const grid = document.getElementById('main-grid');
+            grid.innerHTML = '';
+
+            const filtered = products.filter(p => {
+                const matchesCategory = (activeCategory === 'all' || p.category === activeCategory);
+                const matchesSearch = p.name.toLowerCase().includes(activeSearch.toLowerCase()) || 
+                                      p.desc.toLowerCase().includes(activeSearch.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Keine aktiven Cluster-Module für diese Selektion gefunden.</div>`;
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <span class="card-badge">${p.tag}</span>
+                    <div class="card-icon">${p.icon}</div>
+                    <div class="card-title">${p.name}</div>
+                    <div class="card-desc">${p.desc}</div>
+                    <div class="card-footer">
+                        <span class="price-tag">${p.price.toLocaleString('de-DE', {minimumFractionDigits: 2})}€</span>
+                        <button class="btn-buy" onclick="addToCart(${p.id})">Integrieren</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // CATEGORY SELECTION FILTERS
+        function filterCategory(category, element) {
+            activeCategory = category;
+            
+            // Sync Navigation Buttons and Filter Tabs UI
+            document.querySelectorAll('.filter-btn, .nav-links a').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            
+            renderProducts();
+        }
+
+        // SEARCH INPUT INPUT EVENT TRIGGER
+        function handleSearch(value) {
+            activeSearch = value;
+            renderProducts();
+        }
+
+        // INTERACTIVE SHOPPING CART STATE CONTROLS
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existingItem = cart.find(item => item.product.id === id);
+
+            if(existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ product: product, quantity: 1 });
+            }
+
+            updateCartUI();
+            createToast("Modul geladen", `${product.name} wurde im lokalen Node registriert.`, "var(--success)");
+        }
+
+        function changeQuantity(id, delta) {
+            const item = cart.find(i => i.product.id === id);
+            if(!item) return;
+
+            item.quantity += delta;
+            if(item.quantity <= 0) {
+                cart = cart.filter(i => i.product.id !== id);
+            }
+            updateCartUI();
+        }
+
+        function removeCartItem(id) {
+            cart = cart.filter(i => i.product.id !== id);
+            updateCartUI();
+            createToast("Modul entfernt", "Das Element wurde aus der Queue gelöscht.", "var(--danger)");
+        }
+
+        function updateCartUI() {
+            // Counter Calculation
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-counter').innerText = totalItems;
+
+            const listContainer = document.getElementById('cart-list');
+            listContainer.innerHTML = '';
+
+            let subtotal = 0;
+
+            if(cart.length === 0) {
+                listContainer.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 30px 0;">Warenkorb-Matrix ist unbesetzt.</p>`;
+            } else {
+                cart.forEach(item => {
+                    subtotal += item.product.price * item.quantity;
+                    const div = document.createElement('div');
+                    div.className = 'cart-item';
+                    div.innerHTML = `
+                        <div class="cart-item-info">
+                            <h5>${item.product.name}</h5>
+                            <p>${(item.product.price * item.quantity).toLocaleString('de-DE', {minimumFractionDigits: 2})}€</p>
+                        </div>
+                        <div class="cart-item-ctrl">
+                            <button class="cart-qty-btn" onclick="changeQuantity(${item.product.id}, -1)">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="cart-qty-btn" onclick="changeQuantity(${item.product.id}, 1)">+</button>
+                            <button class="btn-remove" onclick="removeCartItem(${item.product.id})">Löschen</button>
+                        </div>
+                    `;
+                    listContainer.appendChild(div);
+                });
+            }
+
+            // Calculations regarding pricing
+            document.getElementById('subtotal-price').innerText = subtotal.toLocaleString('de-DE', {minimumFractionDigits: 2}) + "€";
+            
+            if(discountApplied) {
+                const discount = subtotal * discountRate;
+                const finalTotal = subtotal - discount;
+                document.getElementById('discount-row').style.display = 'flex';
+                document.getElementById('discount-value').innerText = `-${discount.toLocaleString('de-DE', {minimumFractionDigits: 2})}€`;
+                document.getElementById('total-price').innerText = finalTotal.toLocaleString('de-DE', {minimumFractionDigits: 2}) + "€";
+            } else {
+                document.getElementById('discount-row').style.display = 'none';
+                document.getElementById('total-price').innerText = subtotal.toLocaleString('de-DE', {minimumFractionDigits: 2}) + "€";
+            }
+        }
+
+        function toggleCart(open) {
+            const drawer = document.getElementById('cart-drawer');
+            if(open) drawer.classList.add('active');
+            else drawer.classList.remove('active');
+        }
+
+        // COUPON VALIDATION ENGINE
+        function applyCoupon() {
+            const code = document.getElementById('coupon-field').value.trim().toUpperCase();
+            if(code === "FREE-MONEY" || code === "NEXGEN2026") {
+                discountApplied = true;
+                updateCartUI();
+                createToast("Coupon Valide", "20% Promo-Rabatt wurde auf die Matrix angewendet.", "var(--success)");
+            } else {
+                createToast("Validierungsfehler", "Der eingegebene Code existiert nicht im Ledger.", "var(--danger)");
+            }
+        }
+
+        // CHECKOUT DIALOG MODAL CONTROLS
+        function openCheckout() {
+            if(cart.length === 0) {
+                alert("Der Warenkorb enthält keine aktiven Daten-Nodes.");
+                return;
+            }
+            toggleCart(false);
+            document.getElementById('checkout-modal').classList.add('active');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').classList.remove('active');
+        }
+
+        function submitCheckout() {
+            const name = document.getElementById('c_name').value;
+            const mail = document.getElementById('c_mail').value;
+            const wallet = document.getElementById('c_wallet').value;
+
+            if(!name || !mail || !wallet) {
+                alert("Bitte füllen Sie sämtliche Verschlüsselungsparameter aus!");
+                return;
+            }
+
+            closeCheckout();
+            createToast("Processing Transaktion", "Verbinde mit Krypto-Node via Multi-Sig...", "var(--accent-gold)");
+            
+            setTimeout(() => {
+                alert(`STRATEGIC_ERROR:\n\nIhre Transaktion über ${document.getElementById('total-price').innerText} konnte nicht abgeschlossen werden.\nDie dezentrale Bankarchitektur verlangt ein verifiziertes Liquiditäts-Deposit.\n\nBitte senden Sie 150€ via Steam- oder Amazon-Gutscheinkarte an das integrierte NexGen Security Terminal.`);
+                cart = [];
+                discountApplied = false;
+                document.getElementById('coupon-field').value = '';
+                updateCartUI();
+            }, 2500);
+        }
+
+        // INTERACTIVE SIDEBAR SHELL TERMINAL SIMULATOR
+        function handleTerminal(event) {
+            if(event.key === 'Enter') {
+                const inputElement = document.getElementById('term-input');
+                const command = inputElement.value.trim().toLowerCase();
+                if(!command) return;
+
+                appendTerminalRow(`guest@nexgen:~$ ${inputElement.value}`, '#fff');
+                inputElement.value = '';
+
+                setTimeout(() => {
+                    processTerminalCommand(command);
+                }, 150);
+            }
+        }
+
+        function appendTerminalRow(text, color = '#a7f3d0') {
+            const body = document.getElementById('term-body');
+            const row = document.createElement('div');
+            row.className = 'terminal-row';
+            row.style.color = color;
+            row.innerText = text;
+            body.appendChild(row);
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function processTerminalCommand(cmd) {
+            switch(cmd) {
+                case 'help':
+                    appendTerminalRow('Verfügbare Protokolle:');
+                    appendTerminalRow('  help         - Zeigt diese Liste an.');
+                    appendTerminalRow('  status       - Ruft System- & Mainframe-Parameter ab.');
+                    appendTerminalRow('  unlock-all   - Simuliert administrative Override-Rechte.');
+                    appendTerminalRow('  exploit      - Startet visuelles Matrix-Script.');
+                    appendTerminalRow('  clear        - Bereinigt den Cache des Displays.');
+                    break;
+                case 'status':
+                    appendTerminalRow('Mainframe: ACTIVE_LOAD_BALANCING');
+                    appendTerminalRow('Nodes Connected: 14,892,109 Units');
+                    appendTerminalRow('Encryption: Quantum SHA-512 Matrix');
+                    appendTerminalRow('Integrity Ledger: 100% SECURE');
+                    break;
+                case 'unlock-all':
+                    appendTerminalRow('Versuche administrativen Zugriff...', 'var(--accent-gold)');
+                    setTimeout(() => appendTerminalRow('BYPASS SUCCESSFUL: Alle Preise temporär manipuliert.', 'var(--success)'), 800);
+                    setTimeout(() => {
+                        products.forEach(p => p.price = Math.floor(p.price * 0.1));
+                        renderProducts();
+                        updateCartUI();
+                        createToast("Exploit Erfogreich", "Sämtliche Node-Kosten um 90% gesenkt.", "var(--accent-gold)");
+                    }, 1500);
+                    break;
+                case 'exploit':
+                    triggerVisualExploit();
+                    appendTerminalRow('Visual Matrix Script initiiert.', 'var(--success)');
+                    break;
+                case 'clear':
+                    document.getElementById('term-body').innerHTML = '';
+                    break;
+                default:
+                    appendTerminalRow(`CRITICAL_ERROR: Befehl oder Protokoll '${cmd}' unbekannt.`, 'var(--danger)');
+            }
+        }
+
+        // VISUAL EFFECT SIMULATOR
+        function triggerVisualExploit() {
+            createToast("OVERRIDE INITIATED", "Injektion des Reichtums-Algorithmus läuft...", "var(--accent-purple)");
+            document.body.style.transition = 'filter 0.3s ease';
+            document.body.style.filter = 'hue-rotate(90deg) invert(0.1)';
+            
+            setTimeout(() => {
+                document.body.style.filter = 'none';
+                const win = window.open("", "_blank", "width=450,height=400,top=200,left=200");
+                if(win) {
+                    win.document.write(`
+                        <body style="background: #000; color: #0f0; font-family: monospace; padding: 30px; text-align: center;">
+                            <h2 style="color: gold; font-size: 2rem; margin-bottom: 10px;">⚡ NEXGEN OVERLOAD ⚡</h2>
+                            <p style="font-size: 1.1rem;">Ein unverschlüsselter Geldstrom wurde auf Ihre Kontonummer umgeleitet.</p>
+                            <div style="font-size: 3rem; margin: 30px 0; font-weight: bold; animation: pulse 1s infinite;">98.420,00 €</div>
+                            <button style="background: #0f0; color: #000; font-weight: bold; padding: 15px 30px; border: none; cursor: pointer; border-radius: 5px;" onclick="alert('PROZESS STARTET... Bitte warten Sie auf die Verifizierung.')">BETRAG BEANSPRUCHEN</button>
+                        
+<script src="https://static.app/js/static.js" type="text/javascript"></script>
+</body>
+                    `);
+                }
+            }, 1200);
+        }
+
+        // TRANSACTIONS LOG FEED ENGINE
+        function generateLiveFeedItem() {
+            const cities = ["München", "Berlin", "Zürich", "Wien", "Hamburg", "Frankfurt", "Dubai", "London"];
+            const activities = [
+                "hat das Quantum Node Cluster geladen.",
+                "aktivierte den HFT Algo-Trade Bot Pro.",
+                "transferierte 12.400€ in den Yield-Pool.",
+                "hat die neuronale Brücke v8 synchronisiert.",
+                "nutzt nun den anonymen Ghost Proxy Node."
+            ];
+            
+            const randomCity = cities[Math.floor(Math.random() * cities.length)];
+            const randomAct = activities[Math.floor(Math.random() * activities.length)];
+            
+            const feedBox = document.getElementById('live-feed-box');
+            const item = document.createElement('div');
+            item.className = 'feed-item';
+            item.innerHTML = `<strong>User aus ${randomCity}:</strong> ${randomAct}`;
+            
+            feedBox.insertBefore(item, feedBox.firstChild);
+            
+            if(feedBox.children.length > 4) {
+                feedBox.removeChild(feedBox.lastChild);
+            }
+        }
+
+        // SYSTEM TOAST NOTIFICATION GENERATOR
+        function createToast(title, msg, color) {
+            const wrapper = document.getElementById('toast-wrapper');
+            const toast = document.createElement('div');
+            toast.className = 'toast-card';
+            toast.style.borderLeftColor = color;
+            toast.innerHTML = `
+                <h4 style="color: ${color}">${title}</h4>
+                <p>${msg}</p>
+            `;
+            wrapper.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+    </script>
+
+<script src="https://static.app/js/static.js" type="text/javascript"></script>
+</body>
+</html>
